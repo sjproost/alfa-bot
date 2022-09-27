@@ -27,5 +27,5 @@ jobs:
         # https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
         #
         # github.sha - The commit SHA that triggered the workflow run ${{ github.sha }}
-        docker_image_tag: '1.0.0'
+        docker_image_tag: '1.0.1'
         docker_registry_push: true
