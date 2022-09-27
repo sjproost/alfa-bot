@@ -641,7 +641,7 @@ class ActionTestAction(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        msg = f"Das ist eine Testnachricht von einem rasa 3.0 custom Action server"
+        msg = f"Das ist eine Testnachricht von einem rasa 3.0 custom Action server. {str(tracker.sender_id)}"
         dispatcher.utter_message(text=msg)
         return []
 
