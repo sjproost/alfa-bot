@@ -1,0 +1,31 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+    - 'actions/**'
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    name: Build Action Server image
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - id: action_server
+      name: Build an action server with a custom actions
+      uses: RasaHQ/action-server-gha@main
+      # Full list of parameters: https://github.com/RasaHQ/action-server-gha/tree/master#input-arguments
+      with:
+        actions_directory: ./actions
+        requirements_file: ./actions/requirements.txt
+        docker_image_name: 'sjproost/alfa-bot-ca'
+        docker_registry_login: ${{ secrets.DOCKER_HUB_LOGIN }}
+        docker_registry_password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        # More details about github context:
+        # https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
+        #
+        # github.sha - The commit SHA that triggered the workflow run ${{ github.sha }}
+        docker_image_tag: '1.0.0'
+        docker_registry_push: true
