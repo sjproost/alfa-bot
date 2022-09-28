@@ -218,7 +218,7 @@ image:
   name: rasa-ger-demo
 
   # -- Rasa Open Source image tag to use
-  tag: "0.0.3"
+  tag: "0.1.0"
 
   # -- Override default registry + image.name for Rasa Open Source
   repository: "sjproost/rasa-ger-demo"

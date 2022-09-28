@@ -1,30 +1,128 @@
 version: "3.1"
 
 stories:
-
-- story: happy path
+- story: wm_tournament_mode_happy_path
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
-
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
+  - intent: tournament_mode
+  - action: utter_tournament_mode
   - intent: affirm
-  - action: utter_happy
+  - action: utter_tournament_mode_group_phase
+  - intent: affirm
+  - action: utter_tournament_mode_ko
+  - intent: affirm
+  - action: utter_tournament_mode_ko_rounds
+  - action: action_restart
+  - action: action_listen
 
-- story: sad path 2
+- story: wm_tournament_mode_unhappy_path_step1
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
+  - intent: tournament_mode
+  - action: utter_tournament_mode
   - intent: deny
-  - action: utter_goodbye
+  - action: utter_tournament_no
+  - action: action_restart
+  - action: action_listen
+
+- story:  wm_tournament_mode_unhappy_path_step2
+  steps:
+  - intent: tournament_mode
+  - action: utter_tournament_mode
+  - intent: affirm
+  - action: utter_tournament_mode_group_phase
+  - intent: deny
+  - action: utter_tournament_no
+  - action: action_restart
+  - action: action_listen
+
+- story: wm_tournament_mode_happy_path_step3
+  steps:
+  - intent: tournament_mode
+  - action: utter_tournament_mode
+  - intent: affirm
+  - action: utter_tournament_mode_group_phase
+  - intent: affirm
+  - action: utter_tournament_mode_ko
+  - intent: deny
+  - action: utter_tournament_no
+  - action: action_restart
+  - action: action_listen
+
+- story: offside_happy_right
+  steps:
+  - intent: offside1
+  - action: utter_offside1
+  - intent: affirm
+  - action: utter_offside2
+  - intent: affirm
+  - action: utter_offside3
+  - intent: deny
+  - action: utter_offside_right
+  - action: action_restart
+
+- story: offside_happy_wrong
+  steps:
+  - intent: offside1
+  - action: utter_offside1
+  - intent: affirm
+  - action: utter_offside2
+  - intent: affirm
+  - action: utter_offside3
+  - intent: affirm
+  - action: utter_offside_wrong
+  - action: utter_offside3
+  - intent: deny
+  - action: utter_offside_right
+  - action: action_restart
+
+- story: offside_happy_wrong_dau
+  steps:
+  - intent: offside1
+  - action: utter_offside1
+  - intent: affirm
+  - action: utter_offside2
+  - intent: affirm
+  - action: utter_offside3
+  - intent: affirm
+  - action: utter_offside_wrong
+  - action: utter_offside3
+  - intent: affirm
+  - action: utter_offside_dau
+  - action: action_restart
+
+- story: wall
+  steps:
+  - intent: freekick_wall
+  - action: utter_freekick_wall
+  - action: action_restart
+
+- story: freekick_and_wall
+  steps:
+  - intent: freekick
+  - action: utter_freekick
+  - intent: deny
+  - action: utter_freekick_wall
+  - action: action_restart
+
+- story: freekick_i_know
+  steps:
+  - intent: freekick
+  - action: utter_freekick
+  - intent: affirm
+  - action: utter_i_know
+  - action: action_restart
+
+- story: teams in contest
+  steps:
+    - intent: qualify
+    - action: utter_qualify
+    - intent: affirm
+    - action: utter_qualified_teams
+    - action: action_restart
+
+- story: teams in contest I know
+  steps:
+    - intent: qualify
+    - action: utter_qualify
+    - intent: deny
+    - action: utter_tournament_no
+    - action: action_restart

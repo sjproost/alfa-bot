@@ -1,38 +1,519 @@
-version: "3.1"
-
-intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
-  - alfabot
-
-responses:
-  utter_greet:
-  - text: "Hey, wie geht es dir?"
-
-  utter_cheer_up:
-  - text: "Hier ist etwas um dich aufzuheitern :-)"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Hilft dir das?"
-
-  utter_happy:
-  - text: "Super, dann weiter so!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "Ich bin ein Chatbot, powered by Rasa."
-
-  utter_alfabot:
-    - text: "Ich heiße Lalo und bin aus dem Projekt ALFA-Bot"
-
+version: '3.1'
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+intents:
+# Selectors
+- rule:
+    is_retrieval_intent: true
+- qat:
+    is_retrieval_intent: true
+- wm:
+    is_retrieval_intent: true
+- chitchat:
+    is_retrieval_intent: true
+- nlu_fallback
+- out_of_scope
+- greet
+- goodbye
+- affirm
+- deny
+- bot_challenge
+- inquire_time
+- offside1
+- wm_finals_group
+- wm_finals_team
+- match_score
+- group_ranking
+- time_phase
+- tournament_mode
+- freekick
+- freekick_wall
+- start_survey
+- qualify
+- abort
+- lot_number
+- rate
+- buy_pizza
+- inform
+entities:
+- group
+- lot_number
+- phase
+- pizza_size
+- pizza_type
+- place
+- rating
+- finals_team
+- team
+- team2
+slots:
+  location:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: place
+  group:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: group
+  finals_team:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: finals_team_form
+          requested_slot: finals_team
+  team:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: team
+  team2:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: team
+  phase:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: phase
+  lot_number:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: lot_number
+      conditions:
+      - active_loop: simple_survey_form
+        requested_slot: lot_number
+  pizza_size:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: pizza_size
+  pizza_type:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: pizza_type
+  helpful:
+    type: categorical
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: rating
+    values:
+    - super
+    - mittel
+    - schlecht
+    - grottig
+  length:
+    type: categorical
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: rating
+    values:
+    - super
+    - mittel
+    - schlecht
+    - grottig
+responses:
+  utter_default: # Answer for NLU fallback and out_of_scope
+  - text: 'Meine Entwickler erreichst du am ALFA-Telefon: [0800 53 53 44 55](tel:080053534455). Du findest sie auch im [Internet](https://alfa-telefon.de) oder kannst ihnen eine [Mail](mailto:r.haeder@alphabetisierung.de) schreiben.'
+  utter_greet:
+  - text: Willkommen zum Chat. Frage mich gerne, was du über die Fußball-Weltmeisterschaft 2022 wissen möchtest ⚽. Tippe auf den Lautsprecher, dann lese ich dir die Nachricht vor.
+  utter_goodbye:
+  - text: Bye 👋
+  utter_iamabot:
+  - text: Ich bin ein Chatbot. Das heißt, ich bin ein Computer-Programm mit dem du sprechen kannst.
+  utter_offside1:
+  - buttons:
+    - payload: Ja
+      title: Weiter
+    text: Auf dem Spielfeld befinden sich zwei Spieler der hellblauen und zwei Spieler der roten Mannschaft. Schießt der rote Spieler den Ball zu seinem Mitspieler, wenn kein Gegner mehr zwischen dem Mitspieler und dem anderen Torwart steht, wäre das ein Abseits.
+    image: https://alfacms.se-labor.de/wp-content/uploads/2022/08/abseits.jpg
+  utter_offside2:
+  - buttons:
+    - payload: Ja
+      title: Weiter
+    text: Schießt der rote Spieler den Ball zu seinem Mitspieler, *bevor* dieser Mitspieler hinter die Spieler der gegnerischen Mannschaft läuft, ist es kein Abseits. Das gilt überall in der Spielhälfte der gegnerischen Mannschaft.
+    image: https://alfacms.se-labor.de/wp-content/uploads/2022/08/kein_abseits.jpg
+  utter_offside3:
+  - buttons:
+    - payload: Ja
+      title: Ja
+    - payload: Nein
+      title: Nein
+    text: Was meinst du, handelt es sich hier um Abseits?
+    image: https://alfacms.se-labor.de/wp-content/uploads/2022/08/frage_abseits.jpg
+  utter_offside_right:
+  - text: Richtig! denn, ACHTUNG! Es ist kein Abseits, wenn man zwar hinter allen gegnerischen Spielern aber noch in der eigenen Spielfeld-Hälfte steht und einen Ball zugespielt bekommt!
+  utter_offside_wrong:
+  - text: Nicht ganz richtig. Schau dir mal an, in welcher Hälfte die Spieler stehen und versuche es noch mal.
+  utter_offside_dau:
+  - text: Nein, es ist kein Abseis. Der Spieler steht zwar hinter allen Gegnern, aber er ist noch in der Spielfeldhälfte seiner Mannschaft.
+  utter_tell_final_group:
+  - text: Ok, du  möchtest etwas über Gruppe {wm_group} wissen.
+  utter_ask_finals_team:
+  - text: Um welches Team geht es dir?
+  utter_ask_ranking_group:
+  - text: Zu welcher Gruppe soll ich dir die Tabelle zeigen?
+  utter_ask_other_teams:
+  - buttons:
+    - payload: Wer spielt in Gruppe {group}?
+      title: Wer spielt in Gruppe {group}?
+    text: Möchtest du wissen, welche Teams noch in Gruppe {group} spielen?
+  utter_ask_lot_number:
+  - text: Ok, du möchtest an der Befragung teilnehmen. Wie lautet deine Nummer?
+  utter_ask_helpful:
+  - text: Wie hilfreich fandest du meine Antworten?
+  utter_ask_length:
+  - text: Wie findest du die Antworten? Sind sie zu kurz, genau richtig lang oder zu lang?
+  utter_ask_team2:
+  - text: Wie heißt die andere Mannschaft in dem Spiel?
+  utter_submit_survey:
+  - text: Super, ich habe alles. Danke, dass du uns dabei hilfst, Lalo zu verbessern!
+  utter_submit:
+  - text: I will now order a pizza for you!
+  utter_pizza_slots:
+  - text: I will order a {pizza_size} {pizza_type} pizza.
+  utter_ask_continue:
+  - text: Are you sure you want to stop the form?
+  utter_ask_pizza_size:
+  - text: What size would you like your pizza to be?
+  utter_ask_pizza_type:
+  - text: What kind of pizza would you like to buy?
+  utter_qat/qatar:
+  - buttons:
+    - payload: winter_wm
+      title: Warum spielt die WM im Winter?
+    - payload: wm_time
+      title: Wann ist die WM?
+    - payload: games_tv
+      title: Wo kann ich die WM sehen?
+    - payload: qatar_critics
+      title: Kritik an der WM?
+    - payload: boycott_der_wm
+      title: Boykott der WM
+    text: Zur WM in Katar habe ich auch ein paar Informationen für dich, was davon interessiert dich?
+  utter_qat/qatar_critics:
+  - buttons:
+    - payload: human_rights
+      title: Menschenrechte
+    - payload: costs
+      title: Kosten der WM
+    - payload: worker_situation
+      title: Situation der Arbeiter
+    text: Viele Menschen finden es nicht gut, dass die Fußball-WM in Katar sein wird. Manche Menschen fordern, dass ihre Nationalmannschaft bei der WM nicht spielen soll. Andere werden keine Spiele gucken. Das ist ein Boykott. Willst du mehr zu einem der folgenden Gründe wissen?
+  utter_qat/human_rights:
+  - buttons:
+    - payload: /katar_critics
+    - title: Kritik an der WM
+    text: '**Menschenrechte** sind Regeln die für alle Menschen auf der Welt gelten sollen. 
+    Beispielsweise verbieten die Menschenrechte Sklaverei und Folter. Die Regierung von Katar hält sich nur wenig an diese Menschenrechte. Zum Beispiel unterdrücken Sie Frauen, verhaften Homosexuelle und foltern Kritiker. Daher finden viele Menschen es nicht ok, wenn so ein Land eine Fußball-WM ausrichten darf.'
+  utter_qat/costs:
+  - buttons:
+    - payload: /katar_critics
+    - title: Kritik an der WM?
+    text: Die WM in Katar wird über 150 Milliarden Euro kosten. Keine andere WM oder sonstige Veranstaltung bisher hat jemals so viel Geld gekostet.
+  utter_qat/worker_situation:
+  - buttons:
+    - payload: /katar_critics
+    - title: Kritik an der WM
+    text: Es gibt ungefähr 2,3 Millionen Gastarbeiter in Katar. Die Gastarbeiter müssen oft bei über 40 Grad länger als 10 Stunden schwer arbeiten. Sie bekommen während der Arbeit nichts zu essen oder zu trinken, kriegen wenig Geld, kein eigenes Zimmer, können nicht ausreisen und sich nicht beschweren. Wegen dieser Zustände sind bereits viele Arbeiter gestorben.
+  utter_qat/boycott:
+  - buttons:
+    - payload: /boycott_pro
+      title: Aussage für die WM
+    - payload: /boycott_contra
+      title: Aussage gegen die WM
+    - payload: /katar_critics
+      title: Kritik an der WM
+    text: 'Manche Menschen meinen, man sollte die WM in Katar boykottieren. Das heißt, die Spiele nicht gucken oder die Mannschaften sollten gar nicht erst spielen. Andere sehen in dem Turnier auch Chancen. Interessieren dich Aussagen dafür oder dagegen? Hier findest du einen [Filmbeitrag über Fußball und Katar](https://www.sportschau.de/newsticker/dpa-katar-wm-spaltet-fussball-nation-fast-die-haelfte-fuer-boykott-100.html)'
+  utter_wm/games_tv:
+  - text: Du kannst die Spiele im Fernsehen oder im Internet gucken. Die Sender ARD und ZDF übertragen alle Spiele der deutschen Nationalmannschaft. Auf MagentaTV von der Telekom kannst du alle Spiele gucken. MagentaTV ist aber ein kostenpflichtiges Angebot.
+  utter_qat/boycott_pro:
+  - buttons:
+    - payload: /boycott
+      title: Aussagen für die WM?
+    - payload: /katar_critics
+      title: Kritik an der WM
+    text: '„*Die FIFA hat die Augen vor vorhersehbaren Menschenrechtsverletzungen verschlossen und diese nicht gestoppt. Sie hat unbestreitbar zu weit verbreiteten Menschenrechtsverstößen gegen Arbeitsmigrant*innen beigetragen.*“ Katja Müller-Fahlbusch - Expertin für die Region Naher Osten und Nordafrika bei Amnesty International in Deutschland.'
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/09/Katja-Mueller-Fahlbusch.jpeg
+  utter_qat/boycott_contra:
+  - buttons:
+    - payload: /boycott
+      title: Aussagen gegen die WM?
+    - payload: /katar_critics
+      title: Kritik an der WM
+    text: '"*Wir haben uns mit vielen Nichtregierungsorganisationen getroffen, mit dem katarischen Fußballverband, aber auch mit Migrantinnen und Migranten. Eine Hauptaussage von denen war: Es ist hervorragend, dass es keinen Boykott gibt. Durch den Fokus auf das Land ist bei der Verbesserung der Arbeitsbedingungen sehr viel erreicht worden*", berichtete die DFB-Generalsekretärin Heike Ullrich von ihren Gesprächen *(Foto: ©Agentur 54 Grad/Felix König)*.'
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/09/Heike_Ullrich.jpeg
+  utter_wm/wm_time:
+  - text: Die WM beginnt am 21. November und endet am 18. Dezember. Sie dauert also 28 Tage.
+  utter_qat/winter_wm:
+  - text: Die WM findet im Winter statt, weil es im Sommer in Katar bis zu 50 Grad heiß wird. Das ist zu heiß, um Profi-Fußball zu spielen.
+  utter_rule/duration:
+  - buttons:
+    - payload: Nachspielzeit
+      title: Nachspielzeit
+    - payload: Verlängerung
+      title: Verlängerung
+    text: Ein Fußballspiel besteht aus zwei Halbzeiten. Jede Halbzeit dauert 45 Minuten. Das gesamte Spiel also 90 Minuten. Es gibt aber noch Gründe, die ein Spiel verlängern. Dann gibt es eine **Nachspielzeit**. Ab dem Achtelfinale gibt es noch die **Verlängerung** und schließlich das Elf-Meter-Schießen.
+  utter_rule/overtime:
+  - text: Muss der Schiedsrichter das Spiel unterbrechen, kann er die Spieler ein paar Minuten länger spielen lassen. Zum Beispiel weil ein Spieler sich verletzt hatte oder es viele Fouls gab. Das ist die Nachspielzeit.
+  utter_rule/extraTime:
+  - text: Die Verlängerung dauert zwei mal 15 Minuten. Sie wird gespielt, wenn es nach der normalen Spielzeit unentschieden steht. Ab dem Achtelfinale muss bei der WM immer eine Mannschaft gewinnen.
+  utter_rule/halftimebreak:
+  - text: In jedem Spiel gibt es eine Pause für die Spieler. Diese dauert 15 Minuten. Bei einer Verlängerung gibt es noch eine Pause von 5 Minuten.
+  utter_rule/numberPlayer:
+  - buttons:
+    - payload: Reservespieler
+      title: Reservespieler
+    - payload: Spieler wechseln
+      title: Spieler wechseln
+    - payload: Torwart wechseln
+      title: Torwart wechseln
+    text: |-
+      Jeder Trainer darf für seine Mannschaft bis zu 26 Spieler für die WM benennen. Es müssen mindestens 23 Spieler sein. Zu Beginn eines Spiels stehen 22 Spieler auf dem Platz. Jede Mannschaft hat einen Torwart und 10 Feldspieler. Die Spieler auf dem Feld setzen sich aus Abwehrspielern, Mittelfeldspielern und Stürmern zusammen.
+  utter_rule/exchangePlayer:
+  - buttons:
+    - payload: Spieler wechseln
+      title: Spieler wechseln
+    - payload: Torwart wechseln
+      title: Torwart wechseln
+    text: Reservespieler spielen nicht von Anfang an. Sie warten neben dem Spielfeld. Der Trainer kann einen Spieler vom Spielfeld rufen und einen Reservespieler einwechseln.
+  utter_rule/exchange:
+  - buttons:
+    - payload: Reservespieler
+      title: Reservespieler
+    - payload: Torwart wechseln
+      title: Torwart wechseln
+    text: |-
+      Trainer können Spieler auf dem Feld gegen Reservespieler austauschen. Zum Beispiel, wenn ein Spieler verletzt oder müde ist. Dafür muss man dem Schiedsrichter Bescheid sagen. Normalerweise sind 3 Wechsel pro Spiel erlaubt. Seit der Corona-Pandemie erlaubt die Fifa aber 5 Wechsel pro Spiel.
+  utter_rule/keeperChange:
+  - buttons:
+    - payload: Reservespieler
+      title: Reservespieler
+    - payload: Spieler wechseln
+      title: Spieler wechseln
+    text: Der Torwart ist ein besonderer Spieler beim Fußball. Er kann durch einen Reservespieler ausgewechselt werden. Es darf aber auch jeder Feldspieler mit dem Torwart wechseln. Auch diesen Wechsel muss man dem Schiedsrichter sagen.
+  utter_rule/ball:
+  - buttons:
+    - payload: Al Rihla
+      title: WM-Ball
+    - payload: Ball kaputt
+      title: Ball kaputt
+    text: Ein Fußball ist rund. Früher waren Fußbälle aus Leder. Heute sind sie aus künstlichen Materialien. Ein Ball hat einen Umfang von 68 bis 70 Zentimetern und wiegt zwischen 410 und 450 Gramm.
+    image: https://m.media-amazon.com/images/I/513DbJaOszL._AC_.jpg
+  utter_rule/alRihla:
+  - text: Die Fußbälle für die WM kommen von der Firma Adidas. Für jedes Turnier entwickelt Adidas einen neuen Ball. Zur WM 2022 heißt der Ball *Al Rihla*. Auf Deutsch heißt das *Die Reise*. Ein Bild habe ich auch für dich.
+    image: https://pbs.twimg.com/media/FMxCkI3XoAIV_0a.jpg
+  utter_rule/ballBroken:
+  - text: Geht ein Ball während des Spiels kaputt, unterbricht der Schiedsrichter das Spiel. Mit einem Ersatzball geht das Spiel dann an gleicher Stelle weiter.
+  utter_rule/passiveOffSide:
+  - buttons:
+    - payload: Wann Abseits
+      title: Wann Abseits
+    - payload: Strafe bei Abseits
+      title: Strafe bei Abseits
+    - payload: Abseitsfalle
+      title: Abseitsfalle
+    text: '*Passives Abseits* sagt man, wenn ein Spieler zwar im Abseits steht, aber nicht ins Spiel eingreift. Also beispielsweise, wenn er den Ball nicht hat.'
+    image: https://www.fussball-regeln.info/wp-content/uploads/beispiel_keinabseits2.png
+  utter_rule/penaltyOffSide:
+  - buttons:
+    - payload: Wann Abseits
+      title: Wann Abseits
+    - payload: Kein Abseits
+      title: Kein Abseits
+    - payload: Abseitsfalle
+      title: Abseitsfalle
+    text: Schiedsrichter bestrafen Abseits, wenn ein Spieler aus dieser Position ins Spiel eingreift und daraus einen Vorteil zieht. Schießt ein Spieler ein Tor aus einer Abseitsposition, zählt es nicht.
+  utter_rule/trapOffSide:
+  - buttons:
+    - payload: Wann Abseits
+      title: Wann Abseits
+    - payload: Kein Abseits
+      title: Kein Abseits
+    - payload: Strafe bei Abseits
+      title: Strafe bei Abseits
+    text: Die *Abseitsfalle* ist eine Taktik bei der die Abwehr versucht, angreifende Spieler in eine Abseitsposition zu bringen. Diese Taktik ist aber auch gefährlich. Gelingt sie den Abwehrspielern nicht, können die Angreifer leicht ein Tor schießen.
+  utter_rule/referee:
+  - buttons:
+    - payload: Linienrichter
+      title: Linienrichter
+    - payload: Video-Assistent
+      title: Video-Assistent
+    text: Der Schiedsrichter ist der Leiter eines Fußballspiels. Er sorgt dafür, dass alle Regeln eingehalten werden. Der Schiedsrichter kann die Spieler bestrafen. Außerdem entscheidet er, ob ein Tor zählt oder nicht. Der Schiedsrichter läuft auf dem Platz hin und her und gibt Signale mit einer Pfeife. Die Entscheidungen eines Schiedsrichters sind fest und werden nicht nachträglich geändert.
+    image: https://pixabay.com/de/photos/fußball-ball-schiedsrichter-sport-6679088/
+  utter_rule/refereeAssistant:
+  - buttons:
+    - payload: Schiedsrichter
+      title: Schiedsrichter
+    - payload: Video-Assistent
+      title: Video-Assistent
+    text: Linienrichter sind Assistenten des Schiedsrichters. Meistens gibt es zwei Linienrichter. Sie halten sich am Rand des Spielfelds in der Nähe der *16 Meter-Räume* auf. Sie achten vor allem auf *Abseits*,  *Aus* und *Tore* Linienrichter haben immer eine Flagge dabei. Die heben sie hoch, um ein Abseits, ein Tor oder einen Ball außerhalb des Spielfelds anzuzeigen. Damit der Schiedsrichter das auch mitbekommt, trägt er ein Armband. Dieses Armband vibriert, wenn ein Linienrichter ihm ein Signal gibt.
+    image: https://cdn.pixabay.com/photo/2016/12/11/22/31/flag-1900524_960_720.jpg
+  utter_rule/videoAssistant:
+  - buttons:
+    - payload: Schiedsrichter
+      title: Schiedsrichter
+    - payload: Linienrichter
+      title: Linienrichter
+    text: 'Seit 2017 haben **Schiedsrichter** einen weiteren Assistenten - den Video-Assistenten. Dieser schaut das Spiel über Monitore aus verschiedenen Kamera-Einstellungen. In ganz wichtigen Situationen kann der **Schiedsrichter** sich das Video von seinem Video-Assistenten ansehen. So gibt es weniger Fehlentscheidungen bei **Toren**, **Strafstößen** oder **roten Karten**. Eine sehr übersichtliche Darstellung findest du [hier](https://quality.fifa.com/de/media-tiles/video-assistant-referee-var/)'
+  utter_rule/cornerkick:
+    - text: 'Es gibt einen Eckstoß, wenn ein verteidigender Spieler den Ball über die eigene Torauslinie befördert. Der Ball muss dabei mit dem gesamten Umfang über der Linie sein. Bei einem Eckball darf ein Spieler von der Eckfahne aus den Ball ohne Behinderung spielen. Meistens wird der Ball als Flanke direkt in den Strafraum geschlagen.'
+  utter_rule/foul:
+  - buttons:
+    - payload: Welche Strafen gibt es?
+      title: Strafen
+    - payload: /freekick
+      title: Freistoß
+    text: Der Schiedsrichter entscheidet auf Foulspiel, wenn ein Spieler von einem Gegner regelwidrig behandelt wird. Das kann durch stoßen, treten, festhalten oder andere Aktionen sein.
+  utter_rule/punishment:
+  - buttons:
+    - payload: /freekick
+      title: Freistoß
+    text: 'Der Schiedsrichter bestraft Spieler, die ein Foul begehen. Dafür hat der mehrere Möglichkeiten: * Ermahnen * mit einer *gelben Karte* verwarnen * mit einer *roten Karte* vom Platz schicken. Bekommt ein Spieler in einem Spiel zwei gelbe Karten, ist das wie eine rote Karte. Nach einem Foul gibt es meistens einen Freistoß.'
+  utter_rule/throw_in:
+    - text: Wenn ein Spieler den Ball über die Seitenlinie des Spielfelds befördert, bekommt die gegnerische Mannschaft einen Einwurf zugesprochen. Bei einem Einwurf muss der Ball mit beiden Händen gehalten und von hinten über den Kopf geworfen werden. Der Spieler, der den Einwurf macht, muss mit beiden Beinen auf dem Boden und außerhalb des Spielfelds stehen.
+  utter_rule/penalty_kick:
+    - text: Bei einem Regelverstoß im Strafraum bekommt die gegnerische Mannschaft einen Strafstoß. Der Strafstoß wird auch *Elfmeter* genennt, weil der Punkt von dem geschossen wir, 11 Meter vom Tor entfernt ist. Dieser Schuss darf ohne Behinderung direkt auf das Tor ausgeführt werden.
+  utter_i_know:
+    - text: Ok, dann weißt du ja schon gut Bescheid. Was möchstest du noch wissen?
+  utter_freekick:
+  - buttons:
+      - payload: Ja
+        title: Ja
+      - payload: Nein
+        title: Nein
+    text: Bei einem Regelverstoß bekommt die gegnerische Mannschaft einen Freistoß. Dieser darf ohne Behinderung des Gegners gespielt werden. In den meisten Fällen gibt der Schiedsrichter den Ball durch einen Pfiff frei. Hast du schon mal etwas von einer *Mauer* im Fußball gehört?
+  utter_freekick_wall:
+  - text: Bei einem Freistoß in der Nähe des gegnerischen Tores, stellt der Torwart der verteidigenden Mannschaft eine Mauer aus Spielern, um dem Schützen den Schuss zu erschweren.
+  utter_qualify:
+  - buttons:
+      - payload: Ja
+        title: Ja, bitte
+      - payload: Nein
+        title: Nein, ich weiß Bescheid
+    text: 202 Mannschaften aus der ganzen Welt wollten in Katar mitspielen. Da aber nur 32 Mannschaften in Katar spielen können, mussten sie sich qualifizieren. Willst du wissen, welche Mannschaften in Katar dabei sind?
+  utter_qualified_teams:
+  - text: 'Deutschland, Dänemark, Frankreich, Belgien, Kroatien, Spanien, Serbien, Schweiz, England, Niederlande, Portugal, Polen, Wales, Ghana, Senegal, Tunesien, Marokko, Kamerun, Katar (weil es Gastgeber ist), Australien, Iran, Südkorea, Japan, Saudi-Arabien, Brasilien, Argentinien, Ecuador, Uruguay, Kanada, Mexiko, USA, Costa Rica. Jedes Land hat eine eigene Flagge und Nationalhymne. Schaue dir [hier alle Flaggen der Welt](https://www.welt-flaggen.de/) sehen. Höre dir [hier die Nationalhymnen](https://www.hymne-national.com/de/) an.'
+  utter_tournament_mode:
+  - text: Das WM-Turnier im Winter 2022 nennt man auch Endrunde. Dort spielen die besten 32 Nationalmannschaften der Welt. Die Endrunde besteht aus einer **Gruppenphase** und einer **K.O.-Runde**. Möchtest du mehr darüber wissen?
+  utter_tournament_mode_group_phase:
+  - text: In der **Gruppenphase** der WM spielen 32 Mannschaften. Es gibt 8 Gruppen mit jeweils 4 Mannschaften. Deutschland spielt mit Japan, Spanien und Costa Rica in *Gruppe E*. In den Gruppen spielen alle Mannschaften einmal gegeneinander. Die beiden besten Mannschaften pro Gruppe kommen in die K.O.-Runde. Mehr dazu?
+  utter_tournament_mode_ko:
+  - text: Nach der Gruppenphase einer Weltmeisterschaft geht es in die KO-Phase des Turniers. Sie wird KO-Phase genannt, da jede Mannschaft ausscheidet, die ein Spiel verliert. Bei Unentschieden geht es in die Verlängerung oder ins Elfmeterschießen, bis ein Gewinner und ein Verlierer feststeht. Mehr zu K.O.-Runden?
+  utter_tournament_mode_ko_rounds:
+  - text: Die K.O.-Runden beginnen mit dem Achtel-Finale. Hier spielen die Sieger aus den Gruppen A bis H gegen die Zweiten aus einer anderen Gruppe. Die Sieger der Achtel-Finale spielen im Viertelfinale gegeneinander und anschließend treffen die vier Sieger dort in den Halbfinal-Spielen aufeinander. Nach dem Halbfinale spielen die beiden Verlierer um Platz 3 und die beiden Sieger im Finale um Platz 1 und 2.
+  utter_tournament_no:
+  - text: In Ordnung. Wenn du noch etwas anderes wissen möchtest, frag mich gerne.
+  utter_something_else: # Attention: Utterance ist called from Custom Actions!
+    - text: Möchtest du noch etwas anderes wissen?
+  utter_chitchat/howAreYou:
+  - text: Mir geht es gut, Danke.
+  utter_chitchat/joke:
+  - text: 'Kommt ein _Pferd_ in eine **Bar**, fragt der Barkeeper: "Was machst du denn für ein langes Gesicht?"'
+  - text: 'Sagt Lisa zu Anna: "Mein Hund kann lügen." Sagt Anna: "Das geht doch nicht." Sagt Lisa: "Doch das geht. **Bello**, wie macht eine Katze?" "_Wau wau_."'
+  - text: 'Fritzchen saß in der Schule. Da kam der Lehrer und nahm Fritzchen den Apfel weg. Er sagte: "Wenn du den Apfel haben willst, dann sage mir 3 Obstsorten." Da sagte Fritzchen: "Gib mir meinen Apfel, du Pflaume, sonst kriegst du eins auf die Birne."'
+  utter_chitchat/turing:
+  - text: Du willst mich testen? Dafür gibt es den Turing-Test. Der Turing-Test stammt vom britischen Mathematiker Alan Turing. Turing schlug diesen Test vor, um einen Richtwert für Künstliche Intelligenz zu erschaffen. Solange du mich etwas fragst, was ich weiß, könnte ich den Test bestehen. Aber bei anderen Fragen bin ich raus.
+  utter_chitchat/kontakt:
+  - text: 'Meine Entwickler erreichst du am ALFA-Telefon: [0800 53 53 44 55](tel:080053534455), im [Web](https://alfa-telefon.de) oder schreibe ihnen eine [Mail](mailto:info@alfa-telefon.de)'
+  utter_chitchat/nettiquette:
+  - text: Das war keine nette Eingabe oder? Ich rede gerne mit dir, aber bitte sei freundlich 🙃
+  utter_chitchat/themen:
+  - buttons:
+    - payload: Wann beginnt die WM?
+      title: Wann beginnt die WM?
+    - payload: In welcher Gruppe spielt Deutschland?
+      title: In welcher Gruppe spielt Deutschland?
+    - payload: Was weißt du über Qatar?
+      title: Probleme mit Qatar
+    text: Hier sind Beispiele, was du mich fragen kannst 🙃
+  utter_understand:
+  - text: Hast du das verstanden?
+  utter_exception:
+  - text: Mir ist gerade ein Fehler passiert. Kannst du bitte wiederholen, was du wolltest? Du kannst mich auch nach einem Kontakt fragen.
+actions:
+- action_ask_google
+- action_clear_slots
+- action_submit_survey
+- action_tell_group
+- action_tell_phase
+- action_tell_ranking
+- action_tell_score
+- action_tell_teams
+- action_tell_time
+- action_test_action
+- utter_rule
+- utter_qat
+- utter_wm
+- utter_chitchat
+- utter_ask_other_teams
+- utter_ask_ranking_group
+- utter_ask_team2
+- utter_goodbye
+- utter_greet
+- utter_iamabot
+- utter_offside1
+- utter_offside2
+- utter_offside3
+- utter_offside_dau
+- utter_offside_right
+- utter_offside_wrong
+- utter_pizza_slots
+- utter_submit
+- utter_submit_survey
+- utter_tournament_mode
+- utter_tournament_mode_group_phase
+- utter_tournament_mode_ko
+- utter_tournament_mode_ko_rounds
+- utter_tournament_no
+- utter_understand
+- utter_exception
+- utter_i_know
+- utter_freekick
+- utter_freekick_wall
+- utter_qualify
+- utter_qualified_teams
+- validate_group_form
+- validate_score_form
+- validate_simple_survey_form
+- validate_finals_team_form
+forms:
+  group_form:
+    required_slots:
+    - group
+  finals_team_form:
+    required_slots:
+    - finals_team
+  simple_survey_form:
+    required_slots:
+    - lot_number
+    - helpful
+    - length
+  score_form:
+    required_slots:
+    - team
+    - team2
+  group_ranking_form:
+    required_slots:
+    - group
+  simple_pizza_form:
+    required_slots:
+    - pizza_size
+    - pizza_type
