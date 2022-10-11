@@ -19,7 +19,7 @@ applicationSettings:
   initialModel: "https://github.com/sjproost/rasa-testbot/raw/main/models/latest.tar.gz?raw=true"
 
   # -- Train a model if an initial model is not defined. This parameter is ignored if the `applicationSettings.initialModel` is defined
-  trainInitialModel: false
+  trainInitialModel: true
 
   # -- Port on which Rasa runs
   port: 5005
@@ -215,13 +215,13 @@ extraEnv: []
 ## Define the rasa image to work with
 image:
   # -- Rasa Open Source image name to use (relative to `registry`)
-  name: rasa-ger-demo
+  name: alfa-wmbot
 
   # -- Rasa Open Source image tag to use
-  tag: "0.1.0"
+  tag: "0.0.1"
 
   # -- Override default registry + image.name for Rasa Open Source
-  repository: "sjproost/rasa-ger-demo"
+  repository: "sjproost/alfa-wmbot"
 
   # -- Rasa Open Source image pullPolicy
   pullPolicy: IfNotPresent
@@ -632,11 +632,11 @@ nginx:
 ## See: https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server
 rasa-action-server:
   # -- Install Rasa Action Server
-  install: true
+  install: false
 
   external:
     # -- Determine if external URL is used
-    enabled: false
+    enabled: true
     # -- External URL to Rasa Action Server
     url: "https://alfaca.se-labor.de/"
 

@@ -25,7 +25,7 @@
 #         dispatcher.utter_message(text="Hello World!")
 #
 #         return []
-
+from __future__ import annotations
 from typing import Any, Text, Dict, List
 
 import arrow
@@ -39,7 +39,6 @@ from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
-from typing import List
 from bs4 import BeautifulSoup
 
 # Helper vars and classes
@@ -162,8 +161,8 @@ def get_poll_station(city: str, stationnumber: int) -> Pollingstation:
     response = None
 
     # open csv-file
-    url_ms = 'https://alfacms.se-labor.de/wp-content/uploads/2022/03/wahllokaleMS.csv'
-    url_k = 'https://alfacms.se-labor.de/wp-content/uploads/2022/04/wahllokale_k.csv'
+    url_ms = 'https://www.alfa-bot.de/wp-content/uploads/2022/03/wahllokaleMS.csv'
+    url_k = 'https://www.alfa-bot.de/wp-content/uploads/2022/04/wahllokale_k.csv'
 
     if city in cologne:
         response = requests.get(url_k)
@@ -689,7 +688,7 @@ class ActionTellTeams(Action):
         wm_final_group = str(tracker.get_slot("group")) or None
         msg = 'Tut mir Leid, ich habe leider keine Antwort auf deine Frage'
 
-        create_csv_from_url('https://alfacms.se-labor.de/wp-content/uploads/2022/08/gruppenWM2022.csv')
+        create_csv_from_url('https://www.alfa-bot.de/wp-content/uploads/2022/09/gruppenWM2022.csv')
 
         try:
             df = pd.read_csv('tempfile.csv', sep=';', header=0)
@@ -717,7 +716,7 @@ class ActionTellGroup(Action):
         msg = "Tut mir Leid, ich konnte gerade leider nicht nach deiner Mannschaft suchen. Versuche es später noch mal."
         res = "None"
         try:
-            create_csv_from_url('https://alfacms.se-labor.de/wp-content/uploads/2022/05/gruppenWM2022.csv')
+            create_csv_from_url('https://www.alfa-bot.de/wp-content/uploads/2022/09/gruppenWM2022.csv')
 
             df = pd.read_csv('tempfile.csv', sep=';', header=0)
             res = get_group(team, df)

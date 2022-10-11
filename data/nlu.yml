@@ -206,7 +206,7 @@ nlu:
     - Wann findet das [Spiel um Platz 3](phase) statt?
     - An welchem Datum ist das [Halbfinale](phase)?
     - Wann ist das [Halbfinale](phase)?
-- intent: tournament_mode # TODO: ALF-116
+- intent: tournament_mode
   examples: |
     - Wie funktioniert die WM?
     - Wie ist der Ablauf der WM?

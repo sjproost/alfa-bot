@@ -12,7 +12,6 @@ stories:
   - intent: affirm
   - action: utter_tournament_mode_ko_rounds
   - action: action_restart
-  - action: action_listen
 
 - story: wm_tournament_mode_unhappy_path_step1
   steps:

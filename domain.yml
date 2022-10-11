@@ -3,39 +3,82 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
-# Selectors
-- rule:
-    is_retrieval_intent: true
-- qat:
-    is_retrieval_intent: true
-- wm:
-    is_retrieval_intent: true
+- abort
+- affirm
+- bot_challenge
+- buy_pizza
 - chitchat:
     is_retrieval_intent: true
-- nlu_fallback
-- out_of_scope
-- greet
-- goodbye
-- affirm
+    used_entities:
+    - finals_team
+    - group
+    - lot_number
+    - phase
+    - pizza_size
+    - pizza_type
+    - place
+    - rating
+    - team
+    - team2
 - deny
-- bot_challenge
-- inquire_time
-- offside1
-- wm_finals_group
-- wm_finals_team
-- match_score
-- group_ranking
-- time_phase
-- tournament_mode
 - freekick
 - freekick_wall
-- start_survey
-- qualify
-- abort
-- lot_number
-- rate
-- buy_pizza
+- goodbye
+- greet
+- group_ranking
 - inform
+- inquire_time
+- lot_number
+- match_score
+- nlu_fallback
+- offside1
+- out_of_scope
+- qat:
+    is_retrieval_intent: true
+    used_entities:
+    - finals_team
+    - group
+    - lot_number
+    - phase
+    - pizza_size
+    - pizza_type
+    - place
+    - rating
+    - team
+    - team2
+- qualify
+- rate
+- rule:
+    is_retrieval_intent: true
+    used_entities:
+    - finals_team
+    - group
+    - lot_number
+    - phase
+    - pizza_size
+    - pizza_type
+    - place
+    - rating
+    - team
+    - team2
+- start_survey
+- time_phase
+- tournament_mode
+- wm:
+    is_retrieval_intent: true
+    used_entities:
+    - finals_team
+    - group
+    - lot_number
+    - phase
+    - pizza_size
+    - pizza_type
+    - place
+    - rating
+    - team
+    - team2
+- wm_finals_group
+- wm_finals_team
 entities:
 - group
 - lot_number
@@ -66,8 +109,8 @@ slots:
     mappings:
     - type: from_text
       conditions:
-        - active_loop: finals_team_form
-          requested_slot: finals_team
+      - active_loop: finals_team_form
+        requested_slot: finals_team
   team:
     type: text
     influence_conversation: true
@@ -130,7 +173,7 @@ slots:
     - schlecht
     - grottig
 responses:
-  utter_default: # Answer for NLU fallback and out_of_scope
+  utter_default:
   - text: 'Meine Entwickler erreichst du am ALFA-Telefon: [0800 53 53 44 55](tel:080053534455). Du findest sie auch im [Internet](https://alfa-telefon.de) oder kannst ihnen eine [Mail](mailto:r.haeder@alphabetisierung.de) schreiben.'
   utter_greet:
   - text: Willkommen zum Chat. Frage mich gerne, was du über die Fußball-Weltmeisterschaft 2022 wissen möchtest ⚽. Tippe auf den Lautsprecher, dann lese ich dir die Nachricht vor.
@@ -221,8 +264,7 @@ responses:
   - buttons:
     - payload: /katar_critics
     - title: Kritik an der WM
-    text: '**Menschenrechte** sind Regeln die für alle Menschen auf der Welt gelten sollen. 
-    Beispielsweise verbieten die Menschenrechte Sklaverei und Folter. Die Regierung von Katar hält sich nur wenig an diese Menschenrechte. Zum Beispiel unterdrücken Sie Frauen, verhaften Homosexuelle und foltern Kritiker. Daher finden viele Menschen es nicht ok, wenn so ein Land eine Fußball-WM ausrichten darf.'
+    text: '**Menschenrechte** sind Regeln die für alle Menschen auf der Welt gelten sollen. Beispielsweise verbieten die Menschenrechte Sklaverei und Folter. Die Regierung von Katar hält sich nur wenig an diese Menschenrechte. Zum Beispiel unterdrücken Sie Frauen, verhaften Homosexuelle und foltern Kritiker. Daher finden viele Menschen es nicht ok, wenn so ein Land eine Fußball-WM ausrichten darf.'
   utter_qat/costs:
   - buttons:
     - payload: /katar_critics
@@ -241,7 +283,7 @@ responses:
       title: Aussage gegen die WM
     - payload: /katar_critics
       title: Kritik an der WM
-    text: 'Manche Menschen meinen, man sollte die WM in Katar boykottieren. Das heißt, die Spiele nicht gucken oder die Mannschaften sollten gar nicht erst spielen. Andere sehen in dem Turnier auch Chancen. Interessieren dich Aussagen dafür oder dagegen? Hier findest du einen [Filmbeitrag über Fußball und Katar](https://www.sportschau.de/newsticker/dpa-katar-wm-spaltet-fussball-nation-fast-die-haelfte-fuer-boykott-100.html)'
+    text: Manche Menschen meinen, man sollte die WM in Katar boykottieren. Das heißt, die Spiele nicht gucken oder die Mannschaften sollten gar nicht erst spielen. Andere sehen in dem Turnier auch Chancen. Interessieren dich Aussagen dafür oder dagegen? Hier findest du einen [Filmbeitrag über Fußball und Katar](https://www.sportschau.de/newsticker/dpa-katar-wm-spaltet-fussball-nation-fast-die-haelfte-fuer-boykott-100.html)
   utter_wm/games_tv:
   - text: Du kannst die Spiele im Fernsehen oder im Internet gucken. Die Sender ARD und ZDF übertragen alle Spiele der deutschen Nationalmannschaft. Auf MagentaTV von der Telekom kannst du alle Spiele gucken. MagentaTV ist aber ein kostenpflichtiges Angebot.
   utter_qat/boycott_pro:
@@ -250,7 +292,7 @@ responses:
       title: Aussagen für die WM?
     - payload: /katar_critics
       title: Kritik an der WM
-    text: '„*Die FIFA hat die Augen vor vorhersehbaren Menschenrechtsverletzungen verschlossen und diese nicht gestoppt. Sie hat unbestreitbar zu weit verbreiteten Menschenrechtsverstößen gegen Arbeitsmigrant*innen beigetragen.*“ Katja Müller-Fahlbusch - Expertin für die Region Naher Osten und Nordafrika bei Amnesty International in Deutschland.'
+    text: „*Die FIFA hat die Augen vor vorhersehbaren Menschenrechtsverletzungen verschlossen und diese nicht gestoppt. Sie hat unbestreitbar zu weit verbreiteten Menschenrechtsverstößen gegen Arbeitsmigrant*innen beigetragen.*“ Katja Müller-Fahlbusch - Expertin für die Region Naher Osten und Nordafrika bei Amnesty International in Deutschland.
     image: https://www.alfa-bot.de/wp-content/uploads/2022/09/Katja-Mueller-Fahlbusch.jpeg
   utter_qat/boycott_contra:
   - buttons:
@@ -261,7 +303,7 @@ responses:
     text: '"*Wir haben uns mit vielen Nichtregierungsorganisationen getroffen, mit dem katarischen Fußballverband, aber auch mit Migrantinnen und Migranten. Eine Hauptaussage von denen war: Es ist hervorragend, dass es keinen Boykott gibt. Durch den Fokus auf das Land ist bei der Verbesserung der Arbeitsbedingungen sehr viel erreicht worden*", berichtete die DFB-Generalsekretärin Heike Ullrich von ihren Gesprächen *(Foto: ©Agentur 54 Grad/Felix König)*.'
     image: https://www.alfa-bot.de/wp-content/uploads/2022/09/Heike_Ullrich.jpeg
   utter_wm/wm_time:
-  - text: Die WM beginnt am 21. November und endet am 18. Dezember. Sie dauert also 28 Tage.
+  - text: Die WM beginnt am 20. November und endet am 18. Dezember. Sie dauert also 29 Tage.
   utter_qat/winter_wm:
   - text: Die WM findet im Winter statt, weil es im Sommer in Katar bis zu 50 Grad heiß wird. Das ist zu heiß, um Profi-Fußball zu spielen.
   utter_rule/duration:
@@ -285,8 +327,7 @@ responses:
       title: Spieler wechseln
     - payload: Torwart wechseln
       title: Torwart wechseln
-    text: |-
-      Jeder Trainer darf für seine Mannschaft bis zu 26 Spieler für die WM benennen. Es müssen mindestens 23 Spieler sein. Zu Beginn eines Spiels stehen 22 Spieler auf dem Platz. Jede Mannschaft hat einen Torwart und 10 Feldspieler. Die Spieler auf dem Feld setzen sich aus Abwehrspielern, Mittelfeldspielern und Stürmern zusammen.
+    text: Jeder Trainer darf für seine Mannschaft bis zu 26 Spieler für die WM benennen. Es müssen mindestens 23 Spieler sein. Zu Beginn eines Spiels stehen 22 Spieler auf dem Platz. Jede Mannschaft hat einen Torwart und 10 Feldspieler. Die Spieler auf dem Feld setzen sich aus Abwehrspielern, Mittelfeldspielern und Stürmern zusammen.
   utter_rule/exchangePlayer:
   - buttons:
     - payload: Spieler wechseln
@@ -300,8 +341,7 @@ responses:
       title: Reservespieler
     - payload: Torwart wechseln
       title: Torwart wechseln
-    text: |-
-      Trainer können Spieler auf dem Feld gegen Reservespieler austauschen. Zum Beispiel, wenn ein Spieler verletzt oder müde ist. Dafür muss man dem Schiedsrichter Bescheid sagen. Normalerweise sind 3 Wechsel pro Spiel erlaubt. Seit der Corona-Pandemie erlaubt die Fifa aber 5 Wechsel pro Spiel.
+    text: Trainer können Spieler auf dem Feld gegen Reservespieler austauschen. Zum Beispiel, wenn ein Spieler verletzt oder müde ist. Dafür muss man dem Schiedsrichter Bescheid sagen. Normalerweise sind 3 Wechsel pro Spiel erlaubt. Seit der Corona-Pandemie erlaubt die Fifa aber 5 Wechsel pro Spiel.
   utter_rule/keeperChange:
   - buttons:
     - payload: Reservespieler
@@ -372,9 +412,9 @@ responses:
       title: Schiedsrichter
     - payload: Linienrichter
       title: Linienrichter
-    text: 'Seit 2017 haben **Schiedsrichter** einen weiteren Assistenten - den Video-Assistenten. Dieser schaut das Spiel über Monitore aus verschiedenen Kamera-Einstellungen. In ganz wichtigen Situationen kann der **Schiedsrichter** sich das Video von seinem Video-Assistenten ansehen. So gibt es weniger Fehlentscheidungen bei **Toren**, **Strafstößen** oder **roten Karten**. Eine sehr übersichtliche Darstellung findest du [hier](https://quality.fifa.com/de/media-tiles/video-assistant-referee-var/)'
+    text: Seit 2017 haben **Schiedsrichter** einen weiteren Assistenten - den Video-Assistenten. Dieser schaut das Spiel über Monitore aus verschiedenen Kamera-Einstellungen. In ganz wichtigen Situationen kann der **Schiedsrichter** sich das Video von seinem Video-Assistenten ansehen. So gibt es weniger Fehlentscheidungen bei **Toren**, **Strafstößen** oder **roten Karten**. Eine sehr übersichtliche Darstellung findest du [hier](https://quality.fifa.com/de/media-tiles/video-assistant-referee-var/)
   utter_rule/cornerkick:
-    - text: 'Es gibt einen Eckstoß, wenn ein verteidigender Spieler den Ball über die eigene Torauslinie befördert. Der Ball muss dabei mit dem gesamten Umfang über der Linie sein. Bei einem Eckball darf ein Spieler von der Eckfahne aus den Ball ohne Behinderung spielen. Meistens wird der Ball als Flanke direkt in den Strafraum geschlagen.'
+  - text: Es gibt einen Eckstoß, wenn ein verteidigender Spieler den Ball über die eigene Torauslinie befördert. Der Ball muss dabei mit dem gesamten Umfang über der Linie sein. Bei einem Eckball darf ein Spieler von der Eckfahne aus den Ball ohne Behinderung spielen. Meistens wird der Ball als Flanke direkt in den Strafraum geschlagen.
   utter_rule/foul:
   - buttons:
     - payload: Welche Strafen gibt es?
@@ -388,29 +428,29 @@ responses:
       title: Freistoß
     text: 'Der Schiedsrichter bestraft Spieler, die ein Foul begehen. Dafür hat der mehrere Möglichkeiten: * Ermahnen * mit einer *gelben Karte* verwarnen * mit einer *roten Karte* vom Platz schicken. Bekommt ein Spieler in einem Spiel zwei gelbe Karten, ist das wie eine rote Karte. Nach einem Foul gibt es meistens einen Freistoß.'
   utter_rule/throw_in:
-    - text: Wenn ein Spieler den Ball über die Seitenlinie des Spielfelds befördert, bekommt die gegnerische Mannschaft einen Einwurf zugesprochen. Bei einem Einwurf muss der Ball mit beiden Händen gehalten und von hinten über den Kopf geworfen werden. Der Spieler, der den Einwurf macht, muss mit beiden Beinen auf dem Boden und außerhalb des Spielfelds stehen.
+  - text: Wenn ein Spieler den Ball über die Seitenlinie des Spielfelds befördert, bekommt die gegnerische Mannschaft einen Einwurf zugesprochen. Bei einem Einwurf muss der Ball mit beiden Händen gehalten und von hinten über den Kopf geworfen werden. Der Spieler, der den Einwurf macht, muss mit beiden Beinen auf dem Boden und außerhalb des Spielfelds stehen.
   utter_rule/penalty_kick:
-    - text: Bei einem Regelverstoß im Strafraum bekommt die gegnerische Mannschaft einen Strafstoß. Der Strafstoß wird auch *Elfmeter* genennt, weil der Punkt von dem geschossen wir, 11 Meter vom Tor entfernt ist. Dieser Schuss darf ohne Behinderung direkt auf das Tor ausgeführt werden.
+  - text: Bei einem Regelverstoß im Strafraum bekommt die gegnerische Mannschaft einen Strafstoß. Der Strafstoß wird auch *Elfmeter* genennt, weil der Punkt von dem geschossen wir, 11 Meter vom Tor entfernt ist. Dieser Schuss darf ohne Behinderung direkt auf das Tor ausgeführt werden.
   utter_i_know:
-    - text: Ok, dann weißt du ja schon gut Bescheid. Was möchstest du noch wissen?
+  - text: Ok, dann weißt du ja schon gut Bescheid. Was möchstest du noch wissen?
   utter_freekick:
   - buttons:
-      - payload: Ja
-        title: Ja
-      - payload: Nein
-        title: Nein
+    - payload: Ja
+      title: Ja
+    - payload: Nein
+      title: Nein
     text: Bei einem Regelverstoß bekommt die gegnerische Mannschaft einen Freistoß. Dieser darf ohne Behinderung des Gegners gespielt werden. In den meisten Fällen gibt der Schiedsrichter den Ball durch einen Pfiff frei. Hast du schon mal etwas von einer *Mauer* im Fußball gehört?
   utter_freekick_wall:
   - text: Bei einem Freistoß in der Nähe des gegnerischen Tores, stellt der Torwart der verteidigenden Mannschaft eine Mauer aus Spielern, um dem Schützen den Schuss zu erschweren.
   utter_qualify:
   - buttons:
-      - payload: Ja
-        title: Ja, bitte
-      - payload: Nein
-        title: Nein, ich weiß Bescheid
+    - payload: Ja
+      title: Ja, bitte
+    - payload: Nein
+      title: Nein, ich weiß Bescheid
     text: 202 Mannschaften aus der ganzen Welt wollten in Katar mitspielen. Da aber nur 32 Mannschaften in Katar spielen können, mussten sie sich qualifizieren. Willst du wissen, welche Mannschaften in Katar dabei sind?
   utter_qualified_teams:
-  - text: 'Deutschland, Dänemark, Frankreich, Belgien, Kroatien, Spanien, Serbien, Schweiz, England, Niederlande, Portugal, Polen, Wales, Ghana, Senegal, Tunesien, Marokko, Kamerun, Katar (weil es Gastgeber ist), Australien, Iran, Südkorea, Japan, Saudi-Arabien, Brasilien, Argentinien, Ecuador, Uruguay, Kanada, Mexiko, USA, Costa Rica. Jedes Land hat eine eigene Flagge und Nationalhymne. Schaue dir [hier alle Flaggen der Welt](https://www.welt-flaggen.de/) sehen. Höre dir [hier die Nationalhymnen](https://www.hymne-national.com/de/) an.'
+  - text: Deutschland, Dänemark, Frankreich, Belgien, Kroatien, Spanien, Serbien, Schweiz, England, Niederlande, Portugal, Polen, Wales, Ghana, Senegal, Tunesien, Marokko, Kamerun, Katar (weil es Gastgeber ist), Australien, Iran, Südkorea, Japan, Saudi-Arabien, Brasilien, Argentinien, Ecuador, Uruguay, Kanada, Mexiko, USA, Costa Rica. Jedes Land hat eine eigene Flagge und Nationalhymne. Schaue dir [hier alle Flaggen der Welt](https://www.welt-flaggen.de/) sehen. Höre dir [hier die Nationalhymnen](https://www.hymne-national.com/de/) an.
   utter_tournament_mode:
   - text: Das WM-Turnier im Winter 2022 nennt man auch Endrunde. Dort spielen die besten 32 Nationalmannschaften der Welt. Die Endrunde besteht aus einer **Gruppenphase** und einer **K.O.-Runde**. Möchtest du mehr darüber wissen?
   utter_tournament_mode_group_phase:
@@ -421,8 +461,8 @@ responses:
   - text: Die K.O.-Runden beginnen mit dem Achtel-Finale. Hier spielen die Sieger aus den Gruppen A bis H gegen die Zweiten aus einer anderen Gruppe. Die Sieger der Achtel-Finale spielen im Viertelfinale gegeneinander und anschließend treffen die vier Sieger dort in den Halbfinal-Spielen aufeinander. Nach dem Halbfinale spielen die beiden Verlierer um Platz 3 und die beiden Sieger im Finale um Platz 1 und 2.
   utter_tournament_no:
   - text: In Ordnung. Wenn du noch etwas anderes wissen möchtest, frag mich gerne.
-  utter_something_else: # Attention: Utterance ist called from Custom Actions!
-    - text: Möchtest du noch etwas anderes wissen?
+  utter_something_else:
+  - text: Möchtest du noch etwas anderes wissen?
   utter_chitchat/howAreYou:
   - text: Mir geht es gut, Danke.
   utter_chitchat/joke:
@@ -459,15 +499,16 @@ actions:
 - action_tell_teams
 - action_tell_time
 - action_test_action
-- utter_rule
-- utter_qat
-- utter_wm
-- utter_chitchat
 - utter_ask_other_teams
 - utter_ask_ranking_group
 - utter_ask_team2
+- utter_chitchat
+- utter_exception
+- utter_freekick
+- utter_freekick_wall
 - utter_goodbye
 - utter_greet
+- utter_i_know
 - utter_iamabot
 - utter_offside1
 - utter_offside2
@@ -476,6 +517,10 @@ actions:
 - utter_offside_right
 - utter_offside_wrong
 - utter_pizza_slots
+- utter_qat
+- utter_qualified_teams
+- utter_qualify
+- utter_rule
 - utter_submit
 - utter_submit_survey
 - utter_tournament_mode
@@ -484,16 +529,11 @@ actions:
 - utter_tournament_mode_ko_rounds
 - utter_tournament_no
 - utter_understand
-- utter_exception
-- utter_i_know
-- utter_freekick
-- utter_freekick_wall
-- utter_qualify
-- utter_qualified_teams
+- utter_wm
+- validate_finals_team_form
 - validate_group_form
 - validate_score_form
 - validate_simple_survey_form
-- validate_finals_team_form
 forms:
   group_form:
     required_slots:

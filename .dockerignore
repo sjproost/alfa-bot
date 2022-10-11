@@ -1,6 +1,6 @@
 tests/*
 models/*
-actions/*
+results/*
 **/*.md
 venv
 .idea

@@ -1,91 +1,224 @@
 #### This file contains tests to evaluate that your bot behaves as expected.
 #### If you want to learn more, please see the docs: https://rasa.com/docs/rasa/testing-your-assistant
 
+#### IMPORTANT!! Test-Stories do NOT execute Custom Actions! #####
+
+# Example
+#- story: happy path 1
+#  steps:
+#  - user: |
+#      hello there!
+#    intent: greet
+#  - action: utter_greet
+#  - user: |
+#      amazing
+#    intent: mood_great
+#  - action: utter_happy
+
 stories:
-- story: happy path 1
-  steps:
-  - user: |
-      hello there!
-    intent: greet
-  - action: utter_greet
-  - user: |
-      amazing
-    intent: mood_great
-  - action: utter_happy
 
-- story: happy path 2
+- story: wm_tournament_mode_happy_path
   steps:
   - user: |
-      hello there!
-    intent: greet
-  - action: utter_greet
+      Wie ist der Ablauf der WM?
+    intent: tournament_mode
+  - action: utter_tournament_mode
   - user: |
-      amazing
-    intent: mood_great
-  - action: utter_happy
-  - user: |
-      bye-bye!
-    intent: goodbye
-  - action: utter_goodbye
-
-- story: sad path 1
-  steps:
-  - user: |
-      hello
-    intent: greet
-  - action: utter_greet
-  - user: |
-      not good
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - user: |
-      yes
+      Ja
     intent: affirm
-  - action: utter_happy
+  - action: utter_tournament_mode_group_phase
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_tournament_mode_ko
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_tournament_mode_ko_rounds
+  - action: action_restart
+  - action: action_listen
 
-- story: sad path 2
+- story: wm_tournament_mode_unhappy_path_step1
   steps:
   - user: |
-      hello
-    intent: greet
-  - action: utter_greet
+      Wie ist der Ablauf der WM?
+    intent: tournament_mode
+  - action: utter_tournament_mode
   - user: |
-      not good
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - user: |
-      not really
+      Nein
     intent: deny
-  - action: utter_goodbye
+  - action: utter_tournament_no
+  - action: action_restart
+  - action: action_listen
 
-- story: sad path 3
+- story:  wm_tournament_mode_unhappy_path_step2
   steps:
   - user: |
-      hi
-    intent: greet
-  - action: utter_greet
+      Ablauf der WM?
+    intent: tournament_mode
+  - action: utter_tournament_mode
   - user: |
-      very terrible
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
+      Ja
+    intent: affirm
+  - action: utter_tournament_mode_group_phase
   - user: |
-      no
+      Nein
     intent: deny
-  - action: utter_goodbye
+  - action: utter_tournament_no
+  - action: action_restart
+  - action: action_listen
 
-- story: say goodbye
+- story: wm_tournament_mode_happy_path_step3
   steps:
   - user: |
-      bye-bye!
-    intent: goodbye
-  - action: utter_goodbye
+      Wie ist der Ablauf der WM?
+    intent: tournament_mode
+  - action: utter_tournament_mode
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_tournament_mode_group_phase
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_tournament_mode_ko
+  - user: |
+      Nein
+    intent: deny
+  - action: utter_tournament_no
+  - action: action_restart
+  - action: action_listen
 
-- story: bot challenge
+- story: offside_happy_right
   steps:
   - user: |
-      are you a bot?
-    intent: bot_challenge
-  - action: utter_iamabot
+      Was ist Abseits?
+    intent: offside1
+  - action: utter_offside1
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_offside2
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_offside3
+  - user: |
+      Nein
+    intent: deny
+  - action: utter_offside_right
+  - action: action_restart
+
+- story: offside_happy_wrong
+  steps:
+  - user: |
+      Was ist Abseits?
+    intent: offside1
+  - action: utter_offside1
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_offside2
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_offside3
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_offside_wrong
+  - action: utter_offside3
+  - user: |
+      Nein
+    intent: deny
+  - action: utter_offside_right
+  - action: action_restart
+
+- story: offside_happy_wrong_dau
+  steps:
+  - user: |
+      Was ist Abseits?
+    intent: offside1
+  - action: utter_offside1
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_offside2
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_offside3
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_offside_wrong
+  - action: utter_offside3
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_offside_dau
+  - action: action_restart
+
+- story: wall
+  steps:
+  - user: |
+      Was ist eine Mauer beim Fußball?
+    intent: freekick_wall
+  - action: utter_freekick_wall
+  - action: action_restart
+
+- story: freekick_and_wall
+  steps:
+  - user: |
+      Was ist Freistoß?
+    intent: freekick
+  - action: utter_freekick
+  - user: |
+      Nein
+    intent: deny
+  - action: utter_freekick_wall
+  - action: action_restart
+
+- story: freekick_i_know
+  steps:
+  - user: |
+      Was ist Freistoß?
+    intent: freekick
+  - action: utter_freekick
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_i_know
+  - action: action_restart
+
+- story: teams in contest
+  steps:
+  - user: |
+      Teilnehmer der WM?
+    intent: qualify
+  - action: utter_qualify
+  - user: |
+      Ja
+    intent: affirm
+  - action: utter_qualified_teams
+  - action: action_restart
+
+- story: teams in contest I know
+  steps:
+    - user: |
+        Teilnehmer der WM?
+      intent: qualify
+    - action: utter_qualify
+    - user: |
+        - Nein
+      intent: deny
+    - action: utter_tournament_no
+    - action: action_restart
+
+- story: Greet everyone
+  steps:
+    - user: |
+        Hallo
+      intent: greet
+  - action: utter_greet
+  - action: utter_chitchat/themen
