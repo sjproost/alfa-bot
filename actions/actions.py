@@ -25,20 +25,23 @@
 #         dispatcher.utter_message(text="Hello World!")
 #
 #         return []
-from __future__ import annotations
+
 from typing import Any, Text, Dict, List
 
 import arrow
 import pandas as pd
 import requests
+import requests_cache
 import os
 import json
+import sys
 import datetime
 import urllib.parse
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
+from typing import List
 from bs4 import BeautifulSoup
 
 # Helper vars and classes
@@ -153,6 +156,11 @@ class TournamentTable:
 # Util functions
 # ----------------------------------
 
+# Error-Printing
+def err_print(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+
 # Helper function to generate a polling station object from given city and station number.
 # Currently working only for Münster or Cologne
 def get_poll_station(city: str, stationnumber: int) -> Pollingstation:
@@ -264,29 +272,33 @@ def get_teams(group: str, df: pd.DataFrame):
 
 # Webscraper for game results from Kicker.de for Women EM 2022, returns a list with Game-objects
 def get_games(gameday: str) -> list:
-    base_url = 'https://www.kicker.de/frauen-europameisterschaft/spieltag/2022/'
+    base_url = 'https://www.kicker.de/weltmeisterschaft/spieltag/2022/'
     day = gameday
     url = base_url + day
     WINNER = 0
     LOOSER = 1
     game_results = []
-
-    # 1. Get website
-    website = requests.get(url)
-    # 2. Parse website with beautifulSoup html-parser
-    results = BeautifulSoup(website.content, 'html.parser')
-    # 3. Find all divs containing game entries
-    matches = results.find_all('div', class_='kick__v100-gameList__gameRow')
-    # 4. Iterate through entries to fetch competing teams and score. Kicker uses Winner Score : Score Looser - order
-    for match in matches:
-        players = match.find_all('div', class_='kick__v100-gameCell__team__name')
-        scores = match.find_all('div', class_='kick__v100-scoreBoard__scoreHolder__score')
-        # Create a new Game-object with results
-        game_results.append(
-            Game(players[WINNER].text.strip(), players[LOOSER].text.strip(),
-                 scores[WINNER].text.strip(), scores[LOOSER].text.strip(), day))
-    # 5. Return results as list
-    return game_results
+    session = requests_cache.CachedSession('games_cache', backend='sqlite', expire_after=3600)
+    try:
+        # 1. Get website
+        website = session.get(url)
+        # 2. Parse website with beautifulSoup html-parser
+        results = BeautifulSoup(website.content, 'html.parser')
+        # 3. Find all divs containing game entries
+        matches = results.find_all('div', class_='kick__v100-gameList__gameRow')
+        # 4. Iterate through entries to fetch competing teams and score. Kicker uses Winner Score : Score Looser - order
+        for match in matches:
+            players = match.find_all('div', class_='kick__v100-gameCell__team__name')
+            scores = match.find_all('div', class_='kick__v100-scoreBoard__scoreHolder__score')
+            # Create a new Game-object with results
+            game_results.append(
+                Game(players[WINNER].text.strip(), players[LOOSER].text.strip(),
+                     scores[WINNER].text.strip(), scores[LOOSER].text.strip(), day))
+    except Exception as e:
+        err_print("Failure, retrieving game results: " + str(e))
+    finally:
+        # 5. Return results as list
+        return game_results
 
 
 # Looks up a match in all match data and return a string with match and score
@@ -296,8 +308,8 @@ def find_match(needle_1: str, needle_2: str, matches: List[Game]) -> str:
         return fail
     for game in matches:
         if needle_1.lower() in game.get_teams() and needle_2.lower() in game.get_teams():
-            result_string = ("{} {} : {} {}".format(game.winner, game.goals_winner,
-                                                    game.goals_looser, game.looser))
+            result_string = ("Hier ist das Ergebnis: {} {} - {} {}".format(game.winner, game.goals_winner,
+                                                                           game.goals_looser, game.looser))
             return result_string
     fail = ("Diese Mannschaften haben noch nicht gegeneinander gespielt")
     return fail
@@ -306,32 +318,35 @@ def find_match(needle_1: str, needle_2: str, matches: List[Game]) -> str:
 # Lookup current playday or return playday maximum
 def playday_lookup() -> str:
     playdays_dict = {
-        "2111": "2",
-        "2211": "2",
-        "2311": "2",
-        "2411": "2",
+        "2011": "1",
+        "2111": "1",
+        "2211": "1",
+        "2311": "1",
+        "2411": "1",
         "2511": "2",
-        "2611": "3",
-        "2711": "3",
-        "2811": "3",
+        "2611": "2",
+        "2711": "2",
+        "2811": "2",
         "2911": "3",
-        "3011": "4",
-        "0112": "4",
-        "0212": "4",
+        "3011": "3",
+        "0112": "3",
+        "0212": "3",
         "0312": "4",
-        "0412": "5",
-        "0512": "5",
-        "0612": "5",
-        "0712": "5",
-        "0912": "6",
-        "1012": "6",
-        "1112": "6",
-        "1312": "7",
-        "1412": "7",
-        "1512": "7",
-        "1712": "8",
+        "0412": "4",
+        "0512": "4",
+        "0612": "4",
+        "0712": "4",
+        "0812": "4",
+        "0912": "5",
+        "1012": "5",
+        "1112": "5",
+        "1212": "5",
+        "1312": "6",
+        "1412": "6",
+        "1512": "6",
+        "1612": "6",
+        "1712": "7",
         "1812": "8",
-        "1912": "9",
         #    "0208": "3", #Demodate!
     }
     PLAYDAY_MAX = "7"
@@ -347,7 +362,7 @@ def playday_lookup() -> str:
 
 # Webscraper to geht tournament ranking tables
 def get_rankings() -> TournamentTable:
-    url = 'https://www.kicker.de/frauen-europameisterschaft/tabelle/2022'
+    url = 'https://www.kicker.de/weltmeisterschaft/tabelle/2022'
 
     FIRST_ELEMENT = 0
     PLACEMENT = 0
@@ -362,56 +377,83 @@ def get_rankings() -> TournamentTable:
     ranking_b = []
     ranking_c = []
     ranking_d = []
+    ranking_e = []
+    ranking_f = []
+    ranking_g = []
+    ranking_h = []
     tournament_data = TournamentTable
+    session = requests_cache.CachedSession('rankings_cache', backend='sqlite', expire_after=3600)
+    try:
+        # 1. Get website
+        website = session.get(url)
+        # 2. Parse website with beautifulSoup html-parser
+        results = BeautifulSoup(website.content, 'html.parser')
+        # 3. Find all divs containing ranking entries
+        tables = results.find_all('table', class_='kick__table '
+                                                  'kick__table--ranking kick__table--alternate kick__table--resptabelle')
+        # 4. Iterate through all table entries to fetch ranking data.
+        for table in tables:
+            table_body = table.find('tbody')
+            rows = table_body.find_all('tr')
+            for row in rows:
+                cols = row.find_all('td')
+                cols = [ele.text.strip() for ele in cols]
+                table_data.append([ele for ele in cols if ele])
+        table_data = list(filter(None, table_data))  # Remove empty sublists
+        for idx, data in enumerate(table_data):  # Extracting data
+            if data[PLACEMENT].strip().isnumeric():
+                placement = data[PLACEMENT].strip()
+            else:
+                data.insert(PLACEMENT, "99")
+                placement = data[PLACEMENT].strip()
+            team = data[TEAM].split("\n")[TEAM].strip()  # Original form repeats team name
+            games_played = data[GAMES_PLAYED].strip()
+            vdd = data[VIC_DRA_DEF].split("\n")[FIRST_ELEMENT].strip()  # Original form would be like 3-1-0\n3
+            goals = data[GOALS].strip()
+            diff = data[DIFFERENCE].strip()
+            points = data[POINTS].strip()
+            # Generate ranking lists for the four contest groups A-D
+            if idx in range(0, 4):
+                ranking = (Ranking('A', placement, team, games_played, vdd, goals, diff, points))
+                ranking_a.append(ranking)
+            elif idx in range(4, 8):
+                ranking = (Ranking('B', placement, team, games_played, vdd, goals, diff, points))
+                ranking_b.append(ranking)
+            elif idx in range(8, 12):
+                ranking = (Ranking('C', placement, team, games_played, vdd, goals, diff, points))
+                ranking_c.append(ranking)
+            elif idx in range(12, 16):
+                ranking = (Ranking('D', placement, team, games_played, vdd, goals, diff, points))
+                ranking_d.append(ranking)
+            elif idx in range(16, 20):
+                ranking = (Ranking('E', placement, team, games_played, vdd, goals, diff, points))
+                ranking_e.append(ranking)
+            elif idx in range(20, 24):
+                ranking = (Ranking('F', placement, team, games_played, vdd, goals, diff, points))
+                ranking_f.append(ranking)
+            elif idx in range(24, 28):
+                ranking = (Ranking('G', placement, team, games_played, vdd, goals, diff, points))
+                ranking_g.append(ranking)
+            elif idx in range(28, 32):
+                ranking = (Ranking('H', placement, team, games_played, vdd, goals, diff, points))
+                ranking_h.append(ranking)
 
-    # 1. Get website
-    website = requests.get(url)
-    # 2. Parse website with beautifulSoup html-parser
-    results = BeautifulSoup(website.content, 'html.parser')
-    # 3. Find all divs containing ranking entries
-    tables = results.find_all('table', class_='kick__table '
-                                              'kick__table--ranking kick__table--alternate kick__table--resptabelle')
-    # 4. Iterate through all table entries to fetch ranking data.
-    for table in tables:
-        table_body = table.find('tbody')
-        rows = table_body.find_all('tr')
-        for row in rows:
-            cols = row.find_all('td')
-            cols = [ele.text.strip() for ele in cols]
-            table_data.append([ele for ele in cols if ele])
-    table_data = list(filter(None, table_data))  # Remove empty sublists
-    for idx, data in enumerate(table_data):  # Extracting data
-        placement = data[PLACEMENT].strip()
-        team = data[TEAM].split("\n")[TEAM].strip()  # Original form repeats team name
-        games_played = data[GAMES_PLAYED].strip()
-        vdd = data[VIC_DRA_DEF].split("\n")[FIRST_ELEMENT].strip()  # Original form would be like 3-1-0\n3
-        goals = data[GOALS].strip()
-        diff = data[DIFFERENCE].strip()
-        points = data[POINTS].strip()
-        # Generate ranking lists for the four contest groups A-D
-        if idx in range(0, 4):
-            ranking = (Ranking('A', placement, team, games_played, vdd, goals, diff, points))
-            ranking_a.append(ranking)
-        elif idx in range(4, 8):
-            ranking = (Ranking('B', placement, team, games_played, vdd, goals, diff, points))
-            ranking_b.append(ranking)
-        elif idx in range(8, 12):
-            ranking = (Ranking('C', placement, team, games_played, vdd, goals, diff, points))
-            ranking_c.append(ranking)
-        elif idx in range(12, 16):
-            ranking = (Ranking('D', placement, team, games_played, vdd, goals, diff, points))
-            ranking_d.append(ranking)
+        # Construct table objects
+        table_a = Table('A', ranking_a)
+        table_b = Table('B', ranking_b)
+        table_c = Table('C', ranking_c)
+        table_d = Table('D', ranking_d)
+        table_e = Table('E', ranking_e)
+        table_f = Table('F', ranking_f)
+        table_g = Table('G', ranking_g)
+        table_h = Table('H', ranking_h)
+        # Construct tournament data-object
+        tournament_data = TournamentTable([table_a, table_b, table_c, table_d, table_e, table_f, table_g, table_h])
+    except Exception as e:
+        err_print("Get Rankings: Failure retrieving tournament tables: " + str(e))
 
-    # Construct table objects
-    table_a = Table('A', ranking_a)
-    table_b = Table('B', ranking_b)
-    table_c = Table('C', ranking_c)
-    table_d = Table('D', ranking_d)
-
-    # Construct tournament data-object
-    tournament_data = TournamentTable([table_a, table_b, table_c, table_d])
-
-    return tournament_data
+    finally:
+        return tournament_data
 
 
 # Validation actions
@@ -457,7 +499,6 @@ class ValidatePollingStation(Action):
 
 # Validation of variable in group slot
 class ValidateGroupForm(FormValidationAction):
-    wm_group2 = None
 
     def name(self) -> Text:
         return "validate_group_form"
@@ -520,37 +561,44 @@ class ValidateRankingForm(FormValidationAction):
         return {"group": wm_group.upper()}
 
 
-# Validation of variable in team slot
-class ValidateTeamForm(FormValidationAction):
+# Validation of variable in finals_team slot
+class ValidateFinalsTeamForm(FormValidationAction):
     teams = ['argentinien', 'australien', 'belgien', 'brasilien', 'dänemark', 'deutschland', 'ecuador', 'england',
              'frankreich', 'ghana', 'iran', 'japan', 'kamerun', 'kanada', 'kroatien', 'marokko', 'mexiko', 'neuseeland',
              'niederlande', 'polen', 'portugal', 'qatar', 'saudi-arabien', 'schweiz', 'senegal', 'serbien', 'spanien',
              'südkorea', 'tunesien', 'uruguay', 'usa', 'wales']
 
     def name(self) -> Text:
-        return "validate_team_form"
+        return "validate_finals_team_form"
 
-    async def run(self, dispatcher: "CollectingDispatcher", tracker: Tracker, domain: "DomainDict") -> List[
-        Dict[Text, Any]]:
-        pass
-
-    def validate_team(
+    def validate_finals_team(
             self,
             slot_value: Any,
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: DomainDict,
     ) -> Dict[Text, Any]:
-        """Validate `wm_final_group` value."""
+        """Validate `wm_finals_team' value."""
 
-        team = str(next(tracker.get_latest_entity_values("team"), None))
-        team_low = team.lower()
+        # Handle case that user wants to abort form
+        intent = tracker.latest_message['intent'].get('name')
+        if intent == 'deny':
+            return {"finals_team": "Abort"}
 
-        if team_low not in ValidateTeamForm.teams:
-            dispatcher.utter_message(
-                text=f"Die Mannschaft {team} gibt es bei dieser WM nicht. Frage mich bitte nach einer anderen Mannschaft. Oder sage 'Ende'")
-            return {"team": None}
-        return {"team": team}
+        # has to extract var this way, because value is extracted from text
+        team = slot_value
+        try:
+            team_low = team.lower()
+        except Exception as e:
+            err_print("validate_finals_team: Failure could not set team to lower(): " + str(e))
+            dispatcher.utter_message(text="Gebe bitte nochmal ein, nach welcher Mannschaft du suchst.")
+            return {"finals_team": None}
+        else:
+            if team_low not in ValidateFinalsTeamForm.teams:
+                dispatcher.utter_message(text=f"Die Mannschaft {team} gibt es bei dieser WM nicht. "
+                                              f"Frage mich bitte nach einer anderen Mannschaft. Oder sage 'Ende'")
+                return {"finals_team": None}
+            return {"finals_team": team}
 
 
 # Validation of entering code for survey
@@ -597,12 +645,13 @@ class ValidateScoreForm(FormValidationAction):
         """Validate `team` value."""
 
         team = (next(tracker.get_latest_entity_values("team"), None))
-        team_low = team.lower()
-        print(f"Validiere {team}")
+        try:
+            team_low = team.lower()
 
-        if team_low in ValidateScoreForm.teams:
-            return {"team": team}
-        else:
+            if team_low in ValidateScoreForm.teams:
+                return {"team": team}
+        except Exception as e:
+            err_print("validate_team: Failure to lower team var: " + str(e))
             dispatcher.utter_message(text=f"Die Mannschaft {team} gibt es bei dieser WM nicht. "
                                           f"Frage mich bitte nach einer anderen Mannschaft.")
             return {"team": None}
@@ -617,12 +666,13 @@ class ValidateScoreForm(FormValidationAction):
         """Validate `team2` value."""
 
         team2 = (next(tracker.get_latest_entity_values("team2"), None))
-        team2_low = team2.lower()
-        print(f"Validiere {team2}")
+        try:
+            team2_low = team2.lower()
 
-        if team2_low in ValidateScoreForm.teams:
-            return {"team2": team2}
-        else:
+            if team2_low in ValidateScoreForm.teams:
+                return {"team2": team2}
+        except Exception as e:
+            err_print("validate_team: Failure to lower team var: " + str(e))
             dispatcher.utter_message(text=f"Die Mannschaft {team2} gibt es bei dieser WM nicht. "
                                           f"Frage mich bitte nach einer anderen Mannschaft.")
             return {"team2": None}
@@ -640,7 +690,7 @@ class ActionTestAction(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        msg = f"Das ist eine Testnachricht von einem selbst gehosteten rasa custom Action server. {str(tracker.sender_id)}"
+        msg = f"Das ist eine Testnachricht von einem rasa 3.0 custom Action server"
         dispatcher.utter_message(text=msg)
         return []
 
@@ -688,9 +738,9 @@ class ActionTellTeams(Action):
         wm_final_group = str(tracker.get_slot("group")) or None
         msg = 'Tut mir Leid, ich habe leider keine Antwort auf deine Frage'
 
-        create_csv_from_url('https://www.alfa-bot.de/wp-content/uploads/2022/09/gruppenWM2022.csv')
-
         try:
+            create_csv_from_url('https://www.alfa-bot.de/wp-content/uploads/2022/09/gruppenWM2022.csv')
+
             df = pd.read_csv('tempfile.csv', sep=';', header=0)
             res = get_teams(wm_final_group, df)
             msg = ('Die Mannschaften in Gruppe ' + wm_final_group.upper() + ' sind: {}'
@@ -711,13 +761,17 @@ class ActionTellGroup(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        team = (next(tracker.get_latest_entity_values("team"), None))
-
+        team = (tracker.get_slot("finals_team"))
         msg = "Tut mir Leid, ich konnte gerade leider nicht nach deiner Mannschaft suchen. Versuche es später noch mal."
         res = "None"
+
+        # Handle case that user wants to skip form
+        if team == "Abort":
+            dispatcher.utter_message(response="utter_something_else")
+            return [SlotSet("finals_team", None), SlotSet("group", str(res))]
+
         try:
             create_csv_from_url('https://www.alfa-bot.de/wp-content/uploads/2022/09/gruppenWM2022.csv')
-
             df = pd.read_csv('tempfile.csv', sep=';', header=0)
             res = get_group(team, df)
 
@@ -726,8 +780,9 @@ class ActionTellGroup(Action):
             remove_csv()
         finally:
             dispatcher.utter_message(text=msg)
+            dispatcher.utter_message(response="utter_ask_other_teams")
 
-        return [SlotSet("team", None), SlotSet("group", str(res))]
+        return [SlotSet("finals_team", None), SlotSet("group", str(res))]
 
 
 # Custom Actions for Surveys
@@ -805,7 +860,7 @@ class ActionAskGoogle(Action):
         return []
 
 
-# Custom action returning a Google Search request
+# Custom action returning a game result
 class ActionTellScore(Action):
 
     def name(self) -> Text:
@@ -824,7 +879,6 @@ class ActionTellScore(Action):
         try:
             msg = "Das Turnier hat noch nicht begonnen. Daher kann ich dir keine Spielergebnisse zeigen."
         #            playday = playday_lookup()
-        #            print(f"Spieltag: {playday}")
         #            for day in range(GAMES_START_DAY,int(playday)):
         #                game_list = game_list + get_games(str(day))
         #            msg = find_match(team, team2, game_list)

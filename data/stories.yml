@@ -125,3 +125,42 @@ stories:
     - intent: deny
     - action: utter_tournament_no
     - action: action_restart
+
+- story: Ghostgame wrong
+  steps:
+  - intent: ghostGame
+  - action: utter_ghostGame
+  - intent: deny
+  - action: utter_ghostGame_wrong
+
+- story: Ghostgame right
+  steps:
+  - intent: ghostGame
+  - action: utter_ghostGame
+  - intent: affirm
+  - action: utter_ghostGame_right
+
+- story: Emergency foul unhappy
+  steps:
+  - intent: emergency_foul
+  - action: utter_emergency_foul
+  - intent: deny
+  - action: utter_tournament_no
+
+- story: Emergency foul happy right
+  steps:
+  - intent: emergency_foul
+  - action: utter_emergency_foul
+  - intent: affirm
+  - action: utter_emergency_foul_followup
+  - intent: affirm
+  - action: utter_emergency_followup_right
+
+- story: Emergency foul happy wrong
+  steps:
+  - intent: emergency_foul
+  - action: utter_emergency_foul
+  - intent: affirm
+  - action: utter_emergency_foul_followup
+  - intent: deny
+  - action: utter_emergency_followup_wrong

@@ -220,5 +220,68 @@ stories:
     - user: |
         Hallo
       intent: greet
-  - action: utter_greet
-  - action: utter_chitchat/themen
+    - action: utter_greet
+    - action: utter_chitchat/themen
+
+- story: Ghostgame wrong
+  steps:
+    - user: |
+        Was ist ein Geisterspiel?
+      intent: ghostGame
+    - action: utter_ghostGame
+    - user: |
+        Nein
+      intent: deny
+    - action: utter_ghostGame_wrong
+
+- story: Ghostgame right
+  steps:
+    - user: |
+        Was ist ein Geisterspiel?
+      intent: ghostGame
+    - action: utter_ghostGame
+    - user: |
+        Ja
+      intent: affirm
+    - action: utter_ghostGame_right
+
+- story: Emergency foul unhappy
+  steps:
+    - user: |
+        Was ist eine Notbremse?
+      intent: emergency_foul
+    - action: utter_emergency_foul
+    - user: |
+        Nein
+      intent: deny
+    - action: utter_tournament_no
+
+- story: Emergency foul happy right
+  steps:
+    - user: |
+        Was ist eine Notbremse?
+      intent: emergency_foul
+    - action: utter_emergency_foul
+    - user: |
+        Ja
+      intent: affirm
+    - action: utter_emergency_foul_followup
+    - user: |
+        Ja
+      intent: affirm
+    - action: utter_emergency_followup_right
+
+- story: Emergency foul happy wrong
+  steps:
+    - user: |
+        Was ist eine Notbremse?
+      intent: emergency_foul
+    - action: utter_emergency_foul
+    - user: |
+        Ja
+      intent: affirm
+    - action: utter_emergency_foul_followup
+    - user: |
+        Nein
+      intent: deny
+    - action: utter_emergency_followup_wrong

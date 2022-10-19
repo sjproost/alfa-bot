@@ -23,6 +23,7 @@ intents:
 - deny
 - freekick
 - freekick_wall
+- ghostGame
 - goodbye
 - greet
 - group_ranking
@@ -319,6 +320,14 @@ responses:
   - text: Die Verlängerung dauert zwei mal 15 Minuten. Sie wird gespielt, wenn es nach der normalen Spielzeit unentschieden steht. Ab dem Achtelfinale muss bei der WM immer eine Mannschaft gewinnen.
   utter_rule/halftimebreak:
   - text: In jedem Spiel gibt es eine Pause für die Spieler. Diese dauert 15 Minuten. Bei einer Verlängerung gibt es noch eine Pause von 5 Minuten.
+  utter_rule/goal:
+    - text: 'Ohne Tor gibt es kein Fußballspiel. Aber auch für das Tor gibt es Normen. Das Tor steht in der Mitte der jeweiligen Torlinie. Es muss dort fest im Boden verankert sein. Ein Fußballtor ist 7,32 Meter breit und 2,44 Meter hoch. Es besteht aus zwei Pfosten, einer Latte und einem Netz. Die beiden Pfosten begrenzen das Tor seitlich. Die Latte begrenzt das Tor in der Höhe. Diese drei Balken sind weiß. Das Netz ist an Pfosten, Latte und Boden befestigt. Mit einem Netz kann man besser erkennen, ob der Schuss ins Tor gegangen ist.'
+      image: 'https://www.alfa-bot.de/wp-content/uploads/2022/10/goal.jpg'
+  utter_rule/diving:
+    - buttons:
+        - payload: Was ist ein Elfmeter
+          title: Elfmeter
+      text: 'Jeder kennt die Schwalbe. Aber im Fußball ist damit nicht der Vogel gemeint. Im Fußball wird so ein Foul genannt, das vorgetäuscht wird. Ein Spieler lässt sich im Angriff mit Absicht fallen. Er täuscht also ein Foul vor. Oft geschieht das im gegnerischen Strafraum. Denn dort gibt es für ein Foul einen Elfmeter. Warum heißt dieser Regelverstoß Schwalbe? Beim Fallen breitet der Spieler oft Arme und Beine aus. Das erinnert an eine Schwalbe.'
   utter_rule/numberPlayer:
   - buttons:
     - payload: Reservespieler
@@ -360,6 +369,18 @@ responses:
   utter_rule/alRihla:
   - text: Die Fußbälle für die WM kommen von der Firma Adidas. Für jedes Turnier entwickelt Adidas einen neuen Ball. Zur WM 2022 heißt der Ball *Al Rihla*. Auf Deutsch heißt das *Die Reise*. Ein Bild habe ich auch für dich.
     image: https://pbs.twimg.com/media/FMxCkI3XoAIV_0a.jpg
+  utter_rule/captain:
+    - buttons:
+        - payload: Warum wird eine Münze geworfen?
+          title: Münzwurf
+      text: 'Im Fußball ist der Kapitän der Anführer einer Mannschaft. Ein Kapitän ist meistens ein erfahrener Spieler. Er wird vom Trainer bestimmt oder von der Mannschaft gewählt. Du erkennst den Kapitän meistens an einer Binde am linken Oberarm. Der Kapitän hat viele Aufgaben. Zum Beispiel nimmt er am Münzwurf teil, gibt Anweisungen des Trainers an die Spieler weiter und motiviert sein Team während des Spiels.'
+  utter_rule/coin:
+    - buttons:
+        - payload: Was ist ein Kapitän?
+          title: Kapitän
+        - payload: Schiedsrichter
+          title: Schiedsrichter
+      text: 'Welche Mannschaft spielt auf welcher Seite? Welche Mannschaft hat Anstoß? Das entscheidet der Münzwurf. Vor dem Beginn des Spieles wählt der Kapitän der Gastmannschaft den Kopf oder die Zahl der Münze. Der Schiedsrichter wirft die Münze. Der Kapitän, der gewonnen hat, entscheidet nun: Anstoß oder Seitenwahl. Den Münzwurf gibt es auch vor einer Verlängerung. Und auch beim Elfmeterschießen. Hier entscheidet der Münzwurf, welches Team beginnt.'
   utter_rule/ballBroken:
   - text: Geht ein Ball während des Spiels kaputt, unterbricht der Schiedsrichter das Spiel. Mit einem Ersatzball geht das Spiel dann an gleicher Stelle weiter.
   utter_rule/passiveOffSide:
@@ -484,6 +505,37 @@ responses:
     - payload: Was weißt du über Qatar?
       title: Probleme mit Qatar
     text: Hier sind Beispiele, was du mich fragen kannst 🙃
+  utter_ghostGame:
+  - buttons:
+    - payload: Nein
+      title: Es kamen keine Zuschauer
+    - payload: Nein
+      title: Zu viel Gewalt von Fans
+    - payload: Ja
+      title: Kontaktbeschränkungen
+    text: Von einem Geisterspiel spricht man, wenn keine Zuschauer ins Stadion dürfen. Das Stadion ist also so leer wie die Straßen zur Geisterstunde. Solche Geisterspiele werden meistens als Strafmaßnahme angeordnet, wenn Fans des Heimvereins bei einem vorherigen Spiel besonders stark gegen Regeln verstoßen haben. Diese Bestrafungen sind für die Heimmannschaften besonders ärgerlich, da sie nichts dafür können und trotzdem auf die Einnahmen durch Tickets sowie Essen und Trinken verzichten müssen. Weißt du, aus welchem Grund 2020 und 2021 viele Spiele Geisterspiele waren?
+  utter_ghostGame_right:
+  - text: Richtig, wegen der Corona-Pandemie durften keine Zuschauer kommen. Das galt übrigens auch für andere Sportarten.
+  utter_ghostGame_wrong:
+  - text: Leider nein. 2020 und 2021 gab es wegen der Corona-Pandemie viele Geisterspiele. Die Fans sollten sich im Stadion nicht anstecken. Das galt natürlich für alle Sportarten.
+  utter_emergency_foul:
+    - buttons:
+        - payload: Nein
+          title: Nein
+        - payload: Ja
+          title: Ja
+      text: 'Die Notbremse zu ziehen, das ist oft die letzte Möglichkeit, eine Situation noch zu retten. Auch im Fußball gibt es eine Notbremse:Ein Spieler der gegnerischen Mannschaft läuft allein auf das Tor zu. Dabei sieht es nach einer klaren Torchance aus. An dieser Stelle spielt der Verteidiger die Notbremse. Er stoppt den Gegner mit einem Foul. Dafür bekommt er die Rote Karte. Seine Mannschaft hat nun einen Spieler weniger. Aber dafür hat der Verteidiger ein mögliches Tor verhindert. Möchtest du an einem Beispiel selbst überlegen, ob es eine Notbremse ist?'
+  utter_emergency_foul_followup:
+    - buttons:
+        - payload: Nein
+          title: Nein
+        - payload: Ja
+          title: Ja
+      text: 'Stell dir vor: Der Angreifer läuft mit dem Ball am Fuß frei auf den Torwart zu und hat einen Verteidiger hinter sich. Der Verteidiger grätscht den Stürmer von hinten um, so dass der dieser keine Chance mehr hat die Situation abzuschließen. Meinst du, das ist eine Notbremse gewesen?'
+  utter_emergency_followup_wrong:
+    - text: 'Doch, das war eine Notbremse. Der Angreifer hatte nur noch den Torwart vor sich. Das war eine sehr gute Möglichkeit, um ein Tor zu schießen. Nur das Foul des Verteidigers hat ihn daran gehindert.'
+  utter_emergency_followup_right:
+    - text: 'Sehr gut, das war eine Notbremse! Der Verteidiger hat eine sehr gute Chance auf ein Tor durch sein Foul verhindert.'
   utter_understand:
   - text: Hast du das verstanden?
   utter_exception:
@@ -506,6 +558,9 @@ actions:
 - utter_exception
 - utter_freekick
 - utter_freekick_wall
+- utter_ghostGame
+- utter_ghostGame_right
+- utter_ghostGame_wrong
 - utter_goodbye
 - utter_greet
 - utter_i_know
@@ -528,6 +583,10 @@ actions:
 - utter_tournament_mode_ko
 - utter_tournament_mode_ko_rounds
 - utter_tournament_no
+- utter_emergency_foul
+- utter_emergency_foul_followup
+- utter_emergency_followup_right
+- utter_emergency_followup_wrong
 - utter_understand
 - utter_wm
 - validate_finals_team_form

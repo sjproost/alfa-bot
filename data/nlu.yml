@@ -1,7 +1,6 @@
 version: "3.1"
 nlu:
-# No Selector - Each intent has to occur in the intent-list in the domain.yml
-- intent: nlu_fallback # refers to default fallback detection in DIET-Classifier
+- intent: nlu_fallback
   examples: |
     - Wie erreiche ich die Feuerwehr?
     - Wer war Rudlof Scharping?
@@ -124,7 +123,6 @@ nlu:
     - Was ist die aktuelle Uhrzeit in Berlin?
     - Wie spät ist es hier?
     - Wie spät ist es in Berlin?
-
 - intent: offside1
   examples: |
     - Was ist Abseits?
@@ -219,7 +217,6 @@ nlu:
     - Turniermodus
     - Modus
     - Ablauf der WM?
-# Selector rule/ football rules
 - intent: rule/duration
   examples: |
     - Wie lange dauert ein Spiel?
@@ -304,6 +301,24 @@ nlu:
     - Wie Schwer ist ein Ball?
     - Größe eines Fußballs
     - Wie sieht ein Fußball aus?
+- intent: rule/goal
+  examples: |
+    - Tor
+    - WIe groß ist ein Tor?
+    - Warum hat ein Tor ein Netz?
+    - Wie hoch ist ein Tor?
+    - Wie breit ist ein Fußballtor?
+    - Breite eines Tors
+    - Wie sieht ein Tor aus?
+- intent: rule/diving
+  examples: |
+    - Schwalbe
+    - Was ist eine Schwalbe?
+    - Warum nennt man es Schwalbe?
+    - vorgetäuschtes Foul
+    - Wie nennt man es, wenn man so tut als wäre es ein Foul gewesen?
+    - Was ist, wenn ein Spieler ein Foul vortäuscht?
+    - Ich habe mal was von einer Schwalbe gehört
 - intent: rule/alRihla
   examples: |
     - Al Rihla
@@ -449,6 +464,25 @@ nlu:
     - Schiedsrichter an der Seite
     - Schiedsrichter am Spielfeldrand
     - Schiedsrichter mit Flagge
+- intent: rule/captain
+  examples: |
+    - Was ist ein Kapitän beim Fußball?
+    - Wer ist ein Kapitän beim Fussball?
+    - Kapitän
+    - Kapitän beim Fußball
+    - Wozu braucht man einen Kapitän?
+    - Was macht der Kapitän beim Fußball?
+- intent: rule/coin
+  examples: |
+    - Warum wird eine Münze geworfen?
+    - Münzwurf
+    - Münzwurf beim Fußball
+    - Warum wirft man eine Münze?
+    - Warum wirft der Schiedsrichter eine Münze?
+    - Münze werfen
+    - Kopf oder Zahl
+    - Was it der Münzwurf
+    - Warum wird eine Münze geworfen?
 - intent: rule/videoAssistant
   examples: |
     - Video-Assistent
@@ -460,7 +494,6 @@ nlu:
     - Fehlentscheidung
     - Videohilfe
     - Gibt es Hilfe per Video?
-# Selector qat/ Qatar issues
 - intent: qat/qatar
   examples: |
     - was ist mit der WM in Katar?
@@ -540,7 +573,6 @@ nlu:
     - Geht es den Arbeitern gut?
     - Arbeiter Situation
     - Was ist mit den Arbeitern in Katar?
-# Selector wm/ Everything about the wm itself besides Qatar
 - intent: wm/wm_time
   examples: |
     - wm_time
@@ -558,7 +590,6 @@ nlu:
     - Kann ich die Spiele im Fernsehen sehen?
     - Wo kann ich die Spiele schauen?
     - Wie kann ich die Spiele verfolgen?
-# Selector chitchat/
 - intent: chitchat/howAreYou
   examples: |
     - wie geht es dir?
@@ -636,7 +667,6 @@ nlu:
     - Nazis
     - alle sind doof
     - restart
-# Research intents - also have to be mentioned in the domain.yml
 - intent: start_survey
   examples: |
     - Ich möchte die Umfrage starten
@@ -676,7 +706,29 @@ nlu:
     - Ich fand die Antworten [schlecht](rating)
     - Meiner Meinung nach [grottig](rating)
     - [mittel](rating)
-# developing example intents
+- intent: ghostGame
+  examples: |
+    - Was ist ein Geisterspiel?
+    - Geisterspiel
+    - Was sind Geisterspiele?
+    - Ich habe mal was von Geisterspielen gehört
+    - Warum gibt es manchmal keine Zuschauer
+    - Keine Zuschauer
+    - Keine Zuschauer im Stadion
+    - Gheistspiel?
+    - Ghostgame
+    - Spiel in leerem Stadion
+    - Was ist ein Geisterspiel
+- intent: emergency_foul
+  examples: |
+    - Was ist eine Notbremse?
+    - Notbremse?
+    - Er zieht die Notbremse?
+    - Was ist das Foul in letzter Minute?
+    - Foul im Strafraum
+    - Spieler kurz vor dem Tor foulen
+    - Was passiert, wenn man einen Spieler kurz vor dem Tor gefoult wird?
+    - Foul kurz vor dem Tor.
 - intent: buy_pizza
   examples: |
     - Ich möchte eine Pizza bestellen
@@ -702,7 +754,6 @@ nlu:
     - [veggie](pizza_type)
     - [fungi](pizza_type)
     - [vegggie](pizza_type)
-# lookups
 - lookup: team
   examples: |
     - Afghanistan
