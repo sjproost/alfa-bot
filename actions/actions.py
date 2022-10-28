@@ -37,6 +37,9 @@ import json
 import sys
 import datetime
 import urllib.parse
+import smtplib
+from email.mime.text import MIMEText
+from dotenv import load_dotenv
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
@@ -304,14 +307,14 @@ def get_games(gameday: str) -> list:
 # Looks up a match in all match data and return a string with match and score
 def find_match(needle_1: str, needle_2: str, matches: List[Game]) -> str:
     if not needle_1 or not needle_2:
-        fail = ("Variablen nicht korrekt übermittelt")
+        fail = "Variablen nicht korrekt übermittelt"
         return fail
     for game in matches:
         if needle_1.lower() in game.get_teams() and needle_2.lower() in game.get_teams():
             result_string = ("Hier ist das Ergebnis: {} {} - {} {}".format(game.winner, game.goals_winner,
                                                                            game.goals_looser, game.looser))
             return result_string
-    fail = ("Diese Mannschaften haben noch nicht gegeneinander gespielt")
+    fail = "Diese Mannschaften haben noch nicht gegeneinander gespielt"
     return fail
 
 
@@ -454,6 +457,34 @@ def get_rankings() -> TournamentTable:
 
     finally:
         return tournament_data
+
+def send_survey_mail(message: str) -> None:
+
+    load_dotenv('.env')
+    newline = '\n'
+    line_seperator = '\n---------\n'
+    sender = os.getenv('FROM')
+    receivers = [os.getenv('TOFH'), ('TOBVAG')]
+
+    msg = MIMEText(f'Neues Befragungsergebnis von ALFA-Bot:{newline}{line_seperator}'
+                   f'{message}{newline}{line_seperator}')
+
+    msg['Subject'] = 'Umfrage-Ergebnis von ALFA-Bot'
+    msg['From'] = sender
+    msg['To'] = receivers
+
+    try:
+        with smtplib.SMTP(os.getenv('DOMAIN'), int(os.getenv('PORT1'))) as server:
+            server.connect(os.getenv('DOMAIN'), int(os.getenv('PORT2')))
+            server.ehlo()
+            server.starttls()
+            server.ehlo()
+            server.login(os.getenv('USERNAME'), os.getenv('CREDENTIAL'))
+            server.sendmail(sender, receivers, msg.as_string())
+    except Exception as error:
+        err_msg = "Something went wrong: "
+        err_msg = err_msg + str(error)
+        print(err_msg)
 
 
 # Validation actions
@@ -613,14 +644,37 @@ class ValidateSimpleSurveyForm(FormValidationAction):
             tracker: Tracker,
             domain: DomainDict,
     ) -> Dict[Text, Any]:
-        """Validate `pizza_size` value."""
 
         lot_num = int(slot_value)
         if not 10000 <= lot_num <= 99999:
             dispatcher.utter_message(text=f"Deine eingegebene Nummer ist leider nicht gültig")
             return {"lot_number": None}
-        dispatcher.utter_message(text=f"Danke, deine Nummer {slot_value} ist korrekt. Wir können anfangen")
+        dispatcher.utter_message(
+            text=f"Danke, deine Nummer {slot_value} ist korrekt. Wir können anfangen. Es geht um deine Meinung zu Chatbots, wie mir. Deine Antworten bleiben natürlich komplett anonym!")
         return {"lot_number": slot_value}
+
+    def validate_learn_with_bot(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        affirm = ["ja", "klar", "jeden", "sicher", "natürlich", "gerne", "schon"]
+        deny = ["nein", "nö", "nicht", "keinesfalls", "niemals", "nie"]
+
+        print("Validiere Learn with bot")
+
+        answer = str(slot_value).lower()
+        if any(element in answer for element in affirm):
+            print("Ich lerne mit Bot")
+            return {"learn_with_bot": slot_value, "learn_not": "Ausgefiltert"}
+        elif any(element in answer for element in deny):
+            print("Ich lerne ohne Bot")
+            return {"learn_with_bot": slot_value, "learn_why": "Ausgefiltert"}
+        else:
+            print("Ich weiß nicht wie ich lerne")
+            return {"learn_with_bot": slot_value}
 
 
 # Validation of entering team variable in score request
@@ -776,14 +830,15 @@ class ActionTellGroup(Action):
             res = get_group(team, df)
 
             msg = f"Die Mannschaft von {team} spielt in Gruppe {res}."
-
+            print(f'try res: {res}')
             remove_csv()
         finally:
+            buttons = [{"title": f"Wer spielt noch in Gruppe {res}?",
+                 "payload": f"Wer spielt noch in Gruppe {res}?"}]
             dispatcher.utter_message(text=msg)
-            dispatcher.utter_message(response="utter_ask_other_teams")
-
-        return [SlotSet("finals_team", None), SlotSet("group", str(res))]
-
+            dispatcher.utter_message(text=f"Frage mich gerne, wer noch in Gruppe {res} spielt.", buttons=buttons)
+           # dispatcher.utter_message(response="utter_ask_other_teams")
+        return [SlotSet("group", res), SlotSet("finals_team", None)]
 
 # Custom Actions for Surveys
 class ActionSubmitSurvey(Action):
@@ -796,12 +851,19 @@ class ActionSubmitSurvey(Action):
         slot_lotnum = tracker.get_slot('lot_number')
         slot_helpful = tracker.get_slot('helpful')
         slot_length = tracker.get_slot('length')
+        slot_learn = tracker.get_slot('learn_with_bot')
+        slot_learn_why = tracker.get_slot('learn_why')
+        slot_learn_not = tracker.get_slot('learn_not')
 
-        print("Folgende Befragungswerte erhalten: Losnummer: ", slot_lotnum, " | Hilfreich: ", slot_helpful,
-              " | Länge: ", slot_length)
+        survey_result = ("Folgende Befragungswerte erhalten: Losnummer: ", slot_lotnum, " | Hilfreich: ", slot_helpful,
+              " | Länge: ", slot_length, " | Lernen mit Bot: ", slot_learn, " | Warum: ", slot_learn_why,
+              " | Warum nicht: ", slot_learn_not)
+        send_survey_mail(survey_result)
 
         dispatcher.utter_message(response="utter_submit_survey")
-        return []
+
+        return [SlotSet("lot_number", None), SlotSet("helpful", None), SlotSet("length", None),
+                SlotSet("learn_with_bot", None), SlotSet("learn_why", None), SlotSet("learn_not", None)]
 
 
 # Custom action returning team phase

@@ -2,3 +2,4 @@
 .rasa
 models
 venv
+actions/.env

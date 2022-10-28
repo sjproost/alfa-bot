@@ -7,3 +7,4 @@ DateTime~=4.7
 urllib3~=1.26.9
 beautifulsoup4~=4.11.1
 requests-cache~=0.9.6
+python-dotenv~=0.21.0

@@ -31,6 +31,7 @@ intents:
 - inquire_time
 - lot_number
 - match_score
+- emergency_foul
 - nlu_fallback
 - offside1
 - out_of_scope
@@ -83,6 +84,8 @@ intents:
 entities:
 - group
 - lot_number
+- helpful
+- length
 - phase
 - pizza_size
 - pizza_type
@@ -152,32 +155,50 @@ slots:
     - type: from_entity
       entity: pizza_type
   helpful:
-    type: categorical
+    type: text
     influence_conversation: true
     mappings:
-    - type: from_entity
-      entity: rating
-    values:
-    - super
-    - mittel
-    - schlecht
-    - grottig
+    - type: from_text
+      conditions:
+      - active_loop: simple_survey_form
+        requested_slot: helpful
   length:
-    type: categorical
+    type: text
     influence_conversation: true
     mappings:
-    - type: from_entity
-      entity: rating
-    values:
-    - super
-    - mittel
-    - schlecht
-    - grottig
+    - type: from_text
+      conditions:
+      - active_loop: simple_survey_form
+        requested_slot: length
+  learn_with_bot:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: simple_survey_form
+        requested_slot: learn_with_bot
+  learn_why:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: simple_survey_form
+        requested_slot: learn_why
+  learn_not:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: simple_survey_form
+        requested_slot: learn_not
 responses:
   utter_default:
   - text: 'Meine Entwickler erreichst du am ALFA-Telefon: [0800 53 53 44 55](tel:080053534455). Du findest sie auch im [Internet](https://alfa-telefon.de) oder kannst ihnen eine [Mail](mailto:r.haeder@alphabetisierung.de) schreiben.'
   utter_greet:
-  - text: Willkommen zum Chat. Frage mich gerne, was du über die Fußball-Weltmeisterschaft 2022 wissen möchtest ⚽. Tippe auf den Lautsprecher, dann lese ich dir die Nachricht vor.
+  - text: Willkommen zum Chat. Frage mich gerne, was du über die ⚽-Weltmeisterschaft 2022 wissen möchtest. Tippe auf den Lautsprecher, dann lese ich dir die Nachricht vor.
   utter_goodbye:
   - text: Bye 👋
   utter_iamabot:
@@ -209,22 +230,48 @@ responses:
   utter_offside_dau:
   - text: Nein, es ist kein Abseis. Der Spieler steht zwar hinter allen Gegnern, aber er ist noch in der Spielfeldhälfte seiner Mannschaft.
   utter_tell_final_group:
-  - text: Ok, du  möchtest etwas über Gruppe {wm_group} wissen.
+  - text: Ok, du möchtest etwas über Gruppe {group} wissen.
   utter_ask_finals_team:
   - text: Um welches Team geht es dir?
   utter_ask_ranking_group:
   - text: Zu welcher Gruppe soll ich dir die Tabelle zeigen?
-  utter_ask_other_teams:
-  - buttons:
-    - payload: Wer spielt in Gruppe {group}?
-      title: Wer spielt in Gruppe {group}?
-    text: Möchtest du wissen, welche Teams noch in Gruppe {group} spielen?
   utter_ask_lot_number:
-  - text: Ok, du möchtest an der Befragung teilnehmen. Wie lautet deine Nummer?
+  - text: 'Ok, du möchtest an der Befragung teilnehmen. Nenne mir dafür bitte eine Teilnahme-Nummer:'
   utter_ask_helpful:
-  - text: Wie hilfreich fandest du meine Antworten?
+  - buttons:
+      - payload: Sehr hilfreich
+        title: Sehr hilfreich
+      - payload: Hilfreich
+        title: Hilfreich
+      - payload: Geht so
+        title: Geht so
+      - payload: Nicht hilfreich
+        title: Nicht hilfreich
+      - payload: Unbrauchbar
+        title: Unbrauchbar
+    text: Wie hilfreich fandest du meine Antworten?
   utter_ask_length:
-  - text: Wie findest du die Antworten? Sind sie zu kurz, genau richtig lang oder zu lang?
+  - buttons:
+      - payload: Zu kurz
+        title: Zu kurz
+      - payload: Genau richtig
+        title: Genau richtig
+      - payload: Zu lang
+        title: Zu lang
+    text: Wie findest du die Länge meiner Antworten? Sind sie zu kurz, genau richtig lang oder zu lang?
+  utter_ask_learn_with_bot:
+    - buttons:
+        - payload: Ja, im Kurs
+          title: Ja, in einem Kurs
+        - payload: Ja, Kurs und Alleine
+          title: Ja, in einem Kurs und Alleine
+        - payload: Nein, eher nicht
+          title: Nein, eher nicht
+      text: Könntest du dir vorstellen, mit einer App wie Lalo zu lernen?
+  utter_ask_learn_why:
+    - text: Welchen Vorteil siehst du in einem Chatbot?
+  utter_ask_learn_not:
+    - text: Warum würdest du nicht mit einem Chatbot lernen wollen?
   utter_ask_team2:
   - text: Wie heißt die andere Mannschaft in dem Spiel?
   utter_submit_survey:
@@ -471,7 +518,7 @@ responses:
       title: Nein, ich weiß Bescheid
     text: 202 Mannschaften aus der ganzen Welt wollten in Katar mitspielen. Da aber nur 32 Mannschaften in Katar spielen können, mussten sie sich qualifizieren. Willst du wissen, welche Mannschaften in Katar dabei sind?
   utter_qualified_teams:
-  - text: Deutschland, Dänemark, Frankreich, Belgien, Kroatien, Spanien, Serbien, Schweiz, England, Niederlande, Portugal, Polen, Wales, Ghana, Senegal, Tunesien, Marokko, Kamerun, Katar (weil es Gastgeber ist), Australien, Iran, Südkorea, Japan, Saudi-Arabien, Brasilien, Argentinien, Ecuador, Uruguay, Kanada, Mexiko, USA, Costa Rica. Jedes Land hat eine eigene Flagge und Nationalhymne. Schaue dir [hier alle Flaggen der Welt](https://www.welt-flaggen.de/) sehen. Höre dir [hier die Nationalhymnen](https://www.hymne-national.com/de/) an.
+  - text: 'Folgende Länder spielen bei der WM mit: Deutschland, Dänemark, Frankreich, Belgien, Kroatien, Spanien, Serbien, Schweiz, England, Niederlande, Portugal, Polen, Wales, Ghana, Senegal, Tunesien, Marokko, Kamerun, Katar (weil es Gastgeber ist), Australien, Iran, Südkorea, Japan, Saudi-Arabien, Brasilien, Argentinien, Ecuador, Uruguay, Kanada, Mexiko, USA, Costa Rica. Jedes Land hat eine eigene Flagge und Nationalhymne. Schaue dir [hier alle Flaggen der Welt](https://www.welt-flaggen.de/) sehen. Höre dir [hier die Nationalhymnen](https://www.hymne-national.com/de/) an.'
   utter_tournament_mode:
   - text: Das WM-Turnier im Winter 2022 nennt man auch Endrunde. Dort spielen die besten 32 Nationalmannschaften der Welt. Die Endrunde besteht aus einer **Gruppenphase** und einer **K.O.-Runde**. Möchtest du mehr darüber wissen?
   utter_tournament_mode_group_phase:
@@ -551,9 +598,11 @@ actions:
 - action_tell_teams
 - action_tell_time
 - action_test_action
-- utter_ask_other_teams
 - utter_ask_ranking_group
 - utter_ask_team2
+- utter_ask_learn_with_bot
+- utter_ask_learn_why
+- utter_ask_learn_not
 - utter_chitchat
 - utter_exception
 - utter_freekick
@@ -605,6 +654,9 @@ forms:
     - lot_number
     - helpful
     - length
+    - learn_with_bot
+    - learn_why
+    - learn_not
   score_form:
     required_slots:
     - team

@@ -20,7 +20,7 @@ COPY . .
 
 #RUN update-ca-certificates
 
-RUN rasa train
+#RUN rasa train
 
 # Set User to run, don't run as root
 RUN chgrp -R 0 /app && chmod -R g=u /app && chmod o+wr /app
