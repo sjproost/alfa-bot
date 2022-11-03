@@ -85,7 +85,15 @@ entities:
 - group
 - lot_number
 - helpful
-- length
+- smartphone
+- need_help
+- read_answers
+- understand_answers
+- learn_with_bot
+- learn_why
+- learn_not
+- critic_pos
+- critic_neg
 - phase
 - pizza_size
 - pizza_type
@@ -162,14 +170,54 @@ slots:
       conditions:
       - active_loop: simple_survey_form
         requested_slot: helpful
-  length:
+  smartphone:
     type: text
     influence_conversation: true
     mappings:
     - type: from_text
       conditions:
       - active_loop: simple_survey_form
-        requested_slot: length
+        requested_slot: smartphone
+  need_help:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: simple_survey_form
+            requested_slot: need_help
+  read_answers:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: simple_survey_form
+            requested_slot: read_answers
+  understand_answers:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: simple_survey_form
+            requested_slot: understand_answers
+  critic_pos:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: simple_survey_form
+            requested_slot: critic_pos
+  critic_neg:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: simple_survey_form
+            requested_slot: critic_neg
   learn_with_bot:
     type: text
     influence_conversation: true
@@ -250,15 +298,52 @@ responses:
       - payload: Unbrauchbar
         title: Unbrauchbar
     text: Wie hilfreich fandest du meine Antworten?
-  utter_ask_length:
+  utter_ask_understand_answers:
   - buttons:
-      - payload: Zu kurz
-        title: Zu kurz
-      - payload: Genau richtig
-        title: Genau richtig
-      - payload: Zu lang
-        title: Zu lang
-    text: Wie findest du die Länge meiner Antworten? Sind sie zu kurz, genau richtig lang oder zu lang?
+      - payload: Ja, ich habe alles gut verstanden
+        title: Ja, ich habe alles gut verstanden
+      - payload: Ja, das meiste habe ich verstanden
+        title: Ja, das meiste habe ich verstanden
+      - payload: Einiges habe ich nicht verstanden
+        title: Einiges habe ich nicht verstanden
+      - payload: Viele Antworten waren zu schwer
+        title: Viele Antworten waren zu schwer
+    text: Hast du meine Antworten gut verstanden?
+  utter_ask_smartphone:
+  - buttons:
+      - payload: Ja
+        title: Ja
+      - payload: Nein
+        title: Nein
+    text: Hast du ein eigenes Smartphone?
+  utter_ask_need_help:
+  - buttons:
+      - payload: Ja
+        title: Ja
+      - payload: Ja, aber nur am Anfang
+        title: Ja, aber nur am Anfang
+      - payload: Nein, ich konnte alles alleine
+        title: Nein, ich konnte alles alleine
+    text: Hast du Hilfe bei der Arbeit mit dem Chatbot benötigt?
+  utter_ask_read_answers:
+  - buttons:
+      - payload: Alles selbst gelesen
+        title: Alles selbst gelesen
+      - payload: Einiges selbst gelesen und einiges vorlesen lassen
+        title: Einiges selbst gelesen und einiges vorlesen lassen
+      - payload: Alles vorlesen lassen
+        title: Alles vorlesen lassen
+    text: Hast du meine Antworten selbst gelesen oder sie dir vorlesen lassen?
+  utter_ask_critic_pos:
+  - buttons:
+      - payload: Kein Kommentar
+        title: Kein Kommentar
+    text: Jetzt hast du noch die Möglichkeit zu sagen, was dir gut gefallen hat. Gib deine Antwort einfach unten ein.
+  utter_ask_critic_neg:
+  - buttons:
+      - payload: Kein Kommentar
+        title: Kein Kommentar
+    text: Gibt es auch etwas, das wir besser machen sollten? Gib deine Antwort einfach unten ein.
   utter_ask_learn_with_bot:
     - buttons:
         - payload: Ja, im Kurs
@@ -269,9 +354,15 @@ responses:
           title: Nein, eher nicht
       text: Könntest du dir vorstellen, mit einer App wie Lalo zu lernen?
   utter_ask_learn_why:
-    - text: Welchen Vorteil siehst du in einem Chatbot?
+    - buttons:
+        - payload: Kein Kommentar
+          title: Kein Kommentar
+      text: Welchen Vorteil siehst du in einem Chatbot?
   utter_ask_learn_not:
-    - text: Warum würdest du nicht mit einem Chatbot lernen wollen?
+    - buttons:
+       - payload: Kein Kommentar
+         title: Kein Kommentar
+      text: Warum würdest du nicht mit einem Chatbot lernen wollen?
   utter_ask_team2:
   - text: Wie heißt die andere Mannschaft in dem Spiel?
   utter_submit_survey:
@@ -603,6 +694,12 @@ actions:
 - utter_ask_learn_with_bot
 - utter_ask_learn_why
 - utter_ask_learn_not
+- utter_ask_smartphone
+- utter_ask_need_help
+- utter_ask_read_answers
+- utter_ask_understand_answers
+- utter_ask_critic_pos
+- utter_ask_critic_neg
 - utter_chitchat
 - utter_exception
 - utter_freekick
@@ -652,11 +749,16 @@ forms:
   simple_survey_form:
     required_slots:
     - lot_number
+    - smartphone
+    - need_help
+    - read_answers
+    - understand_answers
     - helpful
-    - length
     - learn_with_bot
     - learn_why
     - learn_not
+    - critic_pos
+    - critic_neg
   score_form:
     required_slots:
     - team
