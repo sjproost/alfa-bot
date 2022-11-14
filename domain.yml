@@ -402,17 +402,17 @@ responses:
   utter_qat/human_rights:
   - buttons:
     - payload: /katar_critics
-    - title: Kritik an der WM
+      title: Kritik an der WM
     text: '**Menschenrechte** sind Regeln die für alle Menschen auf der Welt gelten sollen. Beispielsweise verbieten die Menschenrechte Sklaverei und Folter. Die Regierung von Katar hält sich nur wenig an diese Menschenrechte. Zum Beispiel unterdrücken Sie Frauen, verhaften Homosexuelle und foltern Kritiker. Daher finden viele Menschen es nicht ok, wenn so ein Land eine Fußball-WM ausrichten darf.'
   utter_qat/costs:
   - buttons:
     - payload: /katar_critics
-    - title: Kritik an der WM?
+      title: Kritik an der WM?
     text: Die WM in Katar wird über 150 Milliarden Euro kosten. Keine andere WM oder sonstige Veranstaltung bisher hat jemals so viel Geld gekostet.
   utter_qat/worker_situation:
   - buttons:
     - payload: /katar_critics
-    - title: Kritik an der WM
+      title: Kritik an der WM
     text: Es gibt ungefähr 2,3 Millionen Gastarbeiter in Katar. Die Gastarbeiter müssen oft bei über 40 Grad länger als 10 Stunden schwer arbeiten. Sie bekommen während der Arbeit nichts zu essen oder zu trinken, kriegen wenig Geld, kein eigenes Zimmer, können nicht ausreisen und sich nicht beschweren. Wegen dieser Zustände sind bereits viele Arbeiter gestorben.
   utter_qat/boycott:
   - buttons:
@@ -445,6 +445,8 @@ responses:
   - text: Die WM beginnt am 20. November und endet am 18. Dezember. Sie dauert also 29 Tage.
   utter_qat/winter_wm:
   - text: Die WM findet im Winter statt, weil es im Sommer in Katar bis zu 50 Grad heiß wird. Das ist zu heiß, um Profi-Fußball zu spielen.
+  utter_qat/timetable:
+    - text: 'Den aktuellen Spielplan findest du im Internet. Zum Beispiel kannst du bei [kicker.de](https://www.kicker.de/weltmeisterschaft/spieltag/2022) gucken.'
   utter_rule/duration:
   - buttons:
     - payload: Nachspielzeit
@@ -455,7 +457,7 @@ responses:
   utter_rule/overtime:
   - text: Muss der Schiedsrichter das Spiel unterbrechen, kann er die Spieler ein paar Minuten länger spielen lassen. Zum Beispiel weil ein Spieler sich verletzt hatte oder es viele Fouls gab. Das ist die Nachspielzeit.
   utter_rule/extraTime:
-  - text: Die Verlängerung dauert zwei mal 15 Minuten. Sie wird gespielt, wenn es nach der normalen Spielzeit unentschieden steht. Ab dem Achtelfinale muss bei der WM immer eine Mannschaft gewinnen.
+  - text: Die Verlängerung dauert 2 mal 15 Minuten. Sie wird gespielt, wenn es nach der normalen Spielzeit unentschieden steht. Ab dem Achtelfinale muss bei der WM immer eine Mannschaft gewinnen.
   utter_rule/halftimebreak:
   - text: In jedem Spiel gibt es eine Pause für die Spieler. Diese dauert 15 Minuten. Bei einer Verlängerung gibt es noch eine Pause von 5 Minuten.
   utter_rule/goal:
@@ -489,13 +491,45 @@ responses:
     - payload: Torwart wechseln
       title: Torwart wechseln
     text: Trainer können Spieler auf dem Feld gegen Reservespieler austauschen. Zum Beispiel, wenn ein Spieler verletzt oder müde ist. Dafür muss man dem Schiedsrichter Bescheid sagen. Normalerweise sind 3 Wechsel pro Spiel erlaubt. Seit der Corona-Pandemie erlaubt die Fifa aber 5 Wechsel pro Spiel.
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/11/auswechseln.png
   utter_rule/keeperChange:
   - buttons:
     - payload: Reservespieler
       title: Reservespieler
     - payload: Spieler wechseln
       title: Spieler wechseln
-    text: Der Torwart ist ein besonderer Spieler beim Fußball. Er kann durch einen Reservespieler ausgewechselt werden. Es darf aber auch jeder Feldspieler mit dem Torwart wechseln. Auch diesen Wechsel muss man dem Schiedsrichter sagen.
+    text: Der Torwart ist ein besonderer Spieler beim Fußball. Er kann durch einen anderen Torwart ausgewechselt werden. Es darf aber auch jeder Feldspieler mit dem Torwart wechseln. Auch diesen Wechsel muss man dem Schiedsrichter sagen.
+  utter_rule/fieldsize1:
+    - buttons:
+        - payload: field_underground
+          title: Bodenbelag
+        - payload: field_size
+          title: Größe
+        - payload: field_zones
+          title: Bereiche und Linien
+      text: Über Spielfelder habe ich mehrere Infos. Was interessiert dich?
+  utter_rule/field_underground:
+    - buttons:
+      - payload: field_size
+        title: Größe
+      - payload: field_zones
+        title: Bereiche und Linien
+      text: Das Spielfeld bei der WM besteht in jedem Stadion aus Rasen. Der wird einige Wochen vor dem Turnier in den Stadien ausgerollt.
+  utter_rule/field_size:
+    - buttons:
+        - payload: field_underground
+          title: Bodenbelag
+        - payload: field_zones
+          title: Bereiche und Linien
+      text: Ein Fußballfeld hat immer eine vorgeschriebene Größe. Das Spielfeld muss eine Länge zwischen 100 und 110 Meter betragen. Die geforderte Breite liegt zwischen 64 und 75 Meter.
+  utter_rule/field_zones:
+      - buttons:
+          - payload: field_underground
+            title: Bodenbelag
+          - payload: field_size
+            title: Größe
+        text: Der Fußballplatz besteht aus vielen Zonen mit verschiedenen Linien. Die beiden längeren Begrenzungslinien sind die Seitenlinien, die kürzeren, auf denen die Tore stehen, sind die Torlinien. Die Mittellinie teilt das Spielfeld in zwei Hälften. In jeder Hälfte gibt es einen Strafraum.
+        image: https://www.alfa-bot.de/wp-content/uploads/2022/11/fussballspielfeld.jpeg
   utter_rule/ball:
   - buttons:
     - payload: Al Rihla
@@ -505,8 +539,7 @@ responses:
     text: Ein Fußball ist rund. Früher waren Fußbälle aus Leder. Heute sind sie aus künstlichen Materialien. Ein Ball hat einen Umfang von 68 bis 70 Zentimetern und wiegt zwischen 410 und 450 Gramm.
     image: https://m.media-amazon.com/images/I/513DbJaOszL._AC_.jpg
   utter_rule/alRihla:
-  - text: Die Fußbälle für die WM kommen von der Firma Adidas. Für jedes Turnier entwickelt Adidas einen neuen Ball. Zur WM 2022 heißt der Ball *Al Rihla*. Auf Deutsch heißt das *Die Reise*. Ein Bild habe ich auch für dich.
-    image: https://pbs.twimg.com/media/FMxCkI3XoAIV_0a.jpg
+  - text: 'Die Fußbälle für die WM kommen von der Firma Adidas. Für jedes Turnier entwickelt Adidas einen neuen Ball. Zur WM 2022 heißt der Ball *Al Rihla*. Auf Deutsch heißt das *Die Reise*. Ein Bild und mehr Informationen zum Ball findest du [hier](https://www.dfb.de/news/detail/al-rihla-von-adidas-offizieller-wm-spielball-238510/).'
   utter_rule/captain:
     - buttons:
         - payload: Warum wird eine Münze geworfen?
@@ -518,7 +551,7 @@ responses:
           title: Kapitän
         - payload: Schiedsrichter
           title: Schiedsrichter
-      text: 'Welche Mannschaft spielt auf welcher Seite? Welche Mannschaft hat Anstoß? Das entscheidet der Münzwurf. Vor dem Beginn des Spieles wählt der Kapitän der Gastmannschaft den Kopf oder die Zahl der Münze. Der Schiedsrichter wirft die Münze. Der Kapitän, der gewonnen hat, entscheidet nun: Anstoß oder Seitenwahl. Den Münzwurf gibt es auch vor einer Verlängerung. Und auch beim Elfmeterschießen. Hier entscheidet der Münzwurf, welches Team beginnt.'
+      text: 'Welche Mannschaft spielt auf welcher Seite? Welche Mannschaft hat Anstoß? Das entscheidet der Münzwurf. Vor dem Beginn des Spieles wählt der Kapitän der Gastmannschaft Kopf oder Zahl der Münze. Der Schiedsrichter wirft die Münze. Der Gewinner entscheidet nun: Möchte er Anstoß oder Seitenwahl. Den Münzwurf gibt es auch vor einer Verlängerung und beim Elfmeterschießen. Hier entscheidet der Münzwurf, welches Team beginnt.'
   utter_rule/ballBroken:
   - text: Geht ein Ball während des Spiels kaputt, unterbricht der Schiedsrichter das Spiel. Mit einem Ersatzball geht das Spiel dann an gleicher Stelle weiter.
   utter_rule/passiveOffSide:
@@ -556,24 +589,25 @@ responses:
     - payload: Video-Assistent
       title: Video-Assistent
     text: Der Schiedsrichter ist der Leiter eines Fußballspiels. Er sorgt dafür, dass alle Regeln eingehalten werden. Der Schiedsrichter kann die Spieler bestrafen. Außerdem entscheidet er, ob ein Tor zählt oder nicht. Der Schiedsrichter läuft auf dem Platz hin und her und gibt Signale mit einer Pfeife. Die Entscheidungen eines Schiedsrichters sind fest und werden nicht nachträglich geändert.
-    image: https://pixabay.com/de/photos/fußball-ball-schiedsrichter-sport-6679088/
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/11/schiedsrichter.png
   utter_rule/refereeAssistant:
   - buttons:
     - payload: Schiedsrichter
       title: Schiedsrichter
     - payload: Video-Assistent
       title: Video-Assistent
-    text: Linienrichter sind Assistenten des Schiedsrichters. Meistens gibt es zwei Linienrichter. Sie halten sich am Rand des Spielfelds in der Nähe der *16 Meter-Räume* auf. Sie achten vor allem auf *Abseits*,  *Aus* und *Tore* Linienrichter haben immer eine Flagge dabei. Die heben sie hoch, um ein Abseits, ein Tor oder einen Ball außerhalb des Spielfelds anzuzeigen. Damit der Schiedsrichter das auch mitbekommt, trägt er ein Armband. Dieses Armband vibriert, wenn ein Linienrichter ihm ein Signal gibt.
-    image: https://cdn.pixabay.com/photo/2016/12/11/22/31/flag-1900524_960_720.jpg
+    text: Linienrichter sind Assistenten des Schiedsrichters. Meistens gibt es zwei Linienrichter. Sie halten sich am Rand des Spielfelds in der Nähe der 16 Meter-Räume auf. Sie achten vor allem auf Abseits, Aus und Tore. Linienrichter haben immer eine Flagge dabei. Die heben sie hoch, um ein Abseits, ein Tor oder einen Ball außerhalb des Spielfelds anzuzeigen. Damit der Schiedsrichter das auch mitbekommt, trägt er ein Armband. Dieses Armband vibriert, wenn ein Linienrichter ihm ein Signal gibt.
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/11/linienrichter.png
   utter_rule/videoAssistant:
   - buttons:
     - payload: Schiedsrichter
       title: Schiedsrichter
     - payload: Linienrichter
       title: Linienrichter
-    text: Seit 2017 haben **Schiedsrichter** einen weiteren Assistenten - den Video-Assistenten. Dieser schaut das Spiel über Monitore aus verschiedenen Kamera-Einstellungen. In ganz wichtigen Situationen kann der **Schiedsrichter** sich das Video von seinem Video-Assistenten ansehen. So gibt es weniger Fehlentscheidungen bei **Toren**, **Strafstößen** oder **roten Karten**. Eine sehr übersichtliche Darstellung findest du [hier](https://quality.fifa.com/de/media-tiles/video-assistant-referee-var/)
+    text: Seit 2017 haben Schiedsrichter einen weiteren Assistenten - den Video-Assistenten. Dieser schaut das Spiel über Monitore aus verschiedenen Kamera-Einstellungen. In ganz wichtigen Situationen kann der Schiedsrichter sich das Video ansehen. So gibt es weniger Fehlentscheidungen bei Toren, Strafstößen oder roten Karten. Eine sehr übersichtliche Darstellung findest du [hier](https://quality.fifa.com/de/media-tiles/video-assistant-referee-var/).
   utter_rule/cornerkick:
-  - text: Es gibt einen Eckstoß, wenn ein verteidigender Spieler den Ball über die eigene Torauslinie befördert. Der Ball muss dabei mit dem gesamten Umfang über der Linie sein. Bei einem Eckball darf ein Spieler von der Eckfahne aus den Ball ohne Behinderung spielen. Meistens wird der Ball als Flanke direkt in den Strafraum geschlagen.
+  - text: Es gibt einen Eckball, wenn ein verteidigender Spieler den Ball über die eigene Torauslinie befördert. Der Ball muss dabei mit dem gesamten Umfang über der Linie sein. Bei einem Eckball darf ein Spieler von der Eckfahne aus den Ball ohne Behinderung spielen. Meistens wird der Ball als Flanke direkt in den Strafraum getreten.
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/11/eckball.png
   utter_rule/foul:
   - buttons:
     - payload: Welche Strafen gibt es?
@@ -585,11 +619,13 @@ responses:
   - buttons:
     - payload: /freekick
       title: Freistoß
-    text: 'Der Schiedsrichter bestraft Spieler, die ein Foul begehen. Dafür hat der mehrere Möglichkeiten: * Ermahnen * mit einer *gelben Karte* verwarnen * mit einer *roten Karte* vom Platz schicken. Bekommt ein Spieler in einem Spiel zwei gelbe Karten, ist das wie eine rote Karte. Nach einem Foul gibt es meistens einen Freistoß.'
+    text: 'Der Schiedsrichter bestraft Spieler, die ein Foul begehen. Dafür hat der mehrere Möglichkeiten: *Ermahnen* mit einer *gelben Karte* verwarnen mit einer *roten Karte* vom Platz schicken. Bekommt ein Spieler in einem Spiel zwei gelbe Karten, ist das wie eine rote Karte. Nach einem Foul gibt es meistens einen Freistoß.'
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/11/freistoss.png
   utter_rule/throw_in:
-  - text: Wenn ein Spieler den Ball über die Seitenlinie des Spielfelds befördert, bekommt die gegnerische Mannschaft einen Einwurf zugesprochen. Bei einem Einwurf muss der Ball mit beiden Händen gehalten und von hinten über den Kopf geworfen werden. Der Spieler, der den Einwurf macht, muss mit beiden Beinen auf dem Boden und außerhalb des Spielfelds stehen.
+  - text: Wenn ein Spieler den Ball über die Seitenlinie des Spielfelds befördert, bekommt die gegnerische Mannschaft einen Einwurf zugesprochen. Bei einem Einwurf muss der Ball mit beiden Händen gehalten und von hinten über den Kopf geworfen werden. Der Spieler muss mit beiden Beinen außerhalb des Spielfelds stehen.
   utter_rule/penalty_kick:
-  - text: Bei einem Regelverstoß im Strafraum bekommt die gegnerische Mannschaft einen Strafstoß. Der Strafstoß wird auch *Elfmeter* genennt, weil der Punkt von dem geschossen wir, 11 Meter vom Tor entfernt ist. Dieser Schuss darf ohne Behinderung direkt auf das Tor ausgeführt werden.
+  - text: Bei einem Regelverstoß im Strafraum bekommt die gegnerische Mannschaft einen Strafstoß. Der Strafstoß wird auch *Elfmeter* genannt, weil der Punkt, von dem geschossen wird, 11 Meter vom Tor entfernt ist. Dieser Schuss darf ohne Behinderung direkt auf das Tor ausgeführt werden.
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/11/elfmeter.png
   utter_i_know:
   - text: Ok, dann weißt du ja schon gut Bescheid. Was möchstest du noch wissen?
   utter_freekick:
@@ -600,7 +636,7 @@ responses:
       title: Nein
     text: Bei einem Regelverstoß bekommt die gegnerische Mannschaft einen Freistoß. Dieser darf ohne Behinderung des Gegners gespielt werden. In den meisten Fällen gibt der Schiedsrichter den Ball durch einen Pfiff frei. Hast du schon mal etwas von einer *Mauer* im Fußball gehört?
   utter_freekick_wall:
-  - text: Bei einem Freistoß in der Nähe des gegnerischen Tores, stellt der Torwart der verteidigenden Mannschaft eine Mauer aus Spielern, um dem Schützen den Schuss zu erschweren.
+  - text: Bei einem Freistoß in der Nähe des Tores, stellt der Torwart der verteidigenden Mannschaft eine Mauer aus Spielern auf. So kann der Schütze nicht direkt auf das Tor schießen.
   utter_qualify:
   - buttons:
     - payload: Ja

@@ -209,6 +209,7 @@ nlu:
     - Wie funktioniert die WM?
     - Wie ist der Ablauf der WM?
     - Ablauf WM?
+    - Wie läuft die WM ab?
     - Wie ist der Modus bei der WM?
     - Wie funktioniert die WM-Endrunde?
     - Wie ist die WM organisiert?
@@ -323,6 +324,9 @@ nlu:
   examples: |
     - Al Rihla
     - WM-Ball
+    - WMball
+    - Ball der WM
+    - WM Ball 2022
     - Was ist der offizielle Fußball der WM 2022?
     - Offizieller Spielball der WM 22?
     - Wie sieht der Spielbal bei der WM aus?
@@ -350,6 +354,8 @@ nlu:
     - Schießen von der Fahne
     - Schuss von Ecke
     - Ecke
+    - Eckstoss
+    - Eckball
 - intent: rule/foul
   examples: |
     - Was ist ein Foul?
@@ -363,6 +369,7 @@ nlu:
     - Was bedeutet Foul?
 - intent: rule/punishment
   examples: |
+    - Strafen
     - Welche Strafen gibt es?
     - Wie bestraft ein Schiedsrichter?
     - Was passiert bei einem Foul?
@@ -500,6 +507,13 @@ nlu:
     - Was weißt du über die WM in Katar?
     - Was hat es mit der WM 2022 auf sich?
     - Was weißt du über die WM?
+- intent: qat/timetable
+  examples: |
+    - Wann spielt Deutschland?
+    - Wann ist das nächste Spiel von Deutschland?
+    - Wann spielen Frankreich und Deutschland gegeneinander?
+    - Wann ist das Eröffnungsspiel
+    - Wann spielt Katar?
 - intent: qat/winter_wm
   examples: |
     - winter_wm
@@ -511,6 +525,7 @@ nlu:
     - Müsste die WM nicht im Sommer sein?
 - intent: qat/qatar_critics
   examples: |
+    - Kritik an der WM
     - qatar_critics
     - Warum wird Katar kritisiert?
     - Was ist so schlimm an KAtar?
@@ -536,12 +551,35 @@ nlu:
     - Warum soll ich die WM nicht verfolgen?
     - Warum ist die WM schlecht?
     - Wäre es gut, die WM nicht zu gucken?
+    - Aussage gegen die WM
+- intent: rule/fieldsize1
+  examples: |
+    - Wie groß ist ein Fußballfeld?
+    - Was sollte ich über ein Spielfeld wissen?
+    - Fußballfeld
+    - Größe eines Fußballfeldes
+    - Spielfeld wie groß?
+    - Wie groß ist das Spielfeld?
+    - Spielfeld
+    - Welchen Untergrund hat ein Spielfeld?
+    - Welche Zonen gibt es auf einem Spielfeld?
+    - Wo ist die Auslinie?
+- intent: rule/field_underground
+  examples: |
+    - field_underground
+- intent: rule/field_size
+  examples: |
+    - field_size
+- intent: rule/field_zones
+  examples: |
+    - field_zones
 - intent: qat/boycott_contra
   examples: |
     - Wäre es nicht besser, die WM doch zu gucken?
     - Hilft es, wenn ich die WM gucke?
     - Was kann ich sagen, wenn ich die WM gucken möchte?
     - boycott_contra
+    - Aussage für die WM
 - intent: qat/human_rights
   examples: |
     - human_rights

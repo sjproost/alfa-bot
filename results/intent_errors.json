@@ -1,0 +1,26 @@
+[
+  {
+    "text": "Wie erreiche ich die Feuerwehr?",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "tournament_mode",
+      "confidence": 0.0011061279801651835
+    }
+  },
+  {
+    "text": "Wer war Rudlof Scharping?",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "tournament_mode",
+      "confidence": 0.0002853654441423714
+    }
+  },
+  {
+    "text": "Wo bitte gehts zum Militär?",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "tournament_mode",
+      "confidence": 0.001007480314001441
+    }
+  }
+]

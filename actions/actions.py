@@ -40,7 +40,7 @@ import urllib.parse
 import smtplib
 import csv
 from typing import List
-from datetime import datetime # import datetime und diese Zeile behalten, ggf. recatoring
+from datetime import datetime # TODO: Refactoring
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
@@ -944,7 +944,7 @@ class ActionSubmitSurvey(Action):
 
 # Custom action returning team phase
 class ActionTellPhase(Action):
-    phases = {"gruppenphase": "21. November bis 02. Dezember 2022", "achtelfinale": "vom 03. bis 06. Dezember",
+    phases = {"gruppenphase": "20. November bis 02. Dezember 2022", "achtelfinale": "vom 03. bis 06. Dezember",
               "viertelfinale": "vom 09. und 10. Dezember 2022", "halbfinale": "am 13. und 14. Dezember 2022",
               "spiel um platz 3": "am 17. Dezember 2022", "platz 3": "am 17. Dezember 2022",
               "kleines finale": "am 17. Dezember 2022", "finale": "am 18. Dezember 2022"}
@@ -965,7 +965,7 @@ class ActionTellPhase(Action):
 
         if needle in self.phases.keys():
             if needle == "gruppenphase":
-                msg = f"Die {phase} findet vom {self.phases[needle]} statt."
+                msg = f"Die Gruppenphase findet vom {self.phases[needle]} statt."
             else:
                 msg = f"Das {phase} findet {self.phases[needle]} statt."
 
