@@ -29,7 +29,7 @@ rules:
   steps:
   - intent: greet
   - action: utter_greet
-  - action: utter_chitchat/themen
+  - action: utter_greet_buttons
 
 # Goodbye
 - rule: Say goodbye anytime the user says goodbye
@@ -48,6 +48,22 @@ rules:
   steps:
     - intent: inquire_time
     - action: action_tell_time
+
+# Field properties
+- rule: Tell field size
+  steps:
+    - intent: field_size
+    - action: utter_field_size
+
+- rule: Tell field underground
+  steps:
+    - intent: field_underground
+    - action: utter_field_underground
+
+- rule: Tell field zones
+  steps:
+    - intent: field_zones
+    - action: utter_field_zones
 
 # Tell user when which phase of tournament takes place (Needs Custom Action)
 - rule: Tell championship phase

@@ -35,12 +35,11 @@ import requests_cache
 import os
 import json
 import sys
-import datetime
 import urllib.parse
 import smtplib
 import csv
 from typing import List
-from datetime import datetime # TODO: Refactoring
+from datetime import datetime, date
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
@@ -363,14 +362,18 @@ def playday_lookup() -> str:
         "1612": "6",
         "1712": "7",
         "1812": "8",
-        #    "0208": "3", #Demodate!
     }
     PLAYDAY_MAX = "7"
 
-    today = datetime.datetime.today()
-    daycode = today.strftime('%d') + today.strftime('%m')
+    today = date.today()
+    # start date of wm 2022 in format yyyy, mm, dd
+    startday = date(2022, 11, 20)
+    print(startday)
+    daycode = str(today.day) + str(today.month)
     if daycode in playdays_dict:
         playday = playdays_dict.get(daycode)
+    elif today < startday:
+        playday = "-1"
     else:
         playday = PLAYDAY_MAX
     return playday
@@ -905,6 +908,7 @@ class ActionTellGroup(Action):
            # dispatcher.utter_message(response="utter_ask_other_teams")
         return [SlotSet("group", res), SlotSet("finals_team", None)]
 
+
 # Custom Actions for Surveys
 class ActionSubmitSurvey(Action):
     def name(self) -> Text:
@@ -1015,12 +1019,13 @@ class ActionTellScore(Action):
         res = "None"
 
         try:
-            msg = "Das Turnier hat noch nicht begonnen. Daher kann ich dir keine Spielergebnisse zeigen."
-        #            playday = playday_lookup()
-        #            for day in range(GAMES_START_DAY,int(playday)):
-        #                game_list = game_list + get_games(str(day))
-        #            msg = find_match(team, team2, game_list)
-
+            playday = playday_lookup()
+            if int(playday) == -1:
+                msg = "Das Turnier hat noch nicht begonnen. Daher kann ich dir keine Spielergebnisse zeigen."
+            else:
+                for day in range(GAMES_START_DAY,int(playday)):
+                    game_list = game_list + get_games(str(day))
+                msg = find_match(team, team2, game_list)
         finally:
             dispatcher.utter_message(text=msg)
 
@@ -1042,10 +1047,11 @@ class ActionTellRanking(Action):
         res = "None"
 
         try:
-            msg = "Das Turnier hat noch nicht begonnen. Daher kann ich dir keine Tabellen zeigen."
-        #    all_ranking_tables = get_rankings()
-        #    msg = f'Ok, hier ist die Tabelle:\n{all_ranking_tables.get_table_string(group)}'
-
+            if playday_lookup() == "-1":
+                msg = "Das Turnier hat noch nicht begonnen. Daher kann ich dir keine Spielergebnisse zeigen."
+            else:
+                all_ranking_tables = get_rankings()
+                msg = f'Ok, hier ist die Tabelle:\n{all_ranking_tables.get_table_string(group)}'
         finally:
             dispatcher.utter_message(text=msg)
 

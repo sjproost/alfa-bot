@@ -9,7 +9,7 @@ Container starten und interaktiv (-it) mit shell nutzen
 
 Container pushen `docker push repo/image:tag`
 
-Custom Action Container selbst bauen: `docker build -f name_bzw._pfad_zum_Dockerfile -t repo/image:tag .
+Custom Action Container selbst bauen: `docker build -f Dockerfile.customAction -t sjproost/alfabot-ca:tag .
 `
 Entscheidender Hinweis zum Custom-Action-Server SSL Problem:
 https://stackoverflow.com/questions/52805115/certificate-verify-failed-unable-to-get-local-issuer-certificate

@@ -6,7 +6,6 @@ intents:
 - abort
 - affirm
 - bot_challenge
-- buy_pizza
 - chitchat:
     is_retrieval_intent: true
     used_entities:
@@ -14,8 +13,6 @@ intents:
     - group
     - lot_number
     - phase
-    - pizza_size
-    - pizza_type
     - place
     - rating
     - team
@@ -32,6 +29,9 @@ intents:
 - lot_number
 - match_score
 - emergency_foul
+- field_underground
+- field_size
+- field_zones
 - nlu_fallback
 - offside1
 - out_of_scope
@@ -42,8 +42,6 @@ intents:
     - group
     - lot_number
     - phase
-    - pizza_size
-    - pizza_type
     - place
     - rating
     - team
@@ -57,8 +55,6 @@ intents:
     - group
     - lot_number
     - phase
-    - pizza_size
-    - pizza_type
     - place
     - rating
     - team
@@ -73,8 +69,6 @@ intents:
     - group
     - lot_number
     - phase
-    - pizza_size
-    - pizza_type
     - place
     - rating
     - team
@@ -95,8 +89,6 @@ entities:
 - critic_pos
 - critic_neg
 - phase
-- pizza_size
-- pizza_type
 - place
 - rating
 - finals_team
@@ -150,18 +142,6 @@ slots:
       conditions:
       - active_loop: simple_survey_form
         requested_slot: lot_number
-  pizza_size:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: pizza_size
-  pizza_type:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: pizza_type
   helpful:
     type: text
     influence_conversation: true
@@ -247,6 +227,15 @@ responses:
   - text: 'Meine Entwickler erreichst du am ALFA-Telefon: [0800 53 53 44 55](tel:080053534455). Du findest sie auch im [Internet](https://alfa-telefon.de) oder kannst ihnen eine [Mail](mailto:r.haeder@alphabetisierung.de) schreiben.'
   utter_greet:
   - text: Willkommen zum Chat. Frage mich gerne, was du über die ⚽-Weltmeisterschaft 2022 wissen möchtest. Tippe auf den Lautsprecher, dann lese ich dir die Nachricht vor.
+  utter_greet_buttons:
+  - buttons:
+      - payload: Wann beginnt die WM?
+        title: Wann beginnt die WM?
+      - payload: In welcher Gruppe spielt Deutschland?
+        title: In welcher Gruppe spielt ...?
+      - payload: Was weißt du über Qatar?
+        title: Probleme mit Qatar
+    text: Hier sind Beispiele, was du mich fragen kannst.
   utter_goodbye:
   - text: Bye 👋
   utter_iamabot:
@@ -255,14 +244,14 @@ responses:
   - buttons:
     - payload: Ja
       title: Weiter
-    text: Auf dem Spielfeld befinden sich zwei Spieler der hellblauen und zwei Spieler der roten Mannschaft. Schießt der rote Spieler den Ball zu seinem Mitspieler, wenn kein Gegner mehr zwischen dem Mitspieler und dem anderen Torwart steht, wäre das ein Abseits.
-    image: https://alfacms.se-labor.de/wp-content/uploads/2022/08/abseits.jpg
+    text: Auf dem Spielfeld befinden sich zwei Spieler der blauen und zwei Spieler der gelben Mannschaft. Schießt der gelbe Spieler den Ball zu seinem Mitspieler, wenn kein Gegner mehr zwischen dem Mitspieler und dem anderen Torwart steht, wäre das ein Abseits.
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/11/abseits.png
   utter_offside2:
   - buttons:
     - payload: Ja
       title: Weiter
-    text: Schießt der rote Spieler den Ball zu seinem Mitspieler, *bevor* dieser Mitspieler hinter die Spieler der gegnerischen Mannschaft läuft, ist es kein Abseits. Das gilt überall in der Spielhälfte der gegnerischen Mannschaft.
-    image: https://alfacms.se-labor.de/wp-content/uploads/2022/08/kein_abseits.jpg
+    text: Schießt der gelbe Spieler den Ball zu seinem Mitspieler, *bevor* dieser Mitspieler hinter die Spieler der gegnerischen Mannschaft läuft, ist es kein Abseits. Das gilt überall in der Spielhälfte der gegnerischen Mannschaft.
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/11/kein_abseits.png
   utter_offside3:
   - buttons:
     - payload: Ja
@@ -270,13 +259,13 @@ responses:
     - payload: Nein
       title: Nein
     text: Was meinst du, handelt es sich hier um Abseits?
-    image: https://alfacms.se-labor.de/wp-content/uploads/2022/08/frage_abseits.jpg
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/11/frage_abseits.png
   utter_offside_right:
   - text: Richtig! denn, ACHTUNG! Es ist kein Abseits, wenn man zwar hinter allen gegnerischen Spielern aber noch in der eigenen Spielfeld-Hälfte steht und einen Ball zugespielt bekommt!
   utter_offside_wrong:
   - text: Nicht ganz richtig. Schau dir mal an, in welcher Hälfte die Spieler stehen und versuche es noch mal.
   utter_offside_dau:
-  - text: Nein, es ist kein Abseis. Der Spieler steht zwar hinter allen Gegnern, aber er ist noch in der Spielfeldhälfte seiner Mannschaft.
+  - text: Nein, es ist kein Abseits. Der Spieler steht zwar hinter allen Gegnern, aber er ist noch in der Spielfeldhälfte seiner Mannschaft.
   utter_tell_final_group:
   - text: Ok, du möchtest etwas über Gruppe {group} wissen.
   utter_ask_finals_team:
@@ -300,14 +289,14 @@ responses:
     text: Wie hilfreich fandest du meine Antworten?
   utter_ask_understand_answers:
   - buttons:
-      - payload: Ja, ich habe alles gut verstanden
-        title: Ja, ich habe alles gut verstanden
-      - payload: Ja, das meiste habe ich verstanden
-        title: Ja, das meiste habe ich verstanden
-      - payload: Einiges habe ich nicht verstanden
-        title: Einiges habe ich nicht verstanden
-      - payload: Viele Antworten waren zu schwer
-        title: Viele Antworten waren zu schwer
+      - payload: Ja, alles gut verstanden
+        title: Ja, alles gut verstanden
+      - payload: Ja, das meiste verstanden
+        title: Ja, das meiste verstanden
+      - payload: Einiges nicht verstanden
+        title: Einiges nicht verstanden
+      - payload: Viele Antworten zu schwer
+        title: Viele Antworten zu schwer
     text: Hast du meine Antworten gut verstanden?
   utter_ask_smartphone:
   - buttons:
@@ -329,8 +318,8 @@ responses:
   - buttons:
       - payload: Alles selbst gelesen
         title: Alles selbst gelesen
-      - payload: Einiges selbst gelesen und einiges vorlesen lassen
-        title: Einiges selbst gelesen und einiges vorlesen lassen
+      - payload: teils gelesen, teils vorlesen lassen
+        title: teils gelesen, teils vorlesen lassen
       - payload: Alles vorlesen lassen
         title: Alles vorlesen lassen
     text: Hast du meine Antworten selbst gelesen oder sie dir vorlesen lassen?
@@ -338,7 +327,7 @@ responses:
   - buttons:
       - payload: Kein Kommentar
         title: Kein Kommentar
-    text: Jetzt hast du noch die Möglichkeit zu sagen, was dir gut gefallen hat. Gib deine Antwort einfach unten ein.
+    text: Was hat dir an Lalo dir gut gefallen? Gib deine Antwort einfach unten ein.
   utter_ask_critic_neg:
   - buttons:
       - payload: Kein Kommentar
@@ -367,16 +356,6 @@ responses:
   - text: Wie heißt die andere Mannschaft in dem Spiel?
   utter_submit_survey:
   - text: Super, ich habe alles. Danke, dass du uns dabei hilfst, Lalo zu verbessern!
-  utter_submit:
-  - text: I will now order a pizza for you!
-  utter_pizza_slots:
-  - text: I will order a {pizza_size} {pizza_type} pizza.
-  utter_ask_continue:
-  - text: Are you sure you want to stop the form?
-  utter_ask_pizza_size:
-  - text: What size would you like your pizza to be?
-  utter_ask_pizza_type:
-  - text: What kind of pizza would you like to buy?
   utter_qat/qatar:
   - buttons:
     - payload: winter_wm
@@ -403,17 +382,18 @@ responses:
   - buttons:
     - payload: /katar_critics
       title: Kritik an der WM
-    text: '**Menschenrechte** sind Regeln die für alle Menschen auf der Welt gelten sollen. Beispielsweise verbieten die Menschenrechte Sklaverei und Folter. Die Regierung von Katar hält sich nur wenig an diese Menschenrechte. Zum Beispiel unterdrücken Sie Frauen, verhaften Homosexuelle und foltern Kritiker. Daher finden viele Menschen es nicht ok, wenn so ein Land eine Fußball-WM ausrichten darf.'
+    text: '**Menschenrechte** sind Regeln, die für alle Menschen auf der Welt gelten sollen. Die Menschenrechte verbieten Sklaverei und Folter. Die Regierung von Katar hält sich nur wenig an diese Menschenrechte. Zum Beispiel unterdrücken sie Frauen, verhaften Homosexuelle und foltern Kritiker. Daher finden viele Menschen es nicht gut, wenn so ein Land eine Fußball-WM ausrichten darf.'
   utter_qat/costs:
   - buttons:
     - payload: /katar_critics
       title: Kritik an der WM?
-    text: Die WM in Katar wird über 150 Milliarden Euro kosten. Keine andere WM oder sonstige Veranstaltung bisher hat jemals so viel Geld gekostet.
+    text: Die WM in Katar wird über 150 Milliarden Euro kosten. Keine andere WM hat jemals so viel Geld gekostet.
+    image: 'https://www.alfa-bot.de/wp-content/uploads/2022/11/kosten_wm.png'
   utter_qat/worker_situation:
   - buttons:
     - payload: /katar_critics
       title: Kritik an der WM
-    text: Es gibt ungefähr 2,3 Millionen Gastarbeiter in Katar. Die Gastarbeiter müssen oft bei über 40 Grad länger als 10 Stunden schwer arbeiten. Sie bekommen während der Arbeit nichts zu essen oder zu trinken, kriegen wenig Geld, kein eigenes Zimmer, können nicht ausreisen und sich nicht beschweren. Wegen dieser Zustände sind bereits viele Arbeiter gestorben.
+    text: 'Es gibt ungefähr 2,3 Millionen Gastarbeiter in Katar. Die Gastarbeiter müssen oft bei über 40 Grad länger als 10 Stunden schwer arbeiten. Sie bekommen während der Arbeit wenig zu essen oder zu trinken und sehr wenig Geld. Sie haben kein eigenes Zimmer, können nicht ausreisen und sich nicht beschweren. Wegen dieser Zustände sind bereits sehr viele Arbeiter gestorben.'
   utter_qat/boycott:
   - buttons:
     - payload: /boycott_pro
@@ -422,7 +402,7 @@ responses:
       title: Aussage gegen die WM
     - payload: /katar_critics
       title: Kritik an der WM
-    text: Manche Menschen meinen, man sollte die WM in Katar boykottieren. Das heißt, die Spiele nicht gucken oder die Mannschaften sollten gar nicht erst spielen. Andere sehen in dem Turnier auch Chancen. Interessieren dich Aussagen dafür oder dagegen? Hier findest du einen [Filmbeitrag über Fußball und Katar](https://www.sportschau.de/newsticker/dpa-katar-wm-spaltet-fussball-nation-fast-die-haelfte-fuer-boykott-100.html)
+    text: 'Viele Menschen in Deutschland meinen, man sollte die WM in Katar boykottieren. Das heißt, die Spiele nicht gucken oder die Mannschaften sollten gar nicht erst spielen. Andere sehen in dem Turnier auch Chancen. Interessieren dich Aussagen dafür oder dagegen? Hier findest du einen [Filmbeitrag über Fußball und Katar](https://www.sportschau.de/newsticker/dpa-katar-wm-spaltet-fussball-nation-fast-die-haelfte-fuer-boykott-100.html)'
   utter_wm/games_tv:
   - text: Du kannst die Spiele im Fernsehen oder im Internet gucken. Die Sender ARD und ZDF übertragen alle Spiele der deutschen Nationalmannschaft. Auf MagentaTV von der Telekom kannst du alle Spiele gucken. MagentaTV ist aber ein kostenpflichtiges Angebot.
   utter_qat/boycott_pro:
@@ -431,7 +411,7 @@ responses:
       title: Aussagen für die WM?
     - payload: /katar_critics
       title: Kritik an der WM
-    text: „*Die FIFA hat die Augen vor vorhersehbaren Menschenrechtsverletzungen verschlossen und diese nicht gestoppt. Sie hat unbestreitbar zu weit verbreiteten Menschenrechtsverstößen gegen Arbeitsmigrant*innen beigetragen.*“ Katja Müller-Fahlbusch - Expertin für die Region Naher Osten und Nordafrika bei Amnesty International in Deutschland.
+    text: '*„Die FIFA hat die Augen vor vorhersehbaren Menschenrechtsverletzungen verschlossen und diese nicht gestoppt. Sie hat unbestreitbar zu weit verbreiteten Menschenrechtsverstößen gegen Arbeitsmigrant**innen beigetragen.“* Katja Müller-Fahlbusch - Expertin für die Region Naher Osten und Nordafrika bei Amnesty International in Deutschland.'
     image: https://www.alfa-bot.de/wp-content/uploads/2022/09/Katja-Mueller-Fahlbusch.jpeg
   utter_qat/boycott_contra:
   - buttons:
@@ -442,7 +422,18 @@ responses:
     text: '"*Wir haben uns mit vielen Nichtregierungsorganisationen getroffen, mit dem katarischen Fußballverband, aber auch mit Migrantinnen und Migranten. Eine Hauptaussage von denen war: Es ist hervorragend, dass es keinen Boykott gibt. Durch den Fokus auf das Land ist bei der Verbesserung der Arbeitsbedingungen sehr viel erreicht worden*", berichtete die DFB-Generalsekretärin Heike Ullrich von ihren Gesprächen *(Foto: ©Agentur 54 Grad/Felix König)*.'
     image: https://www.alfa-bot.de/wp-content/uploads/2022/09/Heike_Ullrich.jpeg
   utter_wm/wm_time:
-  - text: Die WM beginnt am 20. November und endet am 18. Dezember. Sie dauert also 29 Tage.
+  - buttons:
+    - payload: Wann ist die Gruppenphase?
+      title: Gruppenphase
+    - payload: Wann ist das Achtelfinale?
+      title: Achtelfinale
+    - payload: Wann ist das Viertelfinale?
+      title: Viertelfinale
+    - payload: Wann ist das Halbfinale?
+      title: Halbfinale
+    - payload: Wann ist das Finale?
+      title: Finale
+    text: Die WM beginnt am 20. November und endet am 18. Dezember. Sie dauert also 29 Tage.
   utter_qat/winter_wm:
   - text: Die WM findet im Winter statt, weil es im Sommer in Katar bis zu 50 Grad heiß wird. Das ist zu heiß, um Profi-Fußball zu spielen.
   utter_qat/timetable:
@@ -476,7 +467,7 @@ responses:
       title: Spieler wechseln
     - payload: Torwart wechseln
       title: Torwart wechseln
-    text: Jeder Trainer darf für seine Mannschaft bis zu 26 Spieler für die WM benennen. Es müssen mindestens 23 Spieler sein. Zu Beginn eines Spiels stehen 22 Spieler auf dem Platz. Jede Mannschaft hat einen Torwart und 10 Feldspieler. Die Spieler auf dem Feld setzen sich aus Abwehrspielern, Mittelfeldspielern und Stürmern zusammen.
+    text: Jeder Trainer darf für seine Mannschaft bis zu 26 Spieler für die WM benennen. Es müssen mindestens 23 Spieler sein. Zu Beginn eines Spiels stehen von jeder Mannschaft 11 Spieler auf dem Platz. Jede Mannschaft hat einen Torwart und 10 Feldspieler. Die Spieler auf dem Feld setzen sich aus Abwehrspielern, Mittelfeldspielern und Stürmern zusammen.
   utter_rule/exchangePlayer:
   - buttons:
     - payload: Spieler wechseln
@@ -498,38 +489,38 @@ responses:
       title: Reservespieler
     - payload: Spieler wechseln
       title: Spieler wechseln
-    text: Der Torwart ist ein besonderer Spieler beim Fußball. Er kann durch einen anderen Torwart ausgewechselt werden. Es darf aber auch jeder Feldspieler mit dem Torwart wechseln. Auch diesen Wechsel muss man dem Schiedsrichter sagen.
+    text: 'Der Torwart ist ein besonderer Spieler beim Fußball, weil er den Ball auch in die Hände nehmen darf.\n Er kann durch einen anderen Torwart ausgewechselt werden. Es darf aber auch jeder Feldspieler mit dem Torwart wechseln. Auch diesen Wechsel muss man dem Schiedsrichter sagen.'
   utter_rule/fieldsize1:
+  - buttons:
+    - payload: Feld Untergrund
+      title: Bodenbelag
+    - payload: Feld Größe
+      title: Größe
+    - payload: Feld Zonen
+      title: Bereiche und Linien
+    text: Über Spielfelder habe ich mehrere Infos. Was interessiert dich?
+  utter_field_underground:
+  - buttons:
+    - payload: Feld Größe
+      title: Größe
+    - payload: Feld Zonen
+      title: Bereiche und Linien
+    text: Das Spielfeld bei der WM besteht in jedem Stadion aus Rasen. Der wird einige Wochen vor dem Turnier in den Stadien ausgerollt.
+  utter_field_size:
+  - buttons:
+    - payload: Feld Untergrund
+      title: Bodenbelag
+    - payload: Feld Zonen
+      title: Bereiche und Linien
+    text: Ein Fußballfeld hat eine vorgeschriebene Größe. Das Spielfeld muss eine Länge zwischen 100 und 110 Meter betragen. Die geforderte Breite liegt zwischen 64 und 75 Meter.
+  utter_field_zones:
     - buttons:
-        - payload: field_underground
-          title: Bodenbelag
-        - payload: field_size
-          title: Größe
-        - payload: field_zones
-          title: Bereiche und Linien
-      text: Über Spielfelder habe ich mehrere Infos. Was interessiert dich?
-  utter_rule/field_underground:
-    - buttons:
-      - payload: field_size
+      - payload: Feld Untergrund
+        title: Bodenbelag
+      - payload: Feld Größe
         title: Größe
-      - payload: field_zones
-        title: Bereiche und Linien
-      text: Das Spielfeld bei der WM besteht in jedem Stadion aus Rasen. Der wird einige Wochen vor dem Turnier in den Stadien ausgerollt.
-  utter_rule/field_size:
-    - buttons:
-        - payload: field_underground
-          title: Bodenbelag
-        - payload: field_zones
-          title: Bereiche und Linien
-      text: Ein Fußballfeld hat immer eine vorgeschriebene Größe. Das Spielfeld muss eine Länge zwischen 100 und 110 Meter betragen. Die geforderte Breite liegt zwischen 64 und 75 Meter.
-  utter_rule/field_zones:
-      - buttons:
-          - payload: field_underground
-            title: Bodenbelag
-          - payload: field_size
-            title: Größe
-        text: Der Fußballplatz besteht aus vielen Zonen mit verschiedenen Linien. Die beiden längeren Begrenzungslinien sind die Seitenlinien, die kürzeren, auf denen die Tore stehen, sind die Torlinien. Die Mittellinie teilt das Spielfeld in zwei Hälften. In jeder Hälfte gibt es einen Strafraum.
-        image: https://www.alfa-bot.de/wp-content/uploads/2022/11/fussballspielfeld.jpeg
+      text: Der Fußballplatz besteht aus vielen Zonen mit verschiedenen Linien. Die beiden längeren Begrenzungslinien sind die Seitenlinien, die kürzeren, auf denen die Tore stehen, sind die Torlinien. Die Mittellinie teilt das Spielfeld in zwei Hälften. In jeder Hälfte gibt es einen Strafraum.
+      image: https://www.alfa-bot.de/wp-content/uploads/2022/11/fussballspielfeld.jpeg
   utter_rule/ball:
   - buttons:
     - payload: Al Rihla
@@ -588,7 +579,7 @@ responses:
       title: Linienrichter
     - payload: Video-Assistent
       title: Video-Assistent
-    text: Der Schiedsrichter ist der Leiter eines Fußballspiels. Er sorgt dafür, dass alle Regeln eingehalten werden. Der Schiedsrichter kann die Spieler bestrafen. Außerdem entscheidet er, ob ein Tor zählt oder nicht. Der Schiedsrichter läuft auf dem Platz hin und her und gibt Signale mit einer Pfeife. Die Entscheidungen eines Schiedsrichters sind fest und werden nicht nachträglich geändert.
+    text: "Der Schiedsrichter ist der Leiter eines Fußballspiels. Er sorgt dafür, dass alle Regeln eingehalten werden. Der Schiedsrichter kann die Spieler bestrafen. Außerdem entscheidet er, ob ein Tor zählt oder nicht.\nDer Schiedsrichter läuft auf dem Platz hin und her und gibt Signale mit einer Pfeife. Die Entscheidungen eines Schiedsrichters sind fest und werden nicht nachträglich geändert."
     image: https://www.alfa-bot.de/wp-content/uploads/2022/11/schiedsrichter.png
   utter_rule/refereeAssistant:
   - buttons:
@@ -596,7 +587,7 @@ responses:
       title: Schiedsrichter
     - payload: Video-Assistent
       title: Video-Assistent
-    text: Linienrichter sind Assistenten des Schiedsrichters. Meistens gibt es zwei Linienrichter. Sie halten sich am Rand des Spielfelds in der Nähe der 16 Meter-Räume auf. Sie achten vor allem auf Abseits, Aus und Tore. Linienrichter haben immer eine Flagge dabei. Die heben sie hoch, um ein Abseits, ein Tor oder einen Ball außerhalb des Spielfelds anzuzeigen. Damit der Schiedsrichter das auch mitbekommt, trägt er ein Armband. Dieses Armband vibriert, wenn ein Linienrichter ihm ein Signal gibt.
+    text: "Linienrichter sind Assistenten des Schiedsrichters. Meistens gibt es zwei Linienrichter. Sie halten sich am Rand des Spielfelds in der Nähe der 16 Meter-Räume auf. Sie achten vor allem auf Abseits, Aus und Tore.\nLinienrichter haben immer eine Flagge dabei. Die heben sie hoch, um ein Abseits, ein Tor oder einen Ball außerhalb des Spielfelds anzuzeigen. Damit der Schiedsrichter das auch mitbekommt, trägt er ein Armband. Dieses Armband vibriert, wenn ein Linienrichter ihm ein Signal gibt."
     image: https://www.alfa-bot.de/wp-content/uploads/2022/11/linienrichter.png
   utter_rule/videoAssistant:
   - buttons:
@@ -612,15 +603,14 @@ responses:
   - buttons:
     - payload: Welche Strafen gibt es?
       title: Strafen
-    - payload: /freekick
+    - payload: '/freekick'
       title: Freistoß
     text: Der Schiedsrichter entscheidet auf Foulspiel, wenn ein Spieler von einem Gegner regelwidrig behandelt wird. Das kann durch stoßen, treten, festhalten oder andere Aktionen sein.
   utter_rule/punishment:
   - buttons:
     - payload: /freekick
       title: Freistoß
-    text: 'Der Schiedsrichter bestraft Spieler, die ein Foul begehen. Dafür hat der mehrere Möglichkeiten: *Ermahnen* mit einer *gelben Karte* verwarnen mit einer *roten Karte* vom Platz schicken. Bekommt ein Spieler in einem Spiel zwei gelbe Karten, ist das wie eine rote Karte. Nach einem Foul gibt es meistens einen Freistoß.'
-    image: https://www.alfa-bot.de/wp-content/uploads/2022/11/freistoss.png
+    text: "Der Schiedsrichter bestraft Spieler, die ein Foul begehen. Dafür hat er mehrere Möglichkeiten:\n* Ermahnen\n* mit einer *gelben Karte* verwarnen\n* mit einer *roten Karte* vom Platz schicken\nBekommt ein Spieler in einem Spiel zwei gelbe Karten, ist das wie eine rote Karte. Nach einem Foul gibt es meistens einen Freistoß."
   utter_rule/throw_in:
   - text: Wenn ein Spieler den Ball über die Seitenlinie des Spielfelds befördert, bekommt die gegnerische Mannschaft einen Einwurf zugesprochen. Bei einem Einwurf muss der Ball mit beiden Händen gehalten und von hinten über den Kopf geworfen werden. Der Spieler muss mit beiden Beinen außerhalb des Spielfelds stehen.
   utter_rule/penalty_kick:
@@ -635,6 +625,7 @@ responses:
     - payload: Nein
       title: Nein
     text: Bei einem Regelverstoß bekommt die gegnerische Mannschaft einen Freistoß. Dieser darf ohne Behinderung des Gegners gespielt werden. In den meisten Fällen gibt der Schiedsrichter den Ball durch einen Pfiff frei. Hast du schon mal etwas von einer *Mauer* im Fußball gehört?
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/11/freistoss.png
   utter_freekick_wall:
   - text: Bei einem Freistoß in der Nähe des Tores, stellt der Torwart der verteidigenden Mannschaft eine Mauer aus Spielern auf. So kann der Schütze nicht direkt auf das Tor schießen.
   utter_qualify:
@@ -645,15 +636,15 @@ responses:
       title: Nein, ich weiß Bescheid
     text: 202 Mannschaften aus der ganzen Welt wollten in Katar mitspielen. Da aber nur 32 Mannschaften in Katar spielen können, mussten sie sich qualifizieren. Willst du wissen, welche Mannschaften in Katar dabei sind?
   utter_qualified_teams:
-  - text: 'Folgende Länder spielen bei der WM mit: Deutschland, Dänemark, Frankreich, Belgien, Kroatien, Spanien, Serbien, Schweiz, England, Niederlande, Portugal, Polen, Wales, Ghana, Senegal, Tunesien, Marokko, Kamerun, Katar (weil es Gastgeber ist), Australien, Iran, Südkorea, Japan, Saudi-Arabien, Brasilien, Argentinien, Ecuador, Uruguay, Kanada, Mexiko, USA, Costa Rica. Jedes Land hat eine eigene Flagge und Nationalhymne. Schaue dir [hier alle Flaggen der Welt](https://www.welt-flaggen.de/) sehen. Höre dir [hier die Nationalhymnen](https://www.hymne-national.com/de/) an.'
+  - text: "Folgende Länder spielen bei der WM mit: \n Deutschland, Dänemark, Frankreich, Belgien, Kroatien, Spanien, Serbien, Schweiz, England, Niederlande, Portugal, Polen, Wales, Ghana, Senegal, Tunesien, Marokko, Kamerun, Katar (weil es Gastgeber ist), Australien, Iran, Südkorea, Japan, Saudi-Arabien, Brasilien, Argentinien, Ecuador, Uruguay, Kanada, Mexiko, USA, Costa Rica.\n Jedes Land hat eine eigene Flagge und Nationalhymne. Schaue dir [hier alle Flaggen der Welt](https://www.welt-flaggen.de/) sehen.\n Höre dir [hier die Nationalhymnen](https://www.hymne-national.com/de/) an."
   utter_tournament_mode:
-  - text: Das WM-Turnier im Winter 2022 nennt man auch Endrunde. Dort spielen die besten 32 Nationalmannschaften der Welt. Die Endrunde besteht aus einer **Gruppenphase** und einer **K.O.-Runde**. Möchtest du mehr darüber wissen?
+  - text: 'Das WM-Turnier im Winter 2022 nennt man auch Endrunde. Dort spielen die besten 32 Nationalmannschaften der Welt. Die Endrunde besteht aus einer **Gruppenphase** und einer **K.O.-Runde**.\n Möchtest du mehr darüber wissen?'
   utter_tournament_mode_group_phase:
-  - text: In der **Gruppenphase** der WM spielen 32 Mannschaften. Es gibt 8 Gruppen mit jeweils 4 Mannschaften. Deutschland spielt mit Japan, Spanien und Costa Rica in *Gruppe E*. In den Gruppen spielen alle Mannschaften einmal gegeneinander. Die beiden besten Mannschaften pro Gruppe kommen in die K.O.-Runde. Mehr dazu?
+  - text: 'In der **Gruppenphase** der WM spielen 32 Mannschaften. Es gibt 8 Gruppen mit jeweils 4 Mannschaften. Deutschland spielt mit Japan, Spanien und Costa Rica in *Gruppe E*. In den Gruppen spielen alle Mannschaften einmal gegeneinander. Die beiden besten Mannschaften pro Gruppe kommen in die K.O.-Runde. \n Mehr dazu?'
   utter_tournament_mode_ko:
-  - text: Nach der Gruppenphase einer Weltmeisterschaft geht es in die KO-Phase des Turniers. Sie wird KO-Phase genannt, da jede Mannschaft ausscheidet, die ein Spiel verliert. Bei Unentschieden geht es in die Verlängerung oder ins Elfmeterschießen, bis ein Gewinner und ein Verlierer feststeht. Mehr zu K.O.-Runden?
+  - text: 'Nach der Gruppenphase einer Weltmeisterschaft geht es in die KO-Phase des Turniers. Sie wird KO-Phase genannt, da jede Mannschaft ausscheidet, die ein Spiel verliert. Bei Unentschieden geht es in die Verlängerung und vielleicht sogar ins Elfmeterschießen, bis ein Gewinner feststeht.\n Mehr zu K.O.-Runden?'
   utter_tournament_mode_ko_rounds:
-  - text: Die K.O.-Runden beginnen mit dem Achtel-Finale. Hier spielen die Sieger aus den Gruppen A bis H gegen die Zweiten aus einer anderen Gruppe. Die Sieger der Achtel-Finale spielen im Viertelfinale gegeneinander und anschließend treffen die vier Sieger dort in den Halbfinal-Spielen aufeinander. Nach dem Halbfinale spielen die beiden Verlierer um Platz 3 und die beiden Sieger im Finale um Platz 1 und 2.
+  - text: 'Die K.O.-Runden beginnen mit dem Achtel-Finale. Hier spielen die Sieger aus den 8 Gruppen A bis H gegen die Zweiten aus einer anderen Gruppe. Die 8 Sieger der Achtel-Finals spielen im Viertelfinale gegeneinander. Die vier Sieger dort treffen in zwei Halbfinal-Spielen aufeinander. Nach den Halbfinal-Spielen kämpfen die beiden Verlierer um Platz 3 und die beiden Sieger im Finale um Platz 1.'
   utter_tournament_no:
   - text: In Ordnung. Wenn du noch etwas anderes wissen möchtest, frag mich gerne.
   utter_something_else:
@@ -667,17 +658,21 @@ responses:
   utter_chitchat/turing:
   - text: Du willst mich testen? Dafür gibt es den Turing-Test. Der Turing-Test stammt vom britischen Mathematiker Alan Turing. Turing schlug diesen Test vor, um einen Richtwert für Künstliche Intelligenz zu erschaffen. Solange du mich etwas fragst, was ich weiß, könnte ich den Test bestehen. Aber bei anderen Fragen bin ich raus.
   utter_chitchat/kontakt:
-  - text: 'Meine Entwickler erreichst du am ALFA-Telefon: [0800 53 53 44 55](tel:080053534455), im [Web](https://alfa-telefon.de) oder schreibe ihnen eine [Mail](mailto:info@alfa-telefon.de)'
+  - text: 'Meine Entwickler findest du im [Web](https://www.alfa-bot.de). Oder schreibe ihnen von hier aus eine [Mail](mailto:r.haeder@alphabetisierung.de).'
   utter_chitchat/nettiquette:
   - text: Das war keine nette Eingabe oder? Ich rede gerne mit dir, aber bitte sei freundlich 🙃
   utter_chitchat/themen:
   - buttons:
-    - payload: Wann beginnt die WM?
-      title: Wann beginnt die WM?
-    - payload: In welcher Gruppe spielt Deutschland?
-      title: In welcher Gruppe spielt Deutschland?
-    - payload: Was weißt du über Qatar?
-      title: Probleme mit Qatar
+    - payload: Was ist Abseits?
+      title: Was ist Abseits?
+    - payload: Was macht der Schiedsrichter?
+      title: Was macht der Schiedsrichter?
+    - payload: Was ist ein Foul?
+      title: Was ist ein Foul?
+    - payload: Wie viele Spieler?
+      title: Wie viele Spieler?
+    - payload: Was sind Geisterspiele?
+      title: Was sind Geisterspiele?
     text: Hier sind Beispiele, was du mich fragen kannst 🙃
   utter_ghostGame:
   - buttons:
@@ -687,7 +682,7 @@ responses:
       title: Zu viel Gewalt von Fans
     - payload: Ja
       title: Kontaktbeschränkungen
-    text: Von einem Geisterspiel spricht man, wenn keine Zuschauer ins Stadion dürfen. Das Stadion ist also so leer wie die Straßen zur Geisterstunde. Solche Geisterspiele werden meistens als Strafmaßnahme angeordnet, wenn Fans des Heimvereins bei einem vorherigen Spiel besonders stark gegen Regeln verstoßen haben. Diese Bestrafungen sind für die Heimmannschaften besonders ärgerlich, da sie nichts dafür können und trotzdem auf die Einnahmen durch Tickets sowie Essen und Trinken verzichten müssen. Weißt du, aus welchem Grund 2020 und 2021 viele Spiele Geisterspiele waren?
+    text: "Von einem Geisterspiel spricht man, wenn keine Zuschauer ins Stadion dürfen. Das Stadion ist also so leer wie die Straßen zur Geisterstunde. Solche Geisterspiele werden meistens als Strafmaßnahme angeordnet, wenn Fans des Heimvereins bei einem vorherigen Spiel besonders stark gegen Regeln verstoßen haben.\nDiese Bestrafungen sind für die Heimmannschaften besonders ärgerlich, da sie nichts dafür können und trotzdem auf die Einnahmen durch Tickets sowie Essen und Trinken verzichten müssen. Weißt du, aus welchem Grund 2020 und 2021 viele Spiele Geisterspiele waren?"
   utter_ghostGame_right:
   - text: Richtig, wegen der Corona-Pandemie durften keine Zuschauer kommen. Das galt übrigens auch für andere Sportarten.
   utter_ghostGame_wrong:
@@ -745,6 +740,7 @@ actions:
 - utter_ghostGame_wrong
 - utter_goodbye
 - utter_greet
+- utter_greet_buttons
 - utter_i_know
 - utter_iamabot
 - utter_offside1
@@ -753,12 +749,13 @@ actions:
 - utter_offside_dau
 - utter_offside_right
 - utter_offside_wrong
-- utter_pizza_slots
 - utter_qat
 - utter_qualified_teams
 - utter_qualify
 - utter_rule
-- utter_submit
+- utter_field_underground
+- utter_field_size
+- utter_field_zones
 - utter_submit_survey
 - utter_tournament_mode
 - utter_tournament_mode_group_phase
@@ -802,7 +799,3 @@ forms:
   group_ranking_form:
     required_slots:
     - group
-  simple_pizza_form:
-    required_slots:
-    - pizza_size
-    - pizza_type

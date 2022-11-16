@@ -423,6 +423,8 @@ nlu:
     - Wer spielt bei der WM mit?
     - Teams bei der WM?
     - Wer spielt bei der WM?
+    - Welche Länder spielen bei der WM?
+    - Länder bei der Weltmeisterschaft
     - Teams WM.
 - intent: rule/passiveOffSide
   examples: |
@@ -514,6 +516,9 @@ nlu:
     - Wann spielen Frankreich und Deutschland gegeneinander?
     - Wann ist das Eröffnungsspiel
     - Wann spielt Katar?
+    - Wann spiel Mexiko?
+    - Wann spiel Deuschland?
+    - Wann Spiele Schland
 - intent: qat/winter_wm
   examples: |
     - winter_wm
@@ -564,15 +569,22 @@ nlu:
     - Welchen Untergrund hat ein Spielfeld?
     - Welche Zonen gibt es auf einem Spielfeld?
     - Wo ist die Auslinie?
-- intent: rule/field_underground
+- intent: field_underground
   examples: |
     - field_underground
-- intent: rule/field_size
+    - Feld Untergrund
+    - Untergrund
+    - Bodenbelag
+- intent: field_size
   examples: |
     - field_size
-- intent: rule/field_zones
+    - Feld Größe
+    - Größe
+- intent: field_zones
   examples: |
     - field_zones
+    - Feld Zonen
+    - Bereiche und Linien
 - intent: qat/boycott_contra
   examples: |
     - Wäre es nicht besser, die WM doch zu gucken?
@@ -628,6 +640,17 @@ nlu:
     - Kann ich die Spiele im Fernsehen sehen?
     - Wo kann ich die Spiele schauen?
     - Wie kann ich die Spiele verfolgen?
+- intent: chitchat/themen
+  examples: |
+    - Welche Theman hast du für mich?
+    - Hilfe
+    - Welche Themen?
+    - Themen?
+    - Temen?
+    - Vorschlag
+    - Was kann ich dich fragen?
+    - Hast du Vorschläge für mich?
+    - Vorschläge
 - intent: chitchat/howAreYou
   examples: |
     - wie geht es dir?
@@ -736,6 +759,31 @@ nlu:
     - [48341](lot_number)
     - [48565](lot_number)
     - [911](lot_number)
+    - [1092](lot_number)
+    - [1126](lot_number)
+    - [1263](lot_number)
+    - [1518](lot_number)
+    - [1645](lot_number)
+    - [1931](lot_number)
+    - [1932](lot_number)
+    - [2063](lot_number)
+    - [2147](lot_number)
+    - [2656](lot_number)
+    - [3094](lot_number)
+    - [3310](lot_number)
+    - [3349](lot_number)
+    - [3507](lot_number)
+    - [4098](lot_number)
+    - [4297](lot_number)
+    - [4667](lot_number)
+    - [4935](lot_number)
+    - [5010](lot_number)
+    - [5025](lot_number)
+    - [5050](lot_number)
+    - [5299](lot_number)
+    - [5320](lot_number)
+    - [5325](lot_number)
+    - [5382](lot_number)
 - intent: rate
   examples: |
     - Die Antworten waren [super](rating)
