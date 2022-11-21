@@ -250,7 +250,7 @@ responses:
   - buttons:
     - payload: Ja
       title: Weiter
-    text: Schießt der gelbe Spieler den Ball zu seinem Mitspieler, *bevor* dieser Mitspieler hinter die Spieler der gegnerischen Mannschaft läuft, ist es kein Abseits. Das gilt überall in der Spielhälfte der gegnerischen Mannschaft.
+    text: Schießt der gelbe Spieler den Ball zu seinem Mitspieler, *bevor* dieser Mitspieler hinter die Spieler der gegnerischen Mannschaft läuft, ist es kein Abseits. Außerdem gibt es Abseits nur in der gegnerischen Hälfte.
     image: https://www.alfa-bot.de/wp-content/uploads/2022/11/kein_abseits.png
   utter_offside3:
   - buttons:
@@ -327,7 +327,7 @@ responses:
   - buttons:
       - payload: Kein Kommentar
         title: Kein Kommentar
-    text: Was hat dir an Lalo dir gut gefallen? Gib deine Antwort einfach unten ein.
+    text: Was hat dir an Lalo gut gefallen? Gib deine Antwort einfach unten ein.
   utter_ask_critic_neg:
   - buttons:
       - payload: Kein Kommentar
@@ -489,7 +489,7 @@ responses:
       title: Reservespieler
     - payload: Spieler wechseln
       title: Spieler wechseln
-    text: 'Der Torwart ist ein besonderer Spieler beim Fußball, weil er den Ball auch in die Hände nehmen darf.\n Er kann durch einen anderen Torwart ausgewechselt werden. Es darf aber auch jeder Feldspieler mit dem Torwart wechseln. Auch diesen Wechsel muss man dem Schiedsrichter sagen.'
+    text: "Der Torwart ist ein besonderer Spieler beim Fußball, weil er den Ball auch in die Hände nehmen darf.\nEr kann durch einen anderen Torwart ausgewechselt werden. Es darf aber auch jeder Feldspieler mit dem Torwart wechseln. Auch diesen Wechsel muss man dem Schiedsrichter sagen."
   utter_rule/fieldsize1:
   - buttons:
     - payload: Feld Untergrund
@@ -610,7 +610,7 @@ responses:
   - buttons:
     - payload: /freekick
       title: Freistoß
-    text: "Der Schiedsrichter bestraft Spieler, die ein Foul begehen. Dafür hat er mehrere Möglichkeiten:\n* Ermahnen\n* mit einer *gelben Karte* verwarnen\n* mit einer *roten Karte* vom Platz schicken\nBekommt ein Spieler in einem Spiel zwei gelbe Karten, ist das wie eine rote Karte. Nach einem Foul gibt es meistens einen Freistoß."
+    text: "Der Schiedsrichter bestraft Spieler, die ein Foul begehen. Dafür hat er mehrere Möglichkeiten. \n* Ermahnen\n* mit einer *gelben Karte* verwarnen\n* mit einer *roten Karte* vom Platz schicken\nBekommt ein Spieler in einem Spiel zwei gelbe Karten, ist das wie eine rote Karte. Nach einem Foul gibt es meistens einen Freistoß."
   utter_rule/throw_in:
   - text: Wenn ein Spieler den Ball über die Seitenlinie des Spielfelds befördert, bekommt die gegnerische Mannschaft einen Einwurf zugesprochen. Bei einem Einwurf muss der Ball mit beiden Händen gehalten und von hinten über den Kopf geworfen werden. Der Spieler muss mit beiden Beinen außerhalb des Spielfelds stehen.
   utter_rule/penalty_kick:
@@ -636,7 +636,7 @@ responses:
       title: Nein, ich weiß Bescheid
     text: 202 Mannschaften aus der ganzen Welt wollten in Katar mitspielen. Da aber nur 32 Mannschaften in Katar spielen können, mussten sie sich qualifizieren. Willst du wissen, welche Mannschaften in Katar dabei sind?
   utter_qualified_teams:
-  - text: "Folgende Länder spielen bei der WM mit: \n Deutschland, Dänemark, Frankreich, Belgien, Kroatien, Spanien, Serbien, Schweiz, England, Niederlande, Portugal, Polen, Wales, Ghana, Senegal, Tunesien, Marokko, Kamerun, Katar (weil es Gastgeber ist), Australien, Iran, Südkorea, Japan, Saudi-Arabien, Brasilien, Argentinien, Ecuador, Uruguay, Kanada, Mexiko, USA, Costa Rica.\n Jedes Land hat eine eigene Flagge und Nationalhymne. Schaue dir [hier alle Flaggen der Welt](https://www.welt-flaggen.de/) sehen.\n Höre dir [hier die Nationalhymnen](https://www.hymne-national.com/de/) an."
+  - text: "Folgende Länder spielen bei der WM mit: \n Deutschland, Dänemark, Frankreich, Belgien, Kroatien, Spanien, Serbien, Schweiz, England, Niederlande, Portugal, Polen, Wales, Ghana, Senegal, Tunesien, Marokko, Kamerun, Katar (weil es Gastgeber ist), Australien, Iran, Südkorea, Japan, Saudi-Arabien, Brasilien, Argentinien, Ecuador, Uruguay, Kanada, Mexiko, USA, Costa Rica.\n Jedes Land hat eine eigene Flagge und Nationalhymne. Schaue dir [hier alle Flaggen der Welt](https://www.welt-flaggen.de/) an. \n Höre dir [hier die Nationalhymnen](https://www.hymne-national.com/de/) an."
   utter_tournament_mode:
   - text: 'Das WM-Turnier im Winter 2022 nennt man auch Endrunde. Dort spielen die besten 32 Nationalmannschaften der Welt. Die Endrunde besteht aus einer **Gruppenphase** und einer **K.O.-Runde**.\n Möchtest du mehr darüber wissen?'
   utter_tournament_mode_group_phase:
@@ -675,14 +675,7 @@ responses:
       title: Was sind Geisterspiele?
     text: Hier sind Beispiele, was du mich fragen kannst 🙃
   utter_ghostGame:
-  - buttons:
-    - payload: Nein
-      title: Es kamen keine Zuschauer
-    - payload: Nein
-      title: Zu viel Gewalt von Fans
-    - payload: Ja
-      title: Kontaktbeschränkungen
-    text: "Von einem Geisterspiel spricht man, wenn keine Zuschauer ins Stadion dürfen. Das Stadion ist also so leer wie die Straßen zur Geisterstunde. Solche Geisterspiele werden meistens als Strafmaßnahme angeordnet, wenn Fans des Heimvereins bei einem vorherigen Spiel besonders stark gegen Regeln verstoßen haben.\nDiese Bestrafungen sind für die Heimmannschaften besonders ärgerlich, da sie nichts dafür können und trotzdem auf die Einnahmen durch Tickets sowie Essen und Trinken verzichten müssen. Weißt du, aus welchem Grund 2020 und 2021 viele Spiele Geisterspiele waren?"
+  - text: "Von einem Geisterspiel spricht man, wenn keine Zuschauer ins Stadion dürfen. Das Stadion ist also so leer wie die Straßen zur Geisterstunde. Solche Geisterspiele werden meistens als Strafmaßnahme angeordnet, wenn Fans des Heimvereins bei einem vorherigen Spiel besonders stark gegen Regeln verstoßen haben.\nDiese Bestrafungen sind für die Heimmannschaften besonders ärgerlich, da sie nichts dafür können und trotzdem auf die Einnahmen durch Tickets sowie Essen und Trinken verzichten müssen."
   utter_ghostGame_right:
   - text: Richtig, wegen der Corona-Pandemie durften keine Zuschauer kommen. Das galt übrigens auch für andere Sportarten.
   utter_ghostGame_wrong:
@@ -700,7 +693,7 @@ responses:
           title: Nein
         - payload: Ja
           title: Ja
-      text: 'Stell dir vor: Der Angreifer läuft mit dem Ball am Fuß frei auf den Torwart zu und hat einen Verteidiger hinter sich. Der Verteidiger grätscht den Stürmer von hinten um, so dass der dieser keine Chance mehr hat die Situation abzuschließen. Meinst du, das ist eine Notbremse gewesen?'
+      text: 'Stell dir vor: Der Angreifer läuft mit dem Ball am Fuß frei auf den Torwart zu und hat einen Verteidiger hinter sich. Der Verteidiger grätscht den Stürmer von hinten um, so dass dieser keine Chance mehr hat die Situation abzuschließen. Meinst du, das ist eine Notbremse gewesen?'
   utter_emergency_followup_wrong:
     - text: 'Doch, das war eine Notbremse. Der Angreifer hatte nur noch den Torwart vor sich. Das war eine sehr gute Möglichkeit, um ein Tor zu schießen. Nur das Foul des Verteidigers hat ihn daran gehindert.'
   utter_emergency_followup_right:

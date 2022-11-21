@@ -948,8 +948,8 @@ class ActionSubmitSurvey(Action):
 
 # Custom action returning team phase
 class ActionTellPhase(Action):
-    phases = {"gruppenphase": "20. November bis 02. Dezember 2022", "achtelfinale": "vom 03. bis 06. Dezember",
-              "viertelfinale": "vom 09. und 10. Dezember 2022", "halbfinale": "am 13. und 14. Dezember 2022",
+    phases = {"gruppenphase": "20. November bis 2. Dezember 2022", "achtelfinale": "vom 3. bis 6. Dezember",
+              "viertelfinale": "am 9. und 10. Dezember 2022", "halbfinale": "am 13. und 14. Dezember 2022",
               "spiel um platz 3": "am 17. Dezember 2022", "platz 3": "am 17. Dezember 2022",
               "kleines finale": "am 17. Dezember 2022", "finale": "am 18. Dezember 2022"}
 
@@ -971,7 +971,7 @@ class ActionTellPhase(Action):
             if needle == "gruppenphase":
                 msg = f"Die Gruppenphase findet vom {self.phases[needle]} statt."
             else:
-                msg = f"Das {phase} findet {self.phases[needle]} statt."
+                msg = f"Das {phase} ist {self.phases[needle]}."
 
         dispatcher.utter_message(text=msg)
 
