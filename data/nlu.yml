@@ -509,6 +509,7 @@ nlu:
     - Was weißt du über die WM in Katar?
     - Was hat es mit der WM 2022 auf sich?
     - Was weißt du über die WM?
+    - Probleme mit Qatar
 - intent: qat/timetable
   examples: |
     - Wann spielt Deutschland?

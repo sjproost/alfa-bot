@@ -50,6 +50,7 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 from typing import List
 from bs4 import BeautifulSoup
+from requests.exceptions import HTTPError
 
 # Helper vars and classes
 # ----------------------------------
@@ -162,6 +163,25 @@ class TournamentTable:
 
 # Util functions
 # ----------------------------------
+
+# Tell a random joke
+def get_joke() -> str:
+    JOKE_URL = "https://witzapi.de/api/joke/"
+    msg = "Chuck Norris schreibt Software ohne Fehler"
+    try:
+        response = requests.get(JOKE_URL)
+        response.raise_for_status()
+        # access JSON content
+        jsonResponse = response.json()
+        joke = jsonResponse[0].get('text')
+        if joke is not None:
+            return joke
+
+    except HTTPError as http_err:
+        print(f'HTTP error occurred: {http_err}')
+    except Exception as err:
+        print(f'Error occurred: {err}')
+    return msg
 
 # Error-Printing
 def err_print(*args, **kwargs):
@@ -799,6 +819,72 @@ class ValidateScoreForm(FormValidationAction):
                                           f"Frage mich bitte nach einer anderen Mannschaft.")
             return {"team2": None}
 
+# Validate as_than_form
+class AsThanForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_as_than_form"
+
+    def validate_as(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        solution_as = str(slot_value).lower()
+        if solution_as != 'als':
+            dispatcher.utter_message(response="utter_test_as_wrong")
+            return {"as": None}
+        dispatcher.utter_message(text=f'Das ist richtig: "Meine Mutter ist älter *als* ich."')
+        return {"as": slot_value}
+
+    def validate_than(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        solution_than = str(slot_value).lower()
+        if solution_than != 'wie':
+            dispatcher.utter_message(response="utter_test_than_wrong")
+            return {"than": None}
+        dispatcher.utter_message(text=f'Das ist richtig: "Meine Freundin hat das gleiche Hobby *wie* ich."')
+        return {"than": slot_value}
+
+# Validate Nugget Apparently Seemingly
+class apparentlySeeminglyForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_apparently_seemingly_form"
+
+    def validate_seemingly(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: DomainDict,
+            firstTry=bool(True)
+    ) -> Dict[Text, Any]:
+        solution_seemingly = str(slot_value).lower()
+        if solution_seemingly != 'scheinbar':
+            dispatcher.utter_message(response="utter_test_seemingly_wrong")
+            return {"seemingly": None}
+        dispatcher.utter_message(text=f'Das ist richtig: Du vermutest, dass es scheinbar ein gutes Angebot ist. In Wahrheit könnte es aber Betrug sein.')
+        return {"seemingly": slot_value}
+
+    def validate_apparently(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        solution_apparently = str(slot_value).lower()
+        if solution_apparently != 'anscheinend':
+            dispatcher.utter_message(response="utter_test_apparently_wrong")
+            return {"apparently": None}
+        dispatcher.utter_message(text=f'Das ist richtig: Der Gast wusste wirklich nicht, dass Hummer teuer ist.')
+        return {"apparently": slot_value}
 
 # Custom Action Code
 # ----------------------------------
@@ -827,6 +913,24 @@ class ActionClearSlots(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         return [SlotSet("polling_num", None), SlotSet("polling_city", None)]
 
+class ActionClearAsThan(Action):
+    def name(self) -> Text:
+        return "action_clear_as_than"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        return [SlotSet("as", None), SlotSet("than", None)]
+
+class ActionClearSeeminglyApparently(Action):
+    def name(self) -> Text:
+        return "action_clear_seemingly_apparently"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        return [SlotSet("seemingly", None), SlotSet("apparently", None)]
+
 
 # Returns current time for Germany and Qatar
 class ActionTellTime(Action):
@@ -848,6 +952,19 @@ class ActionTellTime(Action):
         dispatcher.utter_message(text=msg)
         return []
 
+# Returns current time for Germany and Qatar
+class ActionTellJoke(Action):
+
+    def name(self) -> Text:
+        return "action_tell_joke"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        msg = get_joke()
+
+        dispatcher.utter_message(text=msg)
+        return []
 
 # Returns all teams in a given group at Fifa WM 2022
 class ActionTellTeams(Action):
@@ -861,7 +978,7 @@ class ActionTellTeams(Action):
         msg = 'Tut mir Leid, ich habe leider keine Antwort auf deine Frage'
 
         try:
-            create_csv_from_url('https://www.alfa-bot.de/wp-content/uploads/2022/09/gruppenWM2022.csv')
+            create_csv_from_url('https://www.alfa-bot.de/wp-content/uploads/2022/11/gruppenWM2022.csv')
 
             df = pd.read_csv('tempfile.csv', sep=';', header=0)
             res = get_teams(wm_final_group, df)
@@ -893,7 +1010,7 @@ class ActionTellGroup(Action):
             return [SlotSet("finals_team", None), SlotSet("group", str(res))]
 
         try:
-            create_csv_from_url('https://www.alfa-bot.de/wp-content/uploads/2022/09/gruppenWM2022.csv')
+            create_csv_from_url('https://www.alfa-bot.de/wp-content/uploads/2022/11/gruppenWM2022.csv')
             df = pd.read_csv('tempfile.csv', sep=';', header=0)
             res = get_group(team, df)
 

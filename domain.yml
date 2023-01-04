@@ -231,8 +231,8 @@ responses:
   - buttons:
       - payload: Wann beginnt die WM?
         title: Wann beginnt die WM?
-      - payload: In welcher Gruppe spielt Deutschland?
-        title: In welcher Gruppe spielt ...?
+      - payload: Welche Teams spielen bei der WM?
+        title: Welche Teams spielen bei der WM?
       - payload: Was weißt du über Qatar?
         title: Probleme mit Qatar
     text: Hier sind Beispiele, was du mich fragen kannst.
