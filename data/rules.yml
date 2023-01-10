@@ -2,166 +2,69 @@ version: "3.1"
 
 rules:
 
-# Rules without involving forms
-
-# Selectors
-- rule: respond to FAQs
+- rule: Say hello
   steps:
-    - intent: rule
-    - action: utter_rule
+  - intent: greet
+  - action: utter_greet
+  - action: utter_themen
+
+- rule: Show contact
+  steps:
+    - intent: kontakt
+    - action: utter_kontakt
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: Tell a joke
+  steps:
+    - intent: joke
+    - action: action_tell_joke
+
+- rule: respond to general questions
+  steps:
+    - intent: gen
+    - action: utter_gen
 
 - rule: respond to chitchat
   steps:
     - intent: chitchat
     - action: utter_chitchat
 
-- rule: respond to qatar questions
-  steps:
-    - intent: qat
-    - action: utter_qat
-
-- rule: respond to wm questions
-  steps:
-    - intent: wm
-    - action: utter_wm
-# Greeting
-- rule: Greet everyone
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - action: utter_greet_buttons
-
-# Goodbye
-- rule: Say goodbye anytime the user says goodbye
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
-
-# Bot Challenge
-- rule: Say 'I am a bot' anytime the user challenges
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
-
-# Tell time for Germany and Qatar (Needs Custom Action)
-- rule: Tell the time
-  steps:
-    - intent: inquire_time
-    - action: action_tell_time
-
-# Field properties
-- rule: Tell field size
-  steps:
-    - intent: field_size
-    - action: utter_field_size
-
-- rule: Tell field underground
-  steps:
-    - intent: field_underground
-    - action: utter_field_underground
-
-- rule: Tell field zones
-  steps:
-    - intent: field_zones
-    - action: utter_field_zones
-
-# Tell user when which phase of tournament takes place (Needs Custom Action)
-- rule: Tell championship phase
-  steps:
-    - intent: time_phase
-    - action: action_tell_phase
-
-- rule: fallback ask Google
-  steps:
-    - intent: nlu_fallback
-    - action: action_ask_google
-
-- rule: Out of scope ask Google
+- rule: out-of-scope
   steps:
     - intent: out_of_scope
-    - action: action_ask_google
+    - action: utter_out_of_scope
 
-# RULES WITH INVOLVING FORMS
-
-# Tell all group members after group of a team has been shown
-- rule: tell all group members
+- rule: nlu fallback
   steps:
-    - action: utter_ask_other_teams
-    - intent: affirm
-    - action: group_form
-    - active_loop: group_form
+    - intent: nlu_fallback
+    - action: utter_out_of_scope
 
-# Tell all teams from a tournament group
-- rule: Activate group_form
+- rule: ca test
   steps:
-    - intent: wm_finals_group
-    - action: group_form
-    - active_loop: group_form
-
-- rule: Submit group_form
-  condition:
-    - active_loop: group_form
-  steps:
-    - action: group_form
-    - active_loop: null
-    - slot_was_set:
-        - requested_slot: null
-    - action: action_tell_teams
-
-# Tell in which group a specific team plays
-- rule: Activate finals_team_form
-  steps:
-    - intent: wm_finals_team
-    - action: finals_team_form
-    - active_loop: finals_team_form
-
-- rule: Submit finals_team_form
-  condition:
-    - active_loop: finals_team_form
-  steps:
-    - action: finals_team_form
-    - active_loop: null
-    - slot_was_set:
-        - requested_slot: null
-    - action: action_tell_group
-#    - action: utter_ask_other_teams
+    - intent: testintent
+    - action: action_test_action
 
 
-# Tell score of a specific match
-- rule: Activate score form
-  steps:
-    - intent: match_score
-    - action: score_form
-    - active_loop: score_form
+#- rule: interrupt form
+#  steps:
+#    - intent: interrupt
+#    - action: action_deactivate_loop
+#    - active_loop: null
+#    - slot_was_set:
+#        - requested_slot: null
+#    - action: action_clear_slots
+#    - action: utter_interruption
 
-- rule: Submit score form
-  condition:
-    - active_loop: score_form
-  steps:
-    - action: score_form
-    - active_loop: null
-    - slot_was_set:
-        - requested_slot: null
-    - action: action_tell_score
-
-# Show ranking table of a specific group
-- rule: Activate ranking form
-  steps:
-    - intent: group_ranking
-    - action: group_ranking_form
-    - active_loop: group_ranking_form
-
-- rule: Submit ranking form
-  condition:
-    - active_loop: group_ranking_form
-  steps:
-    - action: group_ranking_form
-    - active_loop: null
-    - slot_was_set:
-        - requested_slot: null
-    - action: action_tell_ranking
-
-# Test Form
+# ALFA-Bot survey Form
 - rule: Activate simple survey form
   steps:
     - intent: start_survey
@@ -177,3 +80,54 @@ rules:
     - slot_was_set:
         - requested_slot: null
     - action: action_submit_survey
+
+# Forms for seit / seid
+- rule: Activate as_like_form
+  steps:
+    - action: as_like_form
+    - active_loop: as_like_form
+
+- rule: Submit as_like_form
+  condition:
+    - active_loop: as_like_form
+  steps:
+    - action: as_like_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_as_like
+    - action: action_clear_as_like
+
+# Forms for scheinbar / anscheinend
+- rule: Activate apparently_seemingly_form
+  steps:
+    - action: apparently_seemingly_form
+    - active_loop: apparently_seemingly_form
+
+- rule: Submit apparently_seemingly_form
+  condition:
+    - active_loop: apparently_seemingly_form
+  steps:
+    - action: apparently_seemingly_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_apparently_seemingly
+    - action: action_clear_seemingly_apparently
+
+# Forms for dasselbe / das gleiche
+- rule: Activate dasselbe_gleiche_form
+  steps:
+    - action: dasselbe_gleiche_form
+    - active_loop: dasselbe_gleiche_form
+
+- rule: Submit dasselbe_gleiche_form
+  condition:
+    - active_loop: dasselbe_gleiche_form
+  steps:
+    - action: dasselbe_gleiche_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_same
+    - action: action_clear_same

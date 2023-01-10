@@ -183,6 +183,7 @@ def get_joke() -> str:
         print(f'Error occurred: {err}')
     return msg
 
+
 # Error-Printing
 def err_print(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
@@ -496,12 +497,12 @@ def get_rankings() -> TournamentTable:
 
 
 def create_survey_msg(survey_result: List[List[str]]) -> str:
-    #survey_result[[header][data]]
-    #header = ['Losnummer', 'Datum', 'Smartphone', 'Hilfe benötigt', 'Antworten gelesen', 'Antworten verstanden',
+    # survey_result[[header][data]]
+    # header = ['Losnummer', 'Datum', 'Smartphone', 'Hilfe benötigt', 'Antworten gelesen', 'Antworten verstanden',
     #          'Hilfreich', 'App akzeptiert', 'Warum', 'Warum nicht', 'Gut', 'Verbesserung']
-    #data = [slot_lotnum, today, slot_smartphone, slot_need_help, slot_read, slot_understand, slot_helpful,
+    # data = [slot_lotnum, today, slot_smartphone, slot_need_help, slot_read, slot_understand, slot_helpful,
     #        slot_learn, slot_learn_why, slot_learn_not, slot_pos, slot_neg]
-    HEADER = 0 
+    HEADER = 0
     DATA = 1
     LOSNUMMER = 0
     DATUM = 1
@@ -555,8 +556,8 @@ def send_survey_mail(survey_result: List[List[str]]) -> None:
 
     try:
         with open(attachment_path, "rb") as attachment:
-            att = MIMEApplication(attachment.read(),_subtype="csv")
-            att.add_header('Content-Disposition', "attachment; filename= %s" %attachment_path)
+            att = MIMEApplication(attachment.read(), _subtype="csv")
+            att.add_header('Content-Disposition', "attachment; filename= %s" % attachment_path)
             msg.attach(att)
     except Exception as e:
         print(str(e))
@@ -819,10 +820,11 @@ class ValidateScoreForm(FormValidationAction):
                                           f"Frage mich bitte nach einer anderen Mannschaft.")
             return {"team2": None}
 
-# Validate as_than_form
-class AsThanForm(FormValidationAction):
+
+# Validate as_like_form
+class AsLikeForm(FormValidationAction):
     def name(self) -> Text:
-        return "validate_as_than_form"
+        return "validate_as_like_form"
 
     def validate_as(
             self,
@@ -838,22 +840,24 @@ class AsThanForm(FormValidationAction):
         dispatcher.utter_message(text=f'Das ist richtig: "Meine Mutter ist älter *als* ich."')
         return {"as": slot_value}
 
-    def validate_than(
+    def validate_like(
             self,
             slot_value: Any,
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: DomainDict,
     ) -> Dict[Text, Any]:
-        solution_than = str(slot_value).lower()
-        if solution_than != 'wie':
-            dispatcher.utter_message(response="utter_test_than_wrong")
-            return {"than": None}
+        solution_like = str(slot_value).lower()
+        print(solution_like)
+        if solution_like != 'wie':
+            dispatcher.utter_message(response="utter_test_like_wrong")
+            return {"like": None}
         dispatcher.utter_message(text=f'Das ist richtig: "Meine Freundin hat das gleiche Hobby *wie* ich."')
-        return {"than": slot_value}
+        return {"like": slot_value}
+
 
 # Validate Nugget Apparently Seemingly
-class apparentlySeeminglyForm(FormValidationAction):
+class ApparentlySeeminglyForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_apparently_seemingly_form"
 
@@ -869,7 +873,8 @@ class apparentlySeeminglyForm(FormValidationAction):
         if solution_seemingly != 'scheinbar':
             dispatcher.utter_message(response="utter_test_seemingly_wrong")
             return {"seemingly": None}
-        dispatcher.utter_message(text=f'Das ist richtig: Du vermutest, dass es scheinbar ein gutes Angebot ist. In Wahrheit könnte es aber Betrug sein.')
+        dispatcher.utter_message(
+            text=f'Das ist richtig: Du vermutest, dass es scheinbar ein gutes Angebot ist. In Wahrheit könnte es aber Betrug sein.')
         return {"seemingly": slot_value}
 
     def validate_apparently(
@@ -885,6 +890,47 @@ class apparentlySeeminglyForm(FormValidationAction):
             return {"apparently": None}
         dispatcher.utter_message(text=f'Das ist richtig: Der Gast wusste wirklich nicht, dass Hummer teuer ist.')
         return {"apparently": slot_value}
+
+
+# Validate dasselbe gleiche form
+class DasselbeGleicheForm(FormValidationAction):
+    dasselbe: List[str] = ["dasselbe", "das selbe"]
+    dasgleiche: List[str] = ["dasgleiche", "das gleiche"]
+
+    def name(self) -> Text:
+        return "validate_dasselbe_gleiche_form"
+
+
+    def validate_dasselbe(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        solution_dasselbe = str(slot_value).lower()
+        if solution_dasselbe not in DasselbeGleicheForm.dasselbe:
+            dispatcher.utter_message(response="utter_test_dasselbe_wrong")
+            return {"dasselbe": None}
+        dispatcher.utter_message(
+            text=f'Das ist richtig: Hat man sich nicht umgezogen, trägt man noch immer dasselbe Shirt wie zuvor.')
+        return {"dasselbe": slot_value}
+
+    def validate_dasgleiche(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        solution_dasgleiche = str(slot_value).lower()
+        if solution_dasgleiche not in DasselbeGleicheForm.dasgleiche:
+            dispatcher.utter_message(response="utter_test_dasgleiche_wrong")
+            return {"dasgleiche": None}
+        dispatcher.utter_message(
+            text=f'Das ist richtig. Das Fahrrad von meinem Nachbarn hat mir so gut gefallen, dass ich mir das gleiche Rad gekauft habe.')
+        return {"dasgleiche": slot_value}
+
 
 # Custom Action Code
 # ----------------------------------
@@ -913,14 +959,16 @@ class ActionClearSlots(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         return [SlotSet("polling_num", None), SlotSet("polling_city", None)]
 
-class ActionClearAsThan(Action):
+
+class ActionClearAsLike(Action):
     def name(self) -> Text:
-        return "action_clear_as_than"
+        return "action_clear_as_like"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        return [SlotSet("as", None), SlotSet("than", None)]
+        return [SlotSet("as", None), SlotSet("like", None)]
+
 
 class ActionClearSeeminglyApparently(Action):
     def name(self) -> Text:
@@ -930,6 +978,16 @@ class ActionClearSeeminglyApparently(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         return [SlotSet("seemingly", None), SlotSet("apparently", None)]
+
+
+class ActionClearSame(Action):
+    def name(self) -> Text:
+        return "action_clear_same"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        return [SlotSet("dasselbe", None), SlotSet("dasgleiche", None)]
 
 
 # Returns current time for Germany and Qatar
@@ -952,6 +1010,7 @@ class ActionTellTime(Action):
         dispatcher.utter_message(text=msg)
         return []
 
+
 # Returns current time for Germany and Qatar
 class ActionTellJoke(Action):
 
@@ -965,6 +1024,7 @@ class ActionTellJoke(Action):
 
         dispatcher.utter_message(text=msg)
         return []
+
 
 # Returns all teams in a given group at Fifa WM 2022
 class ActionTellTeams(Action):
@@ -1015,14 +1075,13 @@ class ActionTellGroup(Action):
             res = get_group(team, df)
 
             msg = f"Die Mannschaft von {team} spielt in Gruppe {res}."
-            print(f'try res: {res}')
             remove_csv('tempfile.csv')
         finally:
             buttons = [{"title": f"Wer spielt noch in Gruppe {res}?",
-                 "payload": f"Wer spielt noch in Gruppe {res}?"}]
+                        "payload": f"Wer spielt noch in Gruppe {res}?"}]
             dispatcher.utter_message(text=msg)
             dispatcher.utter_message(text=f"Frage mich gerne, wer noch in Gruppe {res} spielt.", buttons=buttons)
-           # dispatcher.utter_message(response="utter_ask_other_teams")
+        # dispatcher.utter_message(response="utter_ask_other_teams")
         return [SlotSet("group", res), SlotSet("finals_team", None)]
 
 
@@ -1049,7 +1108,7 @@ class ActionSubmitSurvey(Action):
 
         header = ['Losnummer', 'Datum', 'Smartphone', 'Hilfe benötigt', 'Antworten gelesen', 'Antworten verstanden',
                   'Hilfreich', 'App akzeptiert', 'Warum', 'Warum nicht', 'Gut', 'Verbesserung']
-        data = [slot_lotnum, today, slot_smartphone, slot_need_help, slot_read, slot_understand, slot_helpful, 
+        data = [slot_lotnum, today, slot_smartphone, slot_need_help, slot_read, slot_understand, slot_helpful,
                 slot_learn, slot_learn_why, slot_learn_not, slot_pos, slot_neg]
         survey_result = [header, data]
 
@@ -1140,7 +1199,7 @@ class ActionTellScore(Action):
             if int(playday) == -1:
                 msg = "Das Turnier hat noch nicht begonnen. Daher kann ich dir keine Spielergebnisse zeigen."
             else:
-                for day in range(GAMES_START_DAY,int(playday)):
+                for day in range(GAMES_START_DAY, int(playday)):
                     game_list = game_list + get_games(str(day))
                 msg = find_match(team, team2, game_list)
         finally:

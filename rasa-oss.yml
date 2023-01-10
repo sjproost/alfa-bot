@@ -215,13 +215,13 @@ extraEnv: []
 ## Define the rasa image to work with
 image:
   # -- Rasa Open Source image name to use (relative to `registry`)
-  name: alfa-wmbot
+  name: alfa-wahlbot
 
   # -- Rasa Open Source image tag to use
   tag: "0.0.1"
 
   # -- Override default registry + image.name for Rasa Open Source
-  repository: "sjproost/alfa-wmbot"
+  repository: "sjproost/alfa-wahlbot"
 
   # -- Rasa Open Source image pullPolicy
   pullPolicy: IfNotPresent
