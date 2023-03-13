@@ -83,6 +83,7 @@ nlu:
     - jhv
     - verstanden
     - Ja, kenne ich
+    - Ja
 - intent: go_on
   examples: |
     - weiter
@@ -201,7 +202,6 @@ nlu:
     - ich habe dich gefragt was ich denn nicht nettes gesagt habe
     - was habe ich denn nicht nettes gesagt
     - 1 2 3
-    - wann ist Weihnachten
     - gukgulgul
     - gzkghkghkghk
     - Hier ist meine Nachricht
@@ -268,27 +268,7 @@ nlu:
     - erzähle mir einen Witz
     - ein anderer Witz
     - Einen Witz bitte
-- intent: chitchat/howAreYou
-  examples: |
-    - wie geht es dir?
-    - geht es dir gut?
-    - wie ist dein befinden?
-    - alles fit?
-    - alles gut bei dir?
-    - Wie geht es dir?
-    - Wie geht es dir
-    - Wie geht's dir?
-    - wie gehts?
-- intent: chitchat/turing
-  examples: |
-    - kennst du den Turing-Test?
-    - Turing-Test
-    - weißt du, was der Turing-Test ist?
-    - kannst du den Turing-Test bestehen?
-    - Kennst du den Turing-Test?
-    - test
-    - Test
-- intent: chitchat/nettiquette
+- intent: nettiquette
   examples: |
     - du bist Scheiße
     - Kacke
@@ -325,6 +305,26 @@ nlu:
     - Nazi
     - Nazis
     - alle sind doof
+- intent: overview
+  examples: |
+    - Zeige mir eine Übersicht aller Themen
+    - Übersicht
+    - Übersicht aller Nuggets
+    - Zeige mir alle Nuggets
+    - Zeige mir alle Häppchen
+    - Alle Häppchen zeigen
+- intent: similar_words
+  examples: |
+    - Zeige mir alle ähnlichen Wörter
+    - Similar Words
+    - Alle ähnlichen Wörter
+    - Ähnliche Wörter
+- intent: nice_to_know
+  examples: |
+    - Interessante Fakten
+    - Nice to know
+    - Fakten
+    - Kleine Fakten
 - intent: start_survey
   examples: |
     - Ich möchte die Umfrage starten
@@ -409,6 +409,169 @@ nlu:
     - Kennst du den Unterschied zwischen dasselbe und das Gleiche?
     - Wann sagt man das gleiche und wann dasselbe?
     - Unterschied dasselbe
-- intent: chitchat
+- intent: enter_since_be
   examples: |
-    - wie
+    - Wann schreibt man seit und wann seid?
+    - Was ist der Unterschied zwischen seit und Seid?
+    - Seit
+    - seid
+    - Wann schreibe ich seit mit t und wann mit d?
+    - vergleich seit und seid
+    - Unterscheidung seit und seid?
+- intent: enter_scale_vague
+  examples: |
+    - Was ist der Unterschied zwischen Waage und vage?
+    - Wann sagt man Waage und wann vage?
+    - Unterschied waage und vage
+    - Waage und vage
+    - Wann nehme ich Waage und wann vage?
+    - Vergleich Waage und vage
+- intent: enter_moody_witty
+  examples: |
+    - Was ist der UNterschied zwischen launisch und launig?
+    - launisch und launig
+    - Wann sagt man launisch und wann launig?
+    - Heißt es launig oder launisch?
+    - Es heißt, ich sei launisch, was heißt das?
+    - Wie schreibt man launisch?
+    - Was bedeutet launig?
+- intent: enter_password
+  examples: |
+    - Wie erstelle ich ein sicheres Passwort?
+    - Was ist ein sicheres Passwort?
+    - Sicheres Passwort
+    - Sicheres Passwort erstellen
+    - Wie kann man ein sicheres Passwort bekommen?
+    - Gute Passwörter machen
+    - Wie sieht ein gutes Passwort aus?
+    - Was ist ein gutes Passwort
+    - Gutes Passwort
+    - gutes Passwort erstellen
+- intent: enter_silvester
+  examples: |
+    - Wie schreibt man Silvester?
+    - Silvester oder Sylvester?
+    - Silvester
+    - Sylvester
+    - Wie ist die Schreibweise von Silvester
+    - Warum schreibt man Silvester nicht mit y?
+- intent: enter_christmas
+  examples: |
+    - Warum schreibt man Weihnachten mit h
+    - Was bedeutet advent?
+    - Warum Weihnachten und nicht Weinachten?
+    - Weihnachten
+    - Weinachten
+    - Avent
+    - Wie schreibt man Advent?
+    - Was heißt Advent?
+- intent: enter_few_couple
+  examples: |
+    - Wann schreibe ich ein paar und wann ein Paar?
+    - wann schreibe ich paar klein und wann groß?
+    - Vergleich paar
+    - Ein paar Paare
+    - Wie nennt man zwei Menschen die zusammen gehören?
+    - Wie sage ich zu einigen Früchten
+    - Vergleich ein Paar und ein paar
+- intent: enter_string_page
+  examples: |
+    - Wann heißt es Seite und wann Saite?
+    - Vergleich Seite Saite
+    - Was ist der Unterschied zwischen Seite und Saite?
+    - Wie unterscheide ich Seiten und Saiten?
+    - Hat meine Gitarre Seiten oder Saiten?
+    - Wann nehme ich Saite und wann Seite?
+- intent: enter_warranty_rifle
+  examples: |
+    - Vergleich Gewähr und Gewehr
+    - Gewehr Gewähr
+    - Warum schreibt man Gewehr mit ä?
+    - Was ist der Unterschied zwischen Gewähr und Gewehr
+    - Woher kommt Gewährleistung?
+    - Wann muss ich Gewähr schreiben?
+    - Hat ein Jäger ein Gewehr?
+- intent: enter_cheque_check
+  examples: |
+    - Was ist der Unterschied zwischen Scheck und Check
+    - Scheck und Check
+    - Vergleich scheck mit Check
+    - Wann schreibe ich Check
+    - Was ist ein Scheck
+    - Schreibt man Scheck mit Ch oder Sch?
+- intent: enter_paint_grain
+  examples: |
+    - Unterschied malen mahlen
+    - Was ist der Unterschied zwischen mahlen malen
+    - malen
+    - Mahlen
+    - Wie schreibt man mahlen, wenn es um Mehl geht?
+    - Wann nimmt man malen und wann mahlen?
+    - Wann schreibt man malen mit h?
+    - Wie schreibt man mahlen?
+    - Muss ich malen mit h schreiben?
+- intent: enter_more_sea
+  examples: |
+    - Was ist der Unterschied zwischen mehr und Meer?
+    - mehr meer
+    - Wann schreibt man Meer mit h?
+    - Wann nehme ich Meer und wann mehr?
+    - Wieso mehr mit und ohne h?
+    - Vergleich mehr Meer
+    - Vergleiche Meer und mehr
+- intent: enter_was_truth
+  examples: |
+    - Unterschied wahr und war
+    - Wann schreibe ich war mit h?
+    - Wieso war mit h?
+    - Vergleich wahr und war?
+    - War und wahr
+    - wahr
+    - wann nehme ich wahr?
+- intent: enter_das_dass
+  examples: |
+    - Wann schreibe ich das mit zwei s?
+    - Vergleich das und dass
+    - Vergleich das dass
+    - Wieso schreibt man mal das und mal dass?
+    - dass das
+    - das dass Vergleich
+    - das und dass
+- intent: enter_ward_were
+  examples: |
+    - ward wart
+    - Vergleich wart und ward
+    - Wann nutzt man wart und wann ward?
+    - Schreibweisen wart
+    - Wart mit d und mit t?
+    - Was ist der Unterschied zwischen wart und ward?
+    - Unterschied wart ward
+- intent: enter_again_against
+  examples: |
+    - Was ist der Unterschied zwischen wider und wieder?
+    - Unterschied wider wieder
+    - Wann benutze ich wieder und wann wider?
+    - Vergleich wieder wider
+    - Wann wieder, wann wider
+    - wieder wider
+- intent: enter_mental_blessed
+  examples: |
+    - Vergleich seelisch und selig
+    - Was ist der Unterschied zwischen seelisch und selig
+    - Selig seelisch
+    - Wann verwende ich seelisch und wann selig?
+    - Gibt es einen Unterschied zwischen seelisch und selig?
+    - Vergleich seelisch selig
+- intent: random_smart_nuggets
+  examples: |
+    - neue Auswahl ähnlicher Wörter
+    - neue ähnliche Wörter
+    - andere Auswahl an Worten
+- intent: help
+  examples: |
+    - Hilfe
+    - Hilf mir
+    - Ich brauche Hilfe
+    - Zeig mir deine Hilfe
+    - Zeig mir die Hilfe
+    - Kannst du mir helfen

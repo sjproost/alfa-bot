@@ -1,0 +1,80 @@
+version: "3.1"
+
+rules:
+
+- rule: Say hello
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_themen
+
+- rule: Show contact
+  steps:
+    - intent: kontakt
+    - action: utter_kontakt
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: respond to general questions
+  steps:
+    - intent: gvi
+    - action: utter_gvi
+
+- rule: respond to specific questions
+  steps:
+    - intent: esq
+    - action: utter_esq
+
+- rule: respond to chitchat
+  steps:
+    - intent: chitchat
+    - action: utter_chitchat
+
+- rule: out-of-scope
+  steps:
+    - intent: out_of_scope
+    - action: utter_out_of_scope
+
+- rule: nlu fallback
+  steps:
+    - intent: nlu_fallback
+    - action: utter_out_of_scope
+
+- rule: ca test
+  steps:
+    - intent: testintent
+    - action: action_test_action
+
+- rule: Activate pollingstation form
+  steps:
+    - intent: wahllokal
+    - action: simple_polling_form
+    - active_loop: simple_polling_form
+
+- rule: Submit polling form
+  condition:
+    - active_loop: simple_polling_form
+  steps:
+    - action: simple_polling_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: action_tell_pollingstation
+
+- rule: interrupt form
+  steps:
+    - intent: interrupt
+    - action: action_deactivate_loop
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: action_clear_slots
+    - action: utter_interruption

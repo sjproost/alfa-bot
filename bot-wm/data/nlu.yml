@@ -1,0 +1,1053 @@
+version: "3.1"
+nlu:
+- intent: nlu_fallback
+  examples: |
+    - Wie erreiche ich die Feuerwehr?
+    - Wer war Rudlof Scharping?
+    - Wo bitte gehts zum Militär?
+- intent: out_of_scope
+  examples: |
+    - Wer ist US Präsident?
+    - Wer ist Gott?
+    - Wer ist deutscher Kaiser?
+    - wo gibt's hier was zu essen?
+    - Wer ist Bundeskanzler?
+    - Wie komme ich an Futter?
+    - Ich habe Hunger
+    - Was läuft im Kino?
+    - Laufbahn bei der Bundeswehr
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - hallo
+    - hallöchen
+    - heyho
+    - tach
+    - hey du
+    - hoi
+    - Hallo
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - tschüss
+    - tschöö
+    - tschö
+    - auf wiedersehen
+    - auf wiederhören
+    - bis dann
+    - bis bald
+    - bis zum nächsten Mal
+    - Danke
+- intent: affirm
+  examples: |
+    - yes
+    - Ja
+    - ja
+    - genau
+    - klar
+    - korrekt
+    - Exakt
+    - genau so ist es
+    - j
+    - Weiter
+    - weiter
+    - J
+    - klingt gut
+    - so machen wir das
+    - ja bitte
+    - bitte mach das
+    - 👍
+- intent: deny
+  examples: |
+    - no
+    - n
+    - nie
+    - niemals
+    - das glaube ich nicht
+    - nein
+    - nö
+    - Ende
+    - ende
+    - Ände
+    - end
+    - bitte nicht
+    - definitiv nicht
+    - auf keinen Fall
+    - nicht wirklich
+    - Nein
+    - deny
+    - nein danke
+    - interessiert mich nicht
+    - möchte ich nicht.
+- intent: bot_challenge
+  examples: |
+    - bist du ein Bot?
+    - bist du ein Mensch?
+    - Spreche ich mit einem Bot?
+    - Rede ich mit einem Menschen?
+    - menschlich?
+    - Mensch?
+    - Computer?
+    - Bist du ein Computer?
+- intent: inquire_time
+  examples: |
+    - Wie spät ist es?
+    - wie spät ist es in Qatar?
+    - Wie viel Uhr ist es?
+    - Kannst du mir sagen, wie spät es ist?
+    - Wie spät ist es da, wo die WM stattfindet?
+    - Uhrzeit in Kata
+    - Wie spät ist es in Doha?
+    - Was ist die Uhrzeit in katta
+    - Was ist die aktuelle Uhrzeit in Berlin?
+    - Wie spät ist es hier?
+    - Wie spät ist es in Berlin?
+- intent: offside1
+  examples: |
+    - Was ist Abseits?
+    - Erklär mir Abseits
+    - Abseits
+    - Kannst du mir Abseits erklären?
+    - Wie geht Abseits?
+    - das Abseits
+    - was ist Abseits?
+    - Abseits_followup
+    - Was ist abseits?
+    - Wann Abseits
+    - Wann steht jemand im Abseits?
+    - Wann ist Abseits?
+    - was bedeutet, im Abseits stehen?
+    - Abseits definition?
+    - Definiere Abseits
+- intent: wm_finals_group
+  examples: |
+    - wer spielt in Gruppe [A](group)?
+    - Wer ist in Gruppe [B](group)?
+    - Welche Mannschaften sind in Gruppe [D](group)?
+    - und wer spielt in Gruppe [C](group)?
+    - Sag mir, wer in Gruppe [E](group) spielt?
+    - Welche Teams spielen in Gruppe [G](group)?
+    - Teams in Gruppe [D](group)?
+    - Nationalmannschaften in gruppe [A](group)?
+    - Gruppe [H](group)?
+    - [A](group)
+    - [F](group)
+    - [H](group)
+    - Wer spielt in Gruppe [A](group)?
+    - Wer spielt in Gruppe [B](group)?
+    - Gruppe [C](group)?
+    - [C](group)
+- intent: wm_finals_team
+  examples: |
+    - In welcher Gruppe spielt Deutschland?
+    - Wo spiel Deutschland?
+    - Welche Gruppe ist Spanien?
+    - In welcher Gruppe spielen die USA?
+    - Welche Gruppe Polen?
+    - Gruppe von Qatar
+    - Welche Gruppe hat Frankreich?
+    - Wo spielt Serbien
+    - Gruppe von Italien
+    - In welcher Gruppe spielt der Iran?
+    - Wo spielt Nordkorea?
+    - Welche Gruppe Katar
+    - Welche Gruppe Amerika
+    - Gruppe USA
+- intent: match_score
+  examples: |
+    - Wie haben [Deutschland](team) und [England](team2) gespielt?
+    - Wie ist das Ergebnis von [Deutschland](team) und [England](team2)?
+    - Ergebnis von [Dänemark](team) gegen [Österreich](team2)?
+    - Wie hat [Frankreich](team) gespielt?
+    - gegen [Italien](team2).
+- intent: group_ranking
+  examples: |
+    - Wie steht es in Gruppe [A](group)?
+    - Wie ist der Stand in Gruppe [b](group)?
+    - Tabelle von Gruppe [C](group)
+    - Zeig mir die Tabelle zu Gruppe [d](group)
+    - Wer führt in Gruppe [E](group)?
+    - Wer ist auf dem letzten Platz bei [f](group)?
+    - Ranking [G](group)
+    - Tabelle von [h](group)
+    - Wie steht es in Gruppe [b](group)?
+    - Wie steht es in Gruppe
+- intent: time_phase
+  examples: |
+    - Wann findet die [Gruppenphase](phase) statt?
+    - Von wann bis dann dauert die [Gruppenphase](phase)?
+    - Wann sind die Spiele des [Achtelfinale](phase) s?
+    - Wann ist das [Achtelfinale](phase)?
+    - An welchem Datum ist das [Viertelfinale](phase)?
+    - Wann wird das [Finale](phase) sein?
+    - Wann findet das [Spiel um Platz 3](phase) statt?
+    - An welchem Datum ist das [Halbfinale](phase)?
+    - Wann ist das [Halbfinale](phase)?
+- intent: tournament_mode
+  examples: |
+    - Wie funktioniert die WM?
+    - Wie ist der Ablauf der WM?
+    - Ablauf WM?
+    - Wie läuft die WM ab?
+    - Wie ist der Modus bei der WM?
+    - Wie funktioniert die WM-Endrunde?
+    - Wie ist die WM organisiert?
+    - Aufbau der WM?
+    - Ablauf
+    - Turniermodus
+    - Modus
+    - Ablauf der WM?
+- intent: rule/duration
+  examples: |
+    - Wie lange dauert ein Spiel?
+    - Dauert ein Spiel 90 Minuten?
+    - Dauert ein Spiel immer gleich lange?
+    - Spieldauer
+    - Spiel wie lange?
+    - Wie lange geht ein Fußballspiel?
+    - Dauer eines Spiels?
+- intent: rule/overtime
+  examples: |
+    - Was ist die Nachspielzeit?
+    - Wie lange dauert die Nachspielzeit?
+    - Ist die Nachspielzeit immer gleich lang?
+    - Nachspielzeit?
+    - Nachspielzeit
+    - Nahsielzeit
+- intent: rule/extraTime
+  examples: |
+    - Wie lange dauert die Verlängerung?
+    - Was ist die Verlängerung?
+    - Verlängerung
+    - Verlängerung, was ist das?
+    - Dauer der Verlängerung.
+    - Wie lange wird Spiel verlängert?
+    - Wie viele Minuten dauert die Verlängerung eines Fußballspiels?
+- intent: rule/halftimebreak
+  examples: |
+    - Gibt es eine Pause?
+    - Wie lange dauert die Halbzeitpause?
+    - Wie lange dauert die Pause?
+    - Halbzeitpause
+    - Pause in der Halbzeit?
+    - Gehört die Pause zu den 90 Minuten dazu?
+    - Was ist die Halbzeitpause?
+- intent: rule/numberPlayer
+  examples: |
+    - Anzahl Spieler
+    - Wie viele Spieler gibt es?
+    - Hat eine Mannschaft nur 11 Spieler?
+    - Wie viele Spieler hat eine Mannschaft?
+    - Gehört der Torwart zu den 11 Spielern?
+    - Kader
+    - Wie groß darf der Kader zur WM 2022 sein?
+    - Wie groß Kader für WM in Katar?
+    - Kadergröße
+- intent: rule/exchangePlayer
+  examples: |
+    - Reservespieler
+    - Was sind Reservespieler?
+    - Wie viele Reservespieler gibt es?
+    - Was Reservespieler
+    - Spieler Reserve
+    - Ersatzspieler
+    - Was sind Ersatzspieler
+    - Warum sitzen Spieler auf der Ersatzbank?
+    - Was ist die Ersatzbank?
+    - Auswechselspieler
+- intent: rule/exchange
+  examples: |
+    - Spieler wechseln
+    - Spieler austauschen
+    - Spieler auswechseln
+    - Kann man spieler wechseln?
+    - Können spieler im Spiel getauscht werden?
+    - Wie oft kann man Spieler auswechseln?
+    - Kann man jederzeit Spieler auswechseln?
+    - Kann man Spieler von der Ersatzbank einwechseln?
+    - Reservespieler eintauschen?
+- intent: rule/keeperChange
+  examples: |
+    - Torwart wechseln
+    - Kann ma auch den Torwart wechseln?
+    - Den Torwart wechseln?
+    - Kann man auch den Torwart tauschen?
+    - Kann der Torwart mit Feldspielern tauschen?
+    - Wird auch der Torwart getauscht?
+- intent: rule/ball
+  examples: |
+    - Ball
+    - Wie groß ist ein Ball?
+    - Wie Schwer ist ein Ball?
+    - Größe eines Fußballs
+    - Wie sieht ein Fußball aus?
+- intent: rule/goal
+  examples: |
+    - Tor
+    - WIe groß ist ein Tor?
+    - Warum hat ein Tor ein Netz?
+    - Wie hoch ist ein Tor?
+    - Wie breit ist ein Fußballtor?
+    - Breite eines Tors
+    - Wie sieht ein Tor aus?
+- intent: rule/diving
+  examples: |
+    - Schwalbe
+    - Was ist eine Schwalbe?
+    - Warum nennt man es Schwalbe?
+    - vorgetäuschtes Foul
+    - Wie nennt man es, wenn man so tut als wäre es ein Foul gewesen?
+    - Was ist, wenn ein Spieler ein Foul vortäuscht?
+    - Ich habe mal was von einer Schwalbe gehört
+- intent: rule/alRihla
+  examples: |
+    - Al Rihla
+    - WM-Ball
+    - WMball
+    - Ball der WM
+    - WM Ball 2022
+    - Was ist der offizielle Fußball der WM 2022?
+    - Offizieller Spielball der WM 22?
+    - Wie sieht der Spielbal bei der WM aus?
+    - Hat Adidas wieder einen eigenen Ball entwickelt?
+    - Was ist AL Rihla?
+    - Gibt es einen offiziellen Fußball?
+    - WM Spielball
+- intent: rule/ballBroken
+  examples: |
+    - Ball kapuut
+    - Ball kaputt
+    - Was ist, wenn der Ball kaputt geht?
+    - Was passiert bei einem kaputten Ball?
+    - Wird der Ball ausgetauscht, wenn er kaputt geht?
+    - was passiert bei einem defekten Ball?
+    - Ball defekt?
+- intent: rule/cornerkick
+  examples: |
+    - Was ist ein Eckstoß?
+    - Was ist Eckstoss?
+    - Eckstoß?
+    - Was ist Ecke stoßen?
+    - Was ist eine Ecke?
+    - Schießen Ecke
+    - Schießen von der Fahne
+    - Schuss von Ecke
+    - Ecke
+    - Eckstoss
+    - Eckball
+- intent: rule/foul
+  examples: |
+    - Was ist ein Foul?
+    - Foulspiel
+    - Regelbruch
+    - Foulen
+    - Was ist faul?
+    - Was macht Faul?
+    - Faulspiel
+    - Was ist Foulspielt?
+    - Was bedeutet Foul?
+- intent: rule/punishment
+  examples: |
+    - Strafen
+    - Welche Strafen gibt es?
+    - Wie bestraft ein Schiedsrichter?
+    - Was passiert bei einem Foul?
+    - Bestraft ein Schiedrichter ein Foul?
+    - Gelbe Karte
+    - Rote Karte
+    - Verwarnung
+- intent: rule/throw_in
+  examples: |
+    - Was ist ein Einwurf?
+    - Einwurf
+    - Wann gibt es Einwurf?
+    - Was ist Einwurf?
+    - Ein Wurf
+    - Ball werfen
+    - Ball vom Seitenaus ins Spiel bringen
+- intent: rule/penalty_kick
+  examples: |
+    - Straßstoß
+    - Strafstoss
+    - Was ist ein Strafstoß?
+    - Was ist ein 11 Meter?
+    - Was ist Elfmeter?
+    - 11 Meter
+    - Elf meter
+    - Elfmeter
+    - Wann gibt es einen Elfer
+    - 11er
+- intent: freekick
+  examples: |
+    - Freistoß
+    - Was ist ein Freistoß?
+    - Wie funktioniert ein Freistoß?
+    - Wann gibt es einen Freistoß?
+    - Frei stoß
+    - Freistoss
+    - freier Schuss
+- intent: freekick_wall
+  examples: |
+    - Was ist eine Mauer beim Fußball?
+    - Was ist eine Mauer?
+    - Mauer?
+    - Wann gibt es eine Mauer?
+    - Was hat es mit der Mauer auf sich?
+- intent: qualify
+  examples: |
+    - Welche Teams spielen bei der WM?
+    - Wer hat sich für die WM qualifiziert?
+    - Teilnehmer der WM?
+    - Welche Mannschaften nehmen an der WM teil?
+    - Wer spielt bei der WM mit?
+    - Teams bei der WM?
+    - Wer spielt bei der WM?
+    - Welche Länder spielen bei der WM?
+    - Länder bei der Weltmeisterschaft
+    - Teams WM.
+- intent: rule/passiveOffSide
+  examples: |
+    - Kein Abseits
+    - Wann ist es kein Abseits
+    - Ich habe mal von passivem Abseits gehört, was ist das?
+    - passives Abseits?
+    - passive Abeseits
+    - passivabseits
+    - Was ist passives Abseits
+- intent: rule/penaltyOffSide
+  examples: |
+    - Strafe bei Abseits
+    - Strafe in Abseits
+    - Was passiert, wenn ein Spieler im Abseits steht?
+    - Was ist die Strafe, wenn man im Abseits steht?
+    - Was passoert nach einem Abseits?
+- intent: rule/trapOffSide
+  examples: |
+    - Abseitsfalle
+    - Was ist eine Abseitsfalle?
+    - Kennst du Abseitsfalle?
+    - Gibt es eine Abseitsfalle?
+    - Kannst du mir die Abseitsfalle erklären?
+    - Sag mir bitte, was die Abseitsfalle ist
+- intent: rule/referee
+  examples: |
+    - Schiedsrichter
+    - Was ist ein Schiedsrichter?
+    - Was macht ein Schiedsrichter?
+    - Was sind die Aufgaben eines Schiedsrichters?
+    - Wer ist Schiedsrichter?
+    - Schidsrichter, was ist das?
+    - Pfeife des Spiels
+    - Mann mit Pfeife
+    - Wer feift das Spiel an?
+    - Spiel anpfeifen.
+    - Spiel abpfeifen
+- intent: rule/refereeAssistant
+  examples: |
+    - Linienrichter
+    - Was ist ein Lienienrichter
+    - Wie viele Linienrichter gibt es?
+    - Wo sind die Linienrichter?
+    - Was machen Linienrichter
+    - Schiedsrichter an der Seite
+    - Schiedsrichter am Spielfeldrand
+    - Schiedsrichter mit Flagge
+- intent: rule/captain
+  examples: |
+    - Was ist ein Kapitän beim Fußball?
+    - Wer ist ein Kapitän beim Fussball?
+    - Kapitän
+    - Kapitän beim Fußball
+    - Wozu braucht man einen Kapitän?
+    - Was macht der Kapitän beim Fußball?
+- intent: rule/coin
+  examples: |
+    - Warum wird eine Münze geworfen?
+    - Münzwurf
+    - Münzwurf beim Fußball
+    - Warum wirft man eine Münze?
+    - Warum wirft der Schiedsrichter eine Münze?
+    - Münze werfen
+    - Kopf oder Zahl
+    - Was it der Münzwurf
+    - Warum wird eine Münze geworfen?
+- intent: rule/videoAssistant
+  examples: |
+    - Video-Assistent
+    - Was ist ein Video-Assistent?
+    - Kann ein Schiedsrichter Video gucken?
+    - Videobeweis?
+    - Wie funktioniert der Videobeweis?
+    - Gibt es bei der WM auch wieder den Wideobeweis?
+    - Fehlentscheidung
+    - Videohilfe
+    - Gibt es Hilfe per Video?
+- intent: qat/qatar
+  examples: |
+    - was ist mit der WM in Katar?
+    - Was weißt du über die WM in Katar?
+    - Was hat es mit der WM 2022 auf sich?
+    - Was weißt du über die WM?
+    - Probleme mit Qatar
+- intent: qat/timetable
+  examples: |
+    - Wann spielt Deutschland?
+    - Wann ist das nächste Spiel von Deutschland?
+    - Wann spielen Frankreich und Deutschland gegeneinander?
+    - Wann ist das Eröffnungsspiel
+    - Wann spielt Katar?
+    - Wann spiel Mexiko?
+    - Wann spiel Deuschland?
+    - Wann Spiele Schland
+- intent: qat/winter_wm
+  examples: |
+    - winter_wm
+    - Warum findet die WM im Winter statt?
+    - Warum WM im Winter?
+    - Warum ist die WM im Winter?
+    - Warum ist die Weltmeisterschaft nicht im Sommer?
+    - Ist die Fußball-WM immer im Winter?
+    - Müsste die WM nicht im Sommer sein?
+- intent: qat/qatar_critics
+  examples: |
+    - Kritik an der WM
+    - qatar_critics
+    - Warum wird Katar kritisiert?
+    - Was ist so schlimm an KAtar?
+    - Warum finden viele die WM in Katar schlecht?
+    - Stimmt was nicht mit Katar?
+    - WM in Katar schlecht?
+    - Was ist an dieser WM besonders?
+    - Problem mit dieser WM?
+- intent: qat/boycott
+  examples: |
+    - boycott_der_wm
+    - Wieso wollen einige Leute die WM boykottieren?
+    - Soll man sich die Spiele angucken?
+    - Ist die WM in Katar schlecht?
+    - Ist es gut, dass die WM in Katar ist?
+    - Boykott
+    - WM boykottiern
+- intent: qat/boycott_pro
+  examples: |
+    - Warum sollte man die WM boykottieren?
+    - boycott_pro
+    - Was spricht dafür, die WM nicht zu gucken?
+    - Warum soll ich die WM nicht verfolgen?
+    - Warum ist die WM schlecht?
+    - Wäre es gut, die WM nicht zu gucken?
+    - Aussage gegen die WM
+- intent: rule/fieldsize1
+  examples: |
+    - Wie groß ist ein Fußballfeld?
+    - Was sollte ich über ein Spielfeld wissen?
+    - Fußballfeld
+    - Größe eines Fußballfeldes
+    - Spielfeld wie groß?
+    - Wie groß ist das Spielfeld?
+    - Spielfeld
+    - Welchen Untergrund hat ein Spielfeld?
+    - Welche Zonen gibt es auf einem Spielfeld?
+    - Wo ist die Auslinie?
+- intent: field_underground
+  examples: |
+    - field_underground
+    - Feld Untergrund
+    - Untergrund
+    - Bodenbelag
+- intent: field_size
+  examples: |
+    - field_size
+    - Feld Größe
+    - Größe
+- intent: field_zones
+  examples: |
+    - field_zones
+    - Feld Zonen
+    - Bereiche und Linien
+- intent: qat/boycott_contra
+  examples: |
+    - Wäre es nicht besser, die WM doch zu gucken?
+    - Hilft es, wenn ich die WM gucke?
+    - Was kann ich sagen, wenn ich die WM gucken möchte?
+    - boycott_contra
+    - Aussage für die WM
+- intent: qat/human_rights
+  examples: |
+    - human_rights
+    - Was ist mit den Menschenrechten in Katar?
+    - Was ist mit Menschenrechten?
+    - Achtet Katar die Menschenrechte?
+    - Rechte der Arbeiter in Kater
+    - Ausbeutung der Arbeiter
+    - Werden Menschen in Katar unterdrückt?
+    - Unterdrückte Arbeiter?
+    - Missachtet Katar die UN-Menschenrechtskonvention
+    - Beachtet die WM Menschenrechte?
+- intent: qat/costs
+  examples: |
+    - costs
+    - Was kostet die WM?
+    - Wie teuer wird die WM?
+    - WM Kosten
+    - Kosten WM
+    - Ist die WM teuer
+    - Kostet die WM viel Geld?
+    - Wie viel kostet die WM eigentlich?
+    - Kennst du die Kosten der WM?
+- intent: qat/worker_situation
+  examples: |
+    - worker_situation
+    - Wie ist die Situation der Arbeiter?
+    - Wie geht es den Arbeitern?
+    - Geht es den Arbeitern gut?
+    - Arbeiter Situation
+    - Was ist mit den Arbeitern in Katar?
+- intent: wm/wm_time
+  examples: |
+    - wm_time
+    - Wann ist die WM?
+    - Wie lange dauert die WM?
+    - Wann findet die Weltmeistershcaft statt?
+    - Von wann bis wann ist die WM?
+    - Wann ist Turnier?
+    - Wann beginnt die WM?
+- intent: wm/games_tv
+  examples: |
+    - games_tv
+    - Wo kann ich die WM sehen?
+    - Wie kann ich die WM im Fernsehen gucken?
+    - Kann ich die Spiele im Fernsehen sehen?
+    - Wo kann ich die Spiele schauen?
+    - Wie kann ich die Spiele verfolgen?
+- intent: chitchat/themen
+  examples: |
+    - Welche Theman hast du für mich?
+    - Hilfe
+    - Welche Themen?
+    - Themen?
+    - Temen?
+    - Vorschlag
+    - Was kann ich dich fragen?
+    - Hast du Vorschläge für mich?
+    - Vorschläge
+- intent: chitchat/howAreYou
+  examples: |
+    - wie geht es dir?
+    - geht es dir gut?
+    - wie ist dein befinden?
+    - alles fit?
+    - alles gut bei dir?
+    - Wie geht es dir?
+    - wie gehts?
+- intent: chitchat/joke
+  examples: |
+    - Erzähle mir einen Witz
+    - Kannst du witzig sein?
+    - Kannst du mir einen Witz erzählen?
+    - Ich möchte einen Witz hören
+    - Witz
+    - Witz erzählen
+    - ein anderer Witz
+- intent: chitchat/turing
+  examples: |
+    - kennst du den Turing-Test?
+    - Turing-Test
+    - weißt du, was der Turing-Test ist?
+    - kannst du den Turing-Test bestehen?
+    - Kennst du den Turing-Test?
+    - test
+    - Test
+- intent: chitchat/kontakt
+  examples: |
+    - Ich möchte mit einem Menschen sprechen
+    - Menschen
+    - Handoff
+    - Kontakt
+    - Wer ist für dich verantwortlich?
+    - Kontakte
+    - Anrufen
+    - Anschreiben
+    - kontakt
+    - alfa telefon
+- intent: chitchat/nettiquette
+  examples: |
+    - du bist Scheiße
+    - Kacke
+    - verdammte Scheiße
+    - Pimmel
+    - Sackgesicht
+    - Fotze
+    - Du Hure
+    - Hurensohn
+    - Du Nutte
+    - Schwanz
+    - Was ein Schrott
+    - verfickt noch mal
+    - beschissen
+    - das ist doch Mist
+    - scheiße
+    - Drecksding
+    - Dreck
+    - Schlampe
+    - Die Schlampe
+    - Du Shlampe
+    - Misthaufen
+    - mist
+    - misthaufen
+    - merkel muss weg
+    - nazi
+    - lügenpresse
+    - Penis
+    - Arschloch
+    - Arsch
+    - scheisse
+    - kacka
+    - pipi
+    - Nazi
+    - Nazis
+    - alle sind doof
+    - restart
+- intent: start_survey
+  examples: |
+    - Ich möchte die Umfrage starten
+    - Umfrage starten
+    - Bitte die Umfrage starten
+    - Kann ich mit der Befragung anfangen
+    - App bewerten
+    - Bewerten
+    - Ich möchte die Befragung starten
+    - Befragung starten
+    - Ich möchte an der Befragung teilnehmen
+- intent: abort
+  examples: |
+    - ich will nicht mehr
+    - ich habe keine Lust mehr
+    - ich möchte nicht weiter mitmachen
+    - Befragung beenden
+    - Ich möchte nicht länger an der Befragung teilnehmen
+- intent: lot_number
+  examples: |
+    - Meine Teilnehmernummer lautet [123456](lot number)
+    - Meine Nummer ist [59427](lot_number)
+    - Das ist [94835](lot_number)
+    - Meine Nummer lautet [53757](lot_number)
+    - Meine Nummer lautet [007](lot_number)
+    - Nummer [96123](lot_number)
+    - [53757](lot_number)
+    - [48143](lot_number)
+    - [48341](lot_number)
+    - [48565](lot_number)
+    - [911](lot_number)
+    - [1092](lot_number)
+    - [1126](lot_number)
+    - [1263](lot_number)
+    - [1518](lot_number)
+    - [1645](lot_number)
+    - [1931](lot_number)
+    - [1932](lot_number)
+    - [2063](lot_number)
+    - [2147](lot_number)
+    - [2656](lot_number)
+    - [3094](lot_number)
+    - [3310](lot_number)
+    - [3349](lot_number)
+    - [3507](lot_number)
+    - [4098](lot_number)
+    - [4297](lot_number)
+    - [4667](lot_number)
+    - [4935](lot_number)
+    - [5010](lot_number)
+    - [5025](lot_number)
+    - [5050](lot_number)
+    - [5299](lot_number)
+    - [5320](lot_number)
+    - [5325](lot_number)
+    - [5382](lot_number)
+- intent: rate
+  examples: |
+    - Die Antworten waren [super](rating)
+    - Die Antworten waren [schlecht](rating)
+    - Für mich eher [mittel](rating)
+    - Ich fand die Antworten [schlecht](rating)
+    - Meiner Meinung nach [grottig](rating)
+    - [mittel](rating)
+- intent: ghostGame
+  examples: |
+    - Was ist ein Geisterspiel?
+    - Geisterspiel
+    - Was sind Geisterspiele?
+    - Ich habe mal was von Geisterspielen gehört
+    - Warum gibt es manchmal keine Zuschauer
+    - Keine Zuschauer
+    - Keine Zuschauer im Stadion
+    - Gheistspiel?
+    - Ghostgame
+    - Spiel in leerem Stadion
+    - Was ist ein Geisterspiel
+- intent: emergency_foul
+  examples: |
+    - Was ist eine Notbremse?
+    - Notbremse?
+    - Er zieht die Notbremse?
+    - Was ist das Foul in letzter Minute?
+    - Foul im Strafraum
+    - Spieler kurz vor dem Tor foulen
+    - Was passiert, wenn man einen Spieler kurz vor dem Tor gefoult wird?
+    - Foul kurz vor dem Tor.
+- intent: buy_pizza
+  examples: |
+    - Ich möchte eine Pizza bestellen
+    - Ich hätte gerne eine Pizza
+    - Kann ich eine Pizza bestellen
+    - eine kreisrunde italienische Backware bitte
+    - Ich will eine Pizza kaufen
+- intent: inform
+  examples: |
+    - Ich möchte eine [große](pizza_size) Pizza
+    - Ich möchte eine [xl](pizza_size) [hawai](pizza_type) Pizza bestellen
+    - [medium](pizza_size) pizza
+    - [xl](pizza_size)
+    - [klein](pizza_size)
+    - [s](pizza_size)
+    - [Pepperoni](pizza_type)
+    - Gib mir eine [Mozzarella](pizza_type) pizza
+    - [hawaii](pizza_type) pizza
+    - [kleine](pizza_size)
+    - [hawaii](pizza_type)
+    - [Mozzarella](pizza_type)
+    - [hawai](pizza_type)
+    - [veggie](pizza_type)
+    - [fungi](pizza_type)
+    - [vegggie](pizza_type)
+- lookup: team
+  examples: |
+    - Afghanistan
+    - Albanien
+    - Algerien
+    - Andorra
+    - Angola
+    - Antigua
+    - Argentinien
+    - Armenien
+    - Australien
+    - Österreich
+    - Aserbaidschan
+    - Bahamas
+    - Bahrain
+    - Bangladesch
+    - Barbados
+    - Belarus
+    - Belgien
+    - Belize
+    - Benin
+    - Bhutan
+    - Bolivien
+    - Bosnien Herzegovina
+    - Botswana
+    - Brazilien
+    - Brunei
+    - Bulgarien
+    - Burkina
+    - Burundi
+    - Cambodia
+    - Kameroon
+    - Kanada
+    - Cap Verde
+    - Tschad
+    - Chile
+    - China
+    - Kolumbien
+    - Kongo
+    - Costa Rica
+    - Kroatien
+    - Kuba
+    - Zypern
+    - Tschechische Republik
+    - Dänemark
+    - Djibouti
+    - Dominica
+    - Dominikanische Republik
+    - Ost Timur
+    - Ecuador
+    - Ägypten
+    - El Salvador
+    - Eritrea
+    - Estland
+    - Äthiopien
+    - Fiji
+    - Finnland
+    - Frankreich
+    - Gabun
+    - Gambia
+    - Georgien
+    - Deutschland
+    - Ghana
+    - Griechenland
+    - Grenada
+    - Guatemala
+    - Guinea
+    - Haiti
+    - Honduras
+    - Ungarn
+    - Island
+    - Indien
+    - Indonesien
+    - Iran
+    - Irak
+    - Irland
+    - Isreal
+    - Italien
+    - Israel
+    - Elfenbeinküste
+    - Jamakai
+    - Japan
+    - Jordanien
+    - Kasachstan
+    - Kenia
+    - Kiribati
+    - Nordkorea
+    - Südkorea
+    - Kosovo
+    - Kuwait
+    - Kirgistan
+    - Laos
+    - Litauen
+    - Libanon
+    - Lesotho
+    - Liberien
+    - Lybien
+    - Lichtenstein
+    - Luxemburg
+    - Mazedonien
+    - Madagascar
+    - Malawi
+    - Malaysia
+    - Mali
+    - Malta
+    - Marshallinseln
+    - Mauritanien
+    - Mauritius
+    - Mexico
+    - Mikronesien
+    - Moldavien
+    - Monaco
+    - Mongolei
+    - Montenegro
+    - Marokko
+    - Mosambique
+    - Myanmar
+    - Namibia
+    - Nepal
+    - Niederlande
+    - Holland
+    - Neuseeland
+    - Nicaragua
+    - Niger
+    - Nigeria
+    - Norwegen
+    - Oman
+    - Pakistan
+    - Palau
+    - Panama
+    - Papua Neu Guinea
+    - Paraguay
+    - Peru
+    - Philippinen
+    - Polen
+    - Portugal
+    - Qatar
+    - Rumänien
+    - Russland
+    - Ruanda
+    - Samoa
+    - San Marino
+    - Saudi Arabien
+    - Senegal
+    - Serbien
+    - Seychellen
+    - Sierra Leone
+    - Singapur
+    - Slovakei
+    - Slowenien
+    - Salomonische Inseln
+    - Somalia
+    - England
+    - Großbritannien
+    - Südafrika
+    - Süd Sudan
+    - Sri Lanka
+    - Sudan
+    - Swasiland
+    - Schweiz
+    - Taiwan
+    - Syrien
+    - Tansania
+    - Thailand
+    - Togo
+    - Tonga
+    - Trinidad und Tobago
+    - Tunesien
+    - Türkei
+    - TUrkmenistan
+    - Tuvalu
+    - Uganda
+    - Ukraine
+    - Vereinigte Arabische Emirate
+    - Vereinigtes Königreich
+    - USA
+    - Vereinigte Staaten von Amerika
+    - Uruguay
+    - Vanuatu
+    - Vatikan
+    - Venezuela
+    - Vietnam
+    - Yemen
+    - Sambia
+    - Simbabwe
+    - Portugal
+    - Schweden
+    - Belgien
+    - Indien
+- lookup: phase
+  examples: |
+    - Gruppenphase
+    - Achtelfinale
+    - Viertelfinale
+    - Halbfinale
+    - Finale
+    - Spiel um Platz 3
+    - Dritter Platz
+    - Platz 3
+    - Kleines Finale
+- lookup: group
+  examples: |
+    - A
+    - B
+    - C
+    - D
+    - E
+    - F
+    - G
+    - H

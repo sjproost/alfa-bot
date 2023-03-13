@@ -13,21 +13,43 @@ intents:
     - lot_number
     - seemingly
     - than
-- enter_as_like
-- enter_same
-- enter_seemingly_apparently
 - deny
-- gen:
-    is_retrieval_intent: true
+- help
+- enter_again_against
+- enter_as_like
+- enter_cheque_check
+- enter_christmas
+- enter_das_dass
+- enter_few_couple
+- enter_mental_blessed
+- enter_moody_witty
+- enter_more_sea
+- enter_paint_grain
+- enter_password
+- enter_same
+- enter_scale_vague
+- enter_seemingly_apparently
+- enter_silvester
+- enter_since_be
+- enter_string_page
+- enter_ward_were
+- enter_warranty_rifle
+- enter_was_truth
 - go_on
 - goodbye
 - greet
+- similar_words
+- nice_to_know
+- overview
 - interrupt
 - joke
 - kontakt
+- like
 - lot_number
+- nettiquette
 - nlu_fallback
 - out_of_scope
+- random_smart_nuggets
 - start_survey
 - testintent
 - try
@@ -175,6 +197,230 @@ slots:
       conditions:
       - active_loop: dasselbe_gleiche_form
         requested_slot: dasgleiche
+  since:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: since_be_form
+        requested_slot: since
+  be:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: since_be_form
+        requested_slot: be
+  scale:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: scale_vague_form
+        requested_slot: scale
+  vague:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: scale_vague_form
+        requested_slot: vague
+  moody:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: moody_witty_form
+        requested_slot: moody
+  witty:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: moody_witty_form
+        requested_slot: witty
+  few:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: few_couple_form
+        requested_slot: few
+  couple:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: few_couple_form
+        requested_slot: couple
+  string:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: string_page_form
+        requested_slot: string
+  page:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: string_page_form
+        requested_slot: page
+  warranty:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: warranty_rifle_form
+        requested_slot: warranty
+  rifle:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: warranty_rifle_form
+        requested_slot: rifle
+  cheque:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: cheque_check_form
+        requested_slot: cheque
+  check:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: cheque_check_form
+        requested_slot: check
+  paint:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: paint_grain_form
+        requested_slot: paint
+  grain:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: paint_grain_form
+        requested_slot: grain
+  das:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: das_dass_form
+        requested_slot: das
+  dass:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: das_dass_form
+        requested_slot: dass
+  ward:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: ward_were_form
+        requested_slot: ward
+  were:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: ward_were_form
+        requested_slot: were
+  was:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: was_true_form
+        requested_slot: was
+  truth:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: was_truth_form
+        requested_slot: truth
+  again:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: again_against_form
+        requested_slot: again
+  against:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: again_against_form
+        requested_slot: against
+  mental:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: mental_blessed_form
+        requested_slot: mental
+  blessed:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: mental_blessed_form
+        requested_slot: blessed
+  more:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: more_sea_form
+        requested_slot: more
+  sea:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: more_sea_form
+        requested_slot: sea
 responses:
   utter_ask_lot_number:
   - text: 'Ok, du möchtest an der Befragung teilnehmen. Nenne mir dafür bitte eine Teilnahme-Nummer:'
@@ -268,6 +514,26 @@ responses:
   - text: Ich bin ein Chatbot. Meine Entwickler sind die **FH Münster** und der **Bundesverband Alphabetisierung und Grundbildung**.
   utter_kontakt:
   - text: Meine Entwickler erreichst du im [Web](https://www.alfa-bot.de) oder schreibe ihnen eine [Mail](mailto:r.haeder@alphabetisierung.de).
+  utter_help:
+  - buttons:
+    - payload: /overview
+      title: Übersicht über die klugen Häppchen
+    - payload: /kontakt
+      title: Kontakt
+    - payload: /start_survey
+      title: Befragung
+    text: |
+      Falls du Hilfe brauchst, habe ich hier drei Vorschläge für dich.
+  utter_overview:
+  - buttons:
+    - payload: /similar_words
+      title: Ähnliche Wörter
+    - payload: /nice_to_know
+      title: Interessante Fakten
+    - payload: /random_smart_nuggets
+      title: zufällige Auswahl
+    text: |
+      Wenn du möchtest, zeige ich dir hier eine Liste aller Wortpaare und aller Fakten, die ich für dich habe. Ich zeige dir aber auch gerne eine zufällige Auswahl.
   utter_out_of_scope:
   - text: Ich verstehe deine Eingabe leider nicht. Versuche eine andere Formulierung oder kontaktiere meine Entwickler. Du findest sie [online](https://www.alfa-bot.de) oder schreib ihnen eine [Mail](mailto:r.haeder@alphabetisierung.de).
   utter_anything_else:
@@ -327,10 +593,12 @@ responses:
     - payload: als
       title: als
     text: |
-      Wlches Wort sollte hier rein?
+      Welches Wort sollte hier rein?
       "Meine Freundin hat das gleiche Hobby ___ ich."
   utter_success_as_like:
   - text: Super, du hast es verstanden 🙂
+  utter_nettiquette:
+  - text: Das war keine nette Eingabe oder? Bitte bleibe freundlich.
   utter_enter_same:
   - buttons:
     - payload: /deny
@@ -377,7 +645,7 @@ responses:
   utter_test_dasgleiche_wrong:
   - text: Nicht ganz. Da der Nachbar bereits ein Fahrrad gekauft hat, muss ich mir ein *weiteres* Exemplar gekauft haben.
   utter_success_same:
-  - image: null
+  - image: https://www.alfa-bot.de/wp-content/uploads/2023/01/dasselbe_dasgleiche.png
     text: Super, du hast es raus. Natürlich gilt diese Lektion auch für die Wörter *derselbe / dieselbe* und *der gleiche / die gleiche*.
   utter_enter_seemingly_apparently:
   - buttons:
@@ -430,60 +698,990 @@ responses:
       In einem Restaurant ist ein Gast überrascht von der hohen Rechnung. ___ wusste er nicht, wie teuer Hummer ist.
   utter_success_apparently_seemingly:
   - text: Top! Das ist wirklich schon eine knifflige Lektion gewesen.
+  utter_enter_password:
+  - buttons:
+    - payload: Ja
+      title: Ja
+    - payload: Nein
+      title: Nein
+    text: Im Internet musst du dich an vielen Stellen anmelden. Und immer brauchst du dafür Passwörter. Tust du dich mit guten Passwörtern auch schwer?
+  utter_password_why:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Ein sicheres Passwort ist wichtig, damit es außer dir keiner raten kann. Denn wer dein Passwort kennt, kann dir viel Ärger machen. 
+      Ein sicheres Passwort sollte mindestens 12 Zeichen haben. Benutzer große und kleine Buchstaben, Zahlen und Sonderzeichen.
+      Wenn du möchtest, zeige ich dir einen Trick, um dir sichere Passwörter leicht zu merken.
+  utter_password_no:
+  - buttons:
+    - payload: Ja
+      title: Ja, zeig es mir
+    - payload: Nein
+      title: Nein Danke
+    text: |
+      Das ist erfreulich. Denke daran, dass ein gutes Passwort mindestens 12 Zeichen haben. Benutze große und kleine Buchstaben, Zahlen und Sonderzeichen.
+      Wenn du möchtest, zeige ich dir einen Trick, um dir sichere Passwörter leicht zu merken.
+  utter_password_how:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Denke an einen langen Satz, den du dir gut merken kannst. Zum Beispiel:
+      **"Mit dem Bus 73 fahre ich immer um 16 Uhr nach Hause!"**
+      Nimm nun von jedem Wort den ersten Buchstaben, die Zahlen und Sonderzeichen.
+  utter_password_final:
+  - text: |
+      Dein Passwort sieht nun so aus:
+      **MdB73fiiu16UnH!**
+      Mit so einem Passwort bist du sicher unterwegs!
+      TIPP: Verwendet verschiedene Passwörter. Zumindest für wichtige Anmeldungen wie E-Mail, Bank oder Online-Shopping.
+  utter_enter_christmas:
+  - text: |
+      **Weihnachten** schreibt man mit h, weil es von den Wörtern *Weihe* und *Nacht* kommt. 
+      Der **Advent** vor Weihnachten ist übrigens ein *lateinisches* Wort und bedeutet *Ankunft*.
+  utter_enter_silvester:
+  - buttons:
+    - payload: Ja
+      title: Ja
+    - payload: Nein
+      title: Nein
+    text: Der letzte Tag des Jahres heißt **Silvester**. Möchtest du wissen, warum man diesen Tag mit *i* statt mit *y* schreibt?
+  utter_explain_silvester:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: Dieser Tag heißt so, weil *Papst Silvester der Erste* an einem 31. Dezember gestorben ist und dieser Tag im Heiligenkalender sein Gedenktag ist.
+  utter_explain_newyear:
+  - text: Der erste Tag eines Jahres heißt dann **Neujahr**, weil die Menschen das neue Jahr begrüßen. Dabei wünschen sie sich gegenseitig alles Gute für das neue Jahr. Viele Menschen nehmen sich an diesem Tag auch etwas vor, was sie im neuen Jahr machen wollen.
+  utter_enter_since_be:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: Die Wörter **SEIT** und **SEID** klingen genau gleich. Aber wann benutzt man welches Wort? Weißt du es?
+  utter_explain_since:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Hier habe ich eine kleine Eselsbrücke für dich. 
+      Nimm **seit** bei *Zeit*!
+      Nimm **seid** bei *sein*!
+  utter_explain_since_be_examples:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Hier sind zwei Beispiele für dich:
+      **Seit** einem Jahr habe ich ein Smartphone.
+      **Seid** ihr schon im Kino?
+  utter_ask_since:
+  - buttons:
+    - payload: seit
+      title: seit
+    - payload: seid
+      title: seid
+    text: |
+      Probiere es aus:
+      "Ich wohne ___ drei Jahren in meiner Wohnung."
+  utter_ask_be:
+  - buttons:
+    - payload: seit
+      title: seit
+    - payload: seid
+      title: seid
+    text: |
+      Welches Wort gehört hier hin?
+      "Ihr ___ die beste Familie, die man sich wünschen kann."
+  utter_test_since_wrong:
+  - text: Drei Jahre sind doch schon eine Lange *Zeit*.
+  utter_test_be_wrong:
+  - text: Wer möchte denn nicht Teil der besten Familie *sein*?
+  utter_success_since_be:
+  - text: Super, **seid** und **seit** sind für dich klar 👍
+  utter_enter_scale_vague:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: Bestimmt hast du schon mal die Wörter **Waage** und **vage** gesehen. Weißt du, was der Unterschied zwischen den beiden Wörtern ist?
+  utter_explain_scale:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/waage.png
+    text: |
+      Eine **Waage** ist ein Messgerät. Damit misst man, *wie schwer* etwas ist. **Waage** ist übrigens ein Was-Wort. Bestimmt hast du auch eine Waage im Badezimmer oder in der Küche. Beispiel:
+      "Ihr Gewicht kontrollieren Sie mit einer Personen-Waage."
+  utter_explain_vague:
+  - buttons:
+    - payload: weiter
+      title: Weiter
+    text: |
+      **Vage** sagt man, wenn etwas *unbestimmt* oder *ungenau* ist. **Vage** ist ein Wie-Wort. Beispiel:
+      "Er hat nur vage angedeutet, wann er kommen wollte."
+  utter_ask_scale:
+  - buttons:
+    - payload: Waage
+      title: Waage
+    - payload: vage
+      title: vage
+    text: |
+      Welches Wort ist hier gesucht?
+      "Wir brauchen 500g Mehl, nimm dafür bitte die ___."
+  utter_ask_vague:
+  - buttons:
+    - payload: Waagen
+      title: Waagen
+    - payload: vagen
+      title: vagen
+    text: |
+      Was solltest du hier wählen?
+      "Ich habe einen ___ Verdacht, wer die Kekse gegessen hat."
+  utter_test_scale_wrong:
+  - text: Nicht richtig. Im Beispiel soll jemand messen, wie *schwer* das Mehl ist.
+  utter_test_vague_wrong:
+  - text: Überlege noch mal. Hier hat jemand eine *ungenaue* Vermutung.
+  utter_success_scale_vague:
+  - text: Auf einer *Waage* haben wir wahrscheinlich alle schon gestanden. Und nun weißt du auch, dass man da gerne etwas *vage* drüber spricht 😉
+  utter_enter_moody_witty:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: |
+      **Launisch** und **launig** klingen sehr ähnlich und sind doch sehr gegensätzlich. Kennst du den Unterschied?
+  utter_explain_moody:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/launisch.png
+    text: |
+      **Launisch** verwendest du, wenn jemand *von seinen Launen bestimmt* ist. Man meint damit meistens, dass eine Person oft *schlecht gelaunt* oder *unberechenbar* ist. Beispiel:
+      "Opa konnte sehr launisch sein und wurde schnell wütend."
+  utter_explain_witty:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/launig.png
+    text: |
+      Nimm **launig**, wenn etwas oder jemand  *witzig, gut gelaunt* oder *charmant* ist. Beispiel: 
+      "Sie hielt zur Eröffnung eine launige Rede."
+  utter_ask_moody:
+  - buttons:
+    - payload: launig
+      title: launig
+    - payload: launisch
+      title: launisch
+    text: |
+      Welches Wort solltest du hier verwenden? 
+       "Weil der Chef so ___ ist, sprechen die Angestellten ihn nicht gerne an."
+  utter_test_moody_wrong:
+  - text: Hm, eher nicht. Die Angestellten sprechen nicht gerne mit dem Chef, weil er oft *schlecht gelaunt* ist.
+  utter_ask_witty:
+  - buttons:
+    - payload: launig
+      title: launig
+    - payload: launisch
+      title: launisch
+    text: |
+      Was ist hier richtig?
+      "Der Moderator führte ___ durch den Abend."
+  utter_test_witty_wrong:
+  - text: Also ein Moderator sollte schon *charmant* und *gut gelaunt* sein.
+  utter_success_moody_witty:
+  - text: Gut gemacht! Ich hoffe, du hast immer mehr Gründe, *launig* als *launisch* zu sein 😉
+  utter_enter_few_couple:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: Die Wörter "ein paar" und "ein Paar" sind sehr schwer zu unterscheiden. Sie sehen gleich aus, sie klingen gleich und sagen doch etwas anderes. Weißt du, wann du es klein und wann groß schreiben musst?
+  utter_explain_few:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/ein_paar.png
+    text: 'Schreibe **ein paar** klein, wenn du eine *ungenaue Anzahl* meinst. Beispiel: "Ich habe ein paar Zitronen gekauft." Anders könntest du auch durch *mehrere*, oder *einige* sagen.'
+  utter_explain_couple:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/paar.png
+    text: 'Schreibe **ein Paar** groß, wenn du *genau zwei zusammengehörende* Dinge meinst. Beispiel: "Ich habe nur noch ein Paar Socken." oder "Max und Julia sind ein tolles Paar."'
+  utter_ask_couple:
+  - buttons:
+    - payload: ein neues paar
+      title: ein neues paar
+    - payload: ein neues Paar
+      title: ein neues Paar
+    text: |
+      Wie schreibst du es richtig?
+      "Meine Turnschuhe sind kaputt. Ich brauche ___ ."
+  utter_test_couple_wrong:
+  - text: Noch ein Versuch. Bei Schuhen möchte man doch gerne immer *zwei* haben, *die zusammen passen*.
+  utter_ask_few:
+  - buttons:
+    - payload: ein Paar
+      title: ein Paar
+    - payload: ein paar
+      title: ein paar
+    text: |
+      Wie schreibst du es richtig?
+      "Ich brauche noch ___ Minuten für die Aufgabe."
+  utter_test_few_wrong:
+  - text: Hier ist jemand noch nicht mit der Arbeit fertig, aber wie viele Minuten es noch genau dauert, ist nicht klar.
+  utter_success_few_couple:
+  - text: Gut gemacht, jetzt kennst du den Unterschied zwischen *ein paar* und *ein Paar*. Mach weiter so 👍
+  utter_enter_string_page:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: Wir standen **Seite** an **Saite**... 🤔 Moment mal. Was sind das denn für Wörter und wann benutzt man welches Wort. Weißt du es?
+  utter_explain_string:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/saiten.png
+    text: |
+      Eine **Saite** ist *ein dünner Strang*, den es aus verschiedenen Materialien gibt. Oft sind Saiten aus Plastik oder Metall. Besonders bekannt sind Saiten bei Gitarren, Geigen oder Tennisschlägern. Beispiel:
+      "Mit den neuen Saiten klingt meine Gitarre viel besser!"
+  utter_explain_page:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/seiten.png
+    text: |
+      Das Wort **Seite** nimmst du zum Beispiel, wenn du über *Bücher* oder *Hefte* sprichst. Auch das Wort *Webseite* kommt daher. Die ersten Webseiten im Internet waren so gestaltet, wie die Seiten von Büchern. Zusätzlich nimmst du **Seite**, wenn du über Flächen sprichst. Beispiele:
+      "Ich lese im Buch gerade auf Seite 153."
+      "Kochbücher findest du im Regal auf der linken Seite."
+  utter_ask_string:
+  - buttons:
+    - payload: Saiten
+      title: Saiten
+    - payload: Seiten
+      title: Seiten
+    text: |
+      Welches Wort musst du hier verwenden?
+      "Mein Tennisschläger ist kaputt. Er braucht neue ___."
+  utter_ask_page:
+  - buttons:
+    - payload: Saiten
+      title: Saiten
+    - payload: Seiten
+      title: Seiten
+    text: |
+      Und welches Wort nimmst du in diesem Satz?
+      "Mein Schreibblock ist voll. Er hat keine leeren ___ mehr."
+  utter_test_string_wrong:
+  - text: Das stimmt leider nicht. Bei einem Tennisschläger besteht das Netz aus *einem langen Strang* aus Plastik. Genauer gesagt aus Nylon.
+  utter_test_page_wrong:
+  - text: Versuche es nochmal. Ein Schreibblock besteht doch wie ein *Buch* oder ein *Heft* aus vielen ... 🤐
+  utter_success_string_page:
+  - text: Super. Du weißt, dass man *Seiten* umblättert und irgendwo neue *Saiten* aufzieht.
+  utter_enter_warranty_rifle:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: '"Angaben ohne **Gewähr**". Diese Wörter hast du bestimmt schon gehört. Aber wann nimmt man **Gewähr** und wann **Gewehr**?'
+  utter_explain_warranty:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/gewaehr.png
+    text: |
+      **Gewähr** verwendest du wenn du *garantierst*, dass eine Sache so ist, wie du es sagst. Davon kommt auch das Wort *Gewährleistung*. Beispiel:
+      "Der Händler gibt mir die Gewähr, dass der Staubsauger vollkommen in Ordnung ist."
+  utter_explain_rifle:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/gewehr.png
+    text: |
+      Nimm **Gewehr** wenn du eine *Waffe* meinst, wie Jäger oder Soldaten sie benutzen.
+  utter_ask_warranty:
+  - buttons:
+    - payload: Gewähr
+      title: Gewähr
+    - payload: Gewehr
+      title: Gewehr
+    text: |
+      Probiere es aus, welches Wort musst du hier nehmen:
+      "Wir haben die ___, dass das Auto keine Mängel hat."
+  utter_ask_rifle:
+  - buttons:
+    - payload: Gewähr
+      title: Gewähr
+    - payload: Gewehr
+      title: Gewehr
+    text: |
+      Was ist hier die Lösung?
+      "Zuhause muss ein Jäger sein ___ immer sicher aufbewahren."
+  utter_test_warranty_wrong:
+  - text: Das war leider nicht richtig. Das Auto hat *garantiert* keinen einzigen Mangel.
+  utter_test_rifle_wrong:
+  - text: 'Denk nochmal nach: Es ist schon wichtig, eine *Waffe* sicher aufzuheben.'
+  utter_success_warranty_rifle:
+  - text: Sehr gut. Der Unterschied zwischen **Gewehr** und **Gewähr** ist dir klar. Was sollte auch eine Waffe bei den Lottozahlen suchen?
+  utter_enter_cheque_check:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: Die Wörter **Scheck** und **Check** klingen sehr ähnlich. **Scheck** ist ein deutsches Wort. **Check** kommt aus dem Englischen. Kennst du den Unterschied zwischen den beiden Wörtern?
+  utter_explain_cheque:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/scheck.png
+    text: |
+      *Mit einem **Scheck** kann man *bezahlen*. Der, der einen Scheck bekommt, kann damit zur Bank gehen. Die Bank zahlt ihm so viel *Geld* aus, wie auf dem Scheck steht. Das Geld nimmt die Bank vom Konto der Person, die den Scheck unterschrieben hat. Das funktioniert natürlich nur, wenn auch genug Geld auf dem Konto ist. Ist nicht genug Geld da, sagt man, der Scheck ist nicht gedeckt und *platzt*. Beispiel:
+      "Am Ende des Monats bekomme ich von meinem Chef einen Scheck und hole mir damit meinen Lohn ab."
+  utter_explain_check:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Nimm **Check**, wenn man etwas auf seine Funktion, Sicherheit oder ähnliches prüft. Beispiel:
+      "Das Flugzeug kann erst starten, wenn der Pilot den Sicherheits-Check gemacht hat."
+  utter_ask_cheque:
+  - buttons:
+    - payload: Scheck
+      title: Scheck
+    - payload: Check
+      title: Check
+    text: |
+      Welches Wort ist hier richtig?
+      "Kann ich Ihnen für Ihre Arbeit auch einen ___ ausstellen?"
+  utter_ask_check:
+  - buttons:
+    - payload: Scheck
+      title: Scheck
+    - payload: Check
+      title: Check
+    text: |
+      Welches Wort musst du hier nehmen?
+      "Wir machen bei Ihrem Auto erst einen ___. Dann wissen wir, was defekt ist."
+  utter_test_check_wrong:
+  - text: Versuche es nochmal. Ein Auto ist in der Werkstatt, weil es nicht richtig *funktioniert*.
+  utter_test_cheque_wrong:
+  - text: Überlege noch mal. Hier soll jemand für seine Arbeit *bezahlt* werden.
+  utter_success_cheque_check:
+  - text: Nun weißt du, dass man den Check in der Werkstatt theoretisch auch mit einem Scheck bezahlen kann. Tatsächlich bezahlt man heute kaum noch mit Checks.
+  utter_enter_paint_grain:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: 'Die Wörter **mahlen** und **malen** klingen gleich und sehen fast gleich aus. Weißt du, wann man welches Wort nutzt? '
+  utter_explain_paint:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/malen.png
+    text: |
+      Nimm **malen**, wenn es darum geht, *Bilder* zu machen oder auch Wände mit *Farbe* zu versehen. Etwa mit Stift oder Pinsel. Beispiel: 
+      "Ich male ein Bild für Papa."
+  utter_explain_grain:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/mahlen.png
+    text: |
+      Nimm **mahlen**, wenn etwas *zerkleinert* wird, indem man es reibt oder zerquetscht. Beispiel: "Ich mahle meinen Kaffee gerne frisch in einer Kaffeemühle."
+  utter_ask_paint:
+  - buttons:
+    - payload: malen
+      title: malen
+    - payload: mahlen
+      title: mahlen
+    text: |
+      Welches Wort muss in diese Lücke?
+      "In der Schule ___ wir jetzt mit Wasserfarben."
+  utter_ask_grain:
+  - buttons:
+    - payload: malt
+      title: malt
+    - payload: mahlt
+      title: mahlt
+    text: |
+      Welches Wort ist hier richtig?
+      "In dieser Windmühle ___ der Müller Getreide zu Mehl."
+  utter_test_grain_wrong:
+  - text: Noch ein Versuch. Die Mühle *zerquetscht* und *zerreibt* das grobe Getreide solange, bis es feines Mehl ist.
+  utter_test_paint_wrong:
+  - text: Nicht ganz. Hier erstellen die Schüler bestimmt *Bilder* mit *Pinseln*.
+  utter_success_paint_grain:
+  - text: Klasse! Der Maler malt ein Bild vom mahlenden Müller.
+  utter_enter_das_dass:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: Du hast bestimmt schon die Wörter *das* und *dass* gesehen. Sie klingen zwar gleich, aber weißt du, wann du "das/s" mit einem "s" und mit zwei "s" schreiben solltest?
+  utter_explain_das:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Schreibe **das** mit einem s, wenn du es durch *dies(es), jenes* oder *welches* ersetzen kannst. Beispiel: 
+      "Das Meerschweinchen, das im Käfig sitzt, gehört mir." -> "Dieses Meerschweinchen, welches im Käfig sitzt, gehört mir."
+  utter_explain_dass:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Schreibe **dass** mit zwei s, wenn du *das* verwenden möchtest und es *nicht* durch dies(es), jenes oder welches ersetzen kannst. 
+      Beispiel: "Ich freue mich, dass dir mein Kuchen schmeckt"
+  utter_ask_das:
+  - buttons:
+    - payload: dass
+      title: dass
+    - payload: das
+      title: das
+    text: |
+      Entscheide, welches Wort du hier nimmst:
+      "Mir gefällt ___ neue Wohnmobil."
+  utter_ask_dass:
+  - buttons:
+    - payload: dass
+      title: dass
+    - payload: das
+      title: das
+    text: |
+      Was ist hier die richtige Lösung?
+      "Ich freue mich, ___ wir uns am Wochenende sehen!"
+  utter_test_dass_wrong:
+  - text: Kannst du hier wirklich *welches* oder *dieses* einsetzen?
+  utter_test_das_wrong:
+  - text: Leider nein. Probiere doch mal aus, ob du den Satz auch mit *dieses* bauen kannst.
+  utter_success_das_dass:
+  - text: Klasse. Du weißt nun, wann du *das* oder *dass* schreiben musst.
+  utter_enter_was_truth:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: Du kennst die Wörter **war** und **wahr**. Weißt du, wann du welches Wort verwendest?
+  utter_explain_was:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Nimm **war** um zu sagen, dass etwas *bereits passiert ist*. Es liegt also in der *Vergangenheit*. Beispiel:
+      "Das war eine tolle Feier."
+  utter_explain_truth:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Nimm **wahr** um zu sagen, dass etwas *tatsächlich*, *wirklich* und *nicht erfunden* ist. Du kennst es auch aus dem Wort *Wahrheit*. Beispiel:
+      "An der Geschichte ist kein Wort wahr. Sie ist komplett erfunden."
+  utter_ask_was:
+  - buttons:
+    - payload: wahr
+      title: wahr
+    - payload: war
+      title: war
+    text: |
+      Und welches Wort ist hier richtig?
+      "Der Jahrmarkt ___ letzte Woche."
+  utter_ask_truth:
+  - buttons:
+    - payload: wahr
+      title: wahr
+    - payload: war
+      title: war
+    text: |
+      Welches Wort nimmst du in diesem Fall?
+      "Ist es ___, dass du das letzte Stück Kuchen gegessen hast?"
+  utter_test_truth_wrong:
+  - text: Denk nochmal darüber nach. Hier fragt jemand, ob die andere Person *tatsächlich* das letzte Stück Kuchen gegessen hat.
+  utter_test_was_wrong:
+  - text: Versuche es nochmal. Der Jahrmarkt hat in der *Vergangenheit* stattgefunden.
+  utter_success_was_truth:
+  - text: Gut gemacht, du weißt, wann du *war* und *wahr* einsetzen musst 👍
+  utter_enter_ward_were:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: '**Wart** und **ward** klingen gleich, sind aber unterschiedlich. Weißt du, wann du es mit *t* und wann mit *d* schreibst?'
+  utter_explain_ward:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Das Wort **ward** ist eine veraltete Form des Wortes *wurde* und kommt heute nur noch selten vor. 
+      Beispiel: "Gott sprach, es werde Licht und es ward Licht."
+  utter_explain_were:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      **Wart** kommt vom Wort *sein*. Es gehört zur Vergangenheit der zweiten Mehrzahl-Form von ich, also zu *ihr*. Bei *ihr wart* verwendest du wart immer mit *t*.
+      "Schön, dass ihr heute da wart."
+  utter_ask_ward:
+  - buttons:
+    - payload: wart
+      title: wart
+    - payload: ward
+      title: ward
+    text: |
+      Was meinst du, muss hier rein? 
+      "Sie ging vor drei Jahren weg und ___ nie mehr gesehen."
+  utter_ask_were:
+  - buttons:
+    - payload: wart
+      title: Wart
+    - payload: ward
+      title: Ward
+    text: |
+      Was könnte hier wohl die richtige Lösung sein?
+      "___ ihr mit dem Essen heute zufrieden?"
+  utter_test_were_wrong:
+  - text: Naja, als kleiner Hinweis, hier kommt *ihr* vor.
+  utter_test_ward_wrong:
+  - text: Hmm, frage dich mal, ob sie woanders gesehen *wurde*.
+  utter_success_ward_were:
+  - text: Toll! Wahrscheinlich wirst du heute eher *wart* nutzen. Trotzdem ist es gut, wenn du auch *ward* kennst.
+  utter_enter_again_against:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: Die Wörter **WIEDER** und **WIDER** sehen sehr ähnlich aus und klingen auch fast gleich. Weißt du, welches Wort du wann benutzen musst?
+  utter_explain_again:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Nimm **wieder**, wenn du sagen willst, dass etwas *noch mal* passiert. Auch kannst du damit *zurück* ausdrücken. Beispiel: 
+      "Gestern gab es Pizza. Heute gibt es wieder Pizza". "Ich gebe es dir dein Buch nächste Woche wieder."
+  utter_explain_against:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Nimm **wider** im Sinne von *gegen* oder *dagegen*. Du kannst **wider** alleine und zusammen mit anderen Wörtern verwenden. Beispiel: 
+      "Dass mein Auto abgeschleppt wird, geschieht wider meinen Willen." Oder auch "Widerspruch ist zwecklos".
+  utter_ask_again:
+  - buttons:
+    - payload: wider
+      title: wider
+    - payload: wieder
+      title: wieder
+    text: |
+      Welches Wort ist hier richtig? 
+      "Meine Mutter ist nicht zu Hause. Sie kommt heute Abend ___.
+  utter_ask_against:
+  - buttons:
+    - payload: wider
+      title: wider
+    - payload: wieder
+      title: wieder
+    text: |
+      Welches Wort solltest du hier einsetzen?
+      "Unser Sohn mag keinen Spinat. Er isst ihn, aber ___willig."
+  utter_test_against_wrong:
+  - text: Versuche es noch mal. Der Junge isst zwar den Spinat, aber er wehrt sich auch *dagegen*.
+  utter_test_again_wrong:
+  - text: Die Mutter wird erst am Abend *wieder zurück* sein.
+  utter_success_again_against:
+  - text: Super, du hast es geschafft. Aber natürlich kannst du diese Übung jederzeit *wiederholen* 😉
+  utter_enter_mental_blessed:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: Die Wörter **seelisch** und **selig** klingen manchmal sehr ähnlich, meinen aber etwas anderes. Weißt du, welches Wort du wann nehmen solltest?
+  utter_explain_mental:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Nimm **seelisch**, wenn es dir um die *Seele* oder deine *inneren Gefühle* geht. Beispiel: 
+      "Seit der Trennung geht es mir *seelisch* nicht gut."
+  utter_explain_blessed:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Nimm **selig** für *überglücklich* oder *vollkommen zufrieden*. Beispiel: 
+      "Seine Mutter kaufte ihm einen tollen Fußball und er war selig."
+  utter_ask_mental:
+  - buttons:
+    - payload: seelische
+      title: seelische
+    - payload: selige
+      title: selige
+    text: |
+      Welches Wort ist hier richtig?
+      "Viele Krankheiten haben ___ Ursachen."
+  utter_ask_blessed:
+  - buttons:
+    - payload: seelisch
+      title: seelisch
+    - payload: selig
+      title: selig
+    text: |
+      Was ist hier die richtige Lösung?
+      "Dem Baby geht es bestimmt gut, es sieht so ___ aus."
+  utter_test_blessed_wrong:
+  - text: 'Denk nochmal nach. Die Beobachter hier freuen sich über ein Baby, das *vollkommen zufrieden* wirkt. '
+  utter_test_mental_wrong:
+  - text: Hmm 🤔 - wenn ich sehr krank bin, sind auch meine *inneren Gefühle* nicht gut.
+  utter_success_mental_blessed:
+  - text: 'Super! Übrigens gibt es für **selig** noch eine weitere Bedeutung aus der Kirche. Wer selig ist, ist erlöst und fast heilig. '
+  utter_enter_more_sea:
+  - buttons:
+    - payload: Nein, zeig es mir
+      title: Nein, zeig es mir
+    - payload: Ausprobieren
+      title: Ausprobieren
+    - payload: Ja, kenne ich
+      title: Ja, kenne ich
+    text: Die Wörter **Meer** und **mehr** klingen gleich und sind doch ganz verschiedene Begriffe? Kennst du den Unterschied zwischen ihnen?
+  utter_explain_more:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    text: |
+      Nimm **mehr**, wenn etwas *über das hinaus* geht, was bereits da ist. Oder wenn das was da ist, *nicht reicht*. Beispiel:
+      "Das ist aber teuer. Ich glaube, ich brauche *mehr* Geld.
+  utter_explain_sea:
+  - buttons:
+    - payload: Weiter
+      title: Weiter
+    image: https://www.alfa-bot.de/wp-content/uploads/2023/01/meer.png
+    text: |
+      Nimm **Meer**, wenn du von den großen Gewässern wie der Nordsee, Ostsee, dem Mittelmeer sprichst. Beispiel:
+      "Wir fahren im Urlaub nach Büsum ans Meer."
+  utter_ask_more:
+  - buttons:
+    - payload: Meer
+      title: Meer
+    - payload: mehr
+      title: mehr
+    text: |
+      Was musst du hier einsetzen?
+      "Es tut mir Leid, aber es gibt keine Getränke ___"
+  utter_ask_sea:
+  - buttons:
+    - payload: Meer
+      title: Meer
+    - payload: mehr
+      title: mehr
+    text: |
+      Worum geht es hier?
+      "Rügen ist eine Insel, die im ___ liegt."
+  utter_test_sea_wrong:
+  - text: 'Kleiner Hinweis: Rügen ist eine Insel in der *Ostsee*.'
+  utter_test_more_wrong:
+  - text: In diesem Fall *reicht* die vorhandene Menge an Bier *nicht aus*.
+  utter_success_more_sea:
+  - text: Gut gemacht. Wünschen wir uns nicht alle *mehr* vom *Meer*.
 actions:
 - action_ask_google
+- action_get_nice_to_know
+- action_get_similar_words
+- action_clear_again_against
 - action_clear_as_like
+- action_clear_cheque_check
+- action_clear_das_dass
+- action_clear_few_couple
+- action_clear_mental_blessed
+- action_clear_moody_witty
+- action_clear_more_sea
+- action_clear_paint_grain
 - action_clear_same
+- action_clear_scale_vague
 - action_clear_seemingly_apparently
+- action_clear_since_be
 - action_clear_slots
+- action_clear_string_page
+- action_clear_ward_were
+- action_clear_warranty_rifle
+- action_clear_was_truth
+- action_get_random_nuggets
 - action_submit_survey
 - action_tell_joke
 - action_test_action
+- utter_help
+- utter_overview
 - utter_anything_else
+- utter_ask_again
+- utter_ask_against
 - utter_ask_apparently
 - utter_ask_as
+- utter_ask_be
+- utter_ask_blessed
+- utter_ask_check
+- utter_ask_cheque
+- utter_ask_couple
 - utter_ask_critic_neg
 - utter_ask_critic_pos
+- utter_ask_das
 - utter_ask_dasgleiche
+- utter_ask_dass
 - utter_ask_dasselbe
+- utter_ask_few
+- utter_ask_grain
 - utter_ask_helpful
 - utter_ask_learn_not
 - utter_ask_learn_why
 - utter_ask_learn_with_bot
-- utter_ask_lot_number
-- utter_ask_need_help
-- utter_ask_read_answers
-- utter_ask_seemingly
-- utter_ask_smartphone
 - utter_ask_like
+- utter_ask_lot_number
+- utter_ask_mental
+- utter_ask_moody
+- utter_ask_more
+- utter_ask_need_help
+- utter_ask_page
+- utter_ask_paint
+- utter_ask_read_answers
+- utter_ask_rifle
+- utter_ask_scale
+- utter_ask_sea
+- utter_ask_seemingly
+- utter_ask_since
+- utter_ask_smartphone
+- utter_ask_string
+- utter_ask_truth
 - utter_ask_understand_answers
+- utter_ask_vague
+- utter_ask_ward
+- utter_ask_warranty
+- utter_ask_was
+- utter_ask_were
+- utter_ask_witty
 - utter_chitchat
-- utter_explain_as
+- utter_enter_again_against
 - utter_enter_as_like
+- utter_enter_cheque_check
+- utter_enter_christmas
+- utter_enter_das_dass
+- utter_enter_few_couple
+- utter_enter_mental_blessed
+- utter_enter_moody_witty
+- utter_enter_more_sea
+- utter_enter_paint_grain
+- utter_enter_password
 - utter_enter_same
+- utter_enter_scale_vague
 - utter_enter_seemingly_apparently
-- utter_explain_than
+- utter_enter_silvester
+- utter_enter_since_be
+- utter_enter_string_page
+- utter_enter_ward_were
+- utter_enter_warranty_rifle
+- utter_enter_was_truth
+- utter_explain_against
 - utter_explain_apparently
+- utter_explain_as
+- utter_explain_blessed
+- utter_explain_check
+- utter_explain_couple
 - utter_explain_dasgleiche
+- utter_explain_dass
 - utter_explain_dasselbe
+- utter_explain_few
+- utter_explain_grain
+- utter_explain_moody
+- utter_explain_newyear
+- utter_explain_page
+- utter_explain_rifle
+- utter_explain_scale
+- utter_explain_sea
 - utter_explain_seemingly
+- utter_explain_silvester
+- utter_explain_since
+- utter_explain_since_be_examples
+- utter_explain_string
+- utter_explain_than
+- utter_explain_truth
+- utter_explain_vague
+- utter_explain_warranty
+- utter_explain_were
+- utter_explain_witty
 - utter_gen
+- utter_greet
 - utter_interruption
 - utter_kontakt
+- utter_nettiquette
+- utter_password_final
+- utter_password_how
+- utter_password_no
+- utter_password_why
+- utter_success_again_against
 - utter_success_apparently_seemingly
-- utter_success_same
-- utter_test_apparently_wrong
-- utter_test_like_wrong
-- utter_test_dasgleiche_wrong
-- utter_test_dasselbe_wrong
-- utter_test_seemingly_wrong
 - utter_success_as_like
+- utter_success_cheque_check
+- utter_success_das_dass
+- utter_success_few_couple
+- utter_success_mental_blessed
+- utter_success_moody_witty
+- utter_success_more_sea
+- utter_success_paint_grain
+- utter_success_same
+- utter_success_scale_vague
+- utter_success_since_be
+- utter_success_string_page
+- utter_success_ward_were
+- utter_success_warranty_rifle
+- utter_success_was_truth
+- utter_test_again_wrong
+- utter_test_against_wrong
+- utter_test_apparently_wrong
 - utter_test_as_wrong
+- utter_test_be_wrong
+- utter_test_blessed_wrong
+- utter_test_check_wrong
+- utter_test_cheque_wrong
+- utter_test_couple_wrong
+- utter_test_das_wrong
+- utter_test_dasgleiche_wrong
+- utter_test_dass_wrong
+- utter_test_dasselbe_wrong
+- utter_test_few_wrong
+- utter_test_grain_wrong
+- utter_test_like_wrong
+- utter_test_mental_wrong
+- utter_test_moody_wrong
+- utter_test_more_wrong
+- utter_test_page_wrong
+- utter_test_paint_wrong
+- utter_test_rifle_wrong
+- utter_test_scale_wrong
+- utter_test_sea_wrong
+- utter_test_seemingly_wrong
+- utter_test_since_wrong
+- utter_test_string_wrong
+- utter_test_truth_wrong
+- utter_test_vague_wrong
+- utter_test_ward_wrong
+- utter_test_warranty_wrong
+- utter_test_was_wrong
+- utter_test_were_wrong
+- utter_test_witty_wrong
 - utter_themen
+- validate_again_against_form
 - validate_apparently_seemingly_form
 - validate_as_like_form
+- validate_cheque_check_form
+- validate_das_dass_form
 - validate_dasselbe_gleiche_form
+- validate_few_couple_form
+- validate_mental_blessed_form
+- validate_moody_witty_form
+- validate_more_sea_form
+- validate_paint_grain_form
+- validate_scale_vague_form
+- validate_simple_survey_form
+- validate_since_be_form
+- validate_string_page_form
+- validate_ward_were_form
+- validate_warranty_rifle_form
+- validate_was_truth_form
 forms:
+  more_sea_form:
+    required_slots:
+    - more
+    - sea
+  mental_blessed_form:
+    required_slots:
+    - mental
+    - blessed
+  again_against_form:
+    required_slots:
+    - again
+    - against
+  was_truth_form:
+    required_slots:
+    - truth
+    - was
+  das_dass_form:
+    required_slots:
+    - das
+    - dass
+  paint_grain_form:
+    required_slots:
+    - grain
+    - paint
+  ward_were_form:
+    required_slots:
+    - ward
+    - were
+  cheque_check_form:
+    required_slots:
+    - cheque
+    - check
+  warranty_rifle_form:
+    required_slots:
+    - warranty
+    - rifle
+  string_page_form:
+    required_slots:
+    - page
+    - string
+  few_couple_form:
+    required_slots:
+    - few
+    - couple
+  moody_witty_form:
+    required_slots:
+    - moody
+    - witty
+  scale_vague_form:
+    required_slots:
+    - scale
+    - vague
+  since_be_form:
+    required_slots:
+    - since
+    - be
   simple_survey_form:
     required_slots:
     - lot_number

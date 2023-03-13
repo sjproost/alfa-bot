@@ -1,108 +1,680 @@
 version: "3.1"
 
 stories:
+# Stories for password
+# --------------------------------------------
+- story: password_happy
+  steps:
+  - intent: enter_password
+  - action: utter_enter_password
+  - or:
+      - intent: go_on
+      - intent: affirm
+  - action: utter_password_why
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_password_how
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_password_final
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+
+- story: password_at_least_happy
+  steps:
+  - intent: enter_password
+  - action: utter_enter_password
+  - intent: deny
+  - action: utter_password_no
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_password_how
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_password_final
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+
+- story: password_unhappy
+  steps:
+  - intent: enter_password
+  - action: utter_enter_password
+  - intent: deny
+  - action: utter_password_no
+  - intent: deny
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories for silvster
+# --------------------------------------------
+- story: silvester_happy
+  steps:
+  - intent: enter_silvester
+  - action: utter_enter_silvester
+  - or:
+      - intent: go_on
+      - intent: affirm
+  - action: utter_explain_silvester
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_newyear
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+
+- story: silvester_unhappy
+  steps:
+  - intent: enter_silvester
+  - action: utter_enter_silvester
+  - intent: deny
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories for christmas
+# --------------------------------------------
+- story: explain_spelling_christmas
+  steps:
+  - intent: enter_christmas
+  - action: utter_enter_christmas
+# --------------------------------------------
 
 # Stories als / wie
 # --------------------------------------------
-  - story: compare_as_like_long
-    steps:
+- story: compare_as_like_long
+  steps:
+  - intent: enter_as_like
+  - action: utter_enter_as_like
+  - intent: deny
+  - action: utter_explain_as
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_like
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: as_like_form
+  - active_loop: as_like_form
+
+- story: compare_as_like_short
+  steps:
     - intent: enter_as_like
     - action: utter_enter_as_like
-    - intent: deny
-    - action: utter_explain_as
-    - or:
-        - intent: affirm
-        - intent: go_on
-    - action: utter_explain_like
-    - or:
-        - intent: affirm
-        - intent: go_on
+    - intent: try
     - action: as_like_form
     - active_loop: as_like_form
 
-  - story: compare_as_like_short
-    steps:
-      - intent: enter_as_like
-      - action: utter_enter_as_like
-      - intent: try
-      - action: as_like_form
-      - active_loop: as_like_form
-
-  - story: compare_as_like_no
-    steps:
-      - intent: enter_as_like
-      - action: utter_enter_as_like
-      - intent: affirm
-      - action: utter_anything_else
-      - action: utter_themen
+- story: compare_as_like_no
+  steps:
+    - intent: enter_as_like
+    - action: utter_enter_as_like
+    - intent: affirm
+    - action: utter_anything_else
+    - action: action_get_random_nuggets
 # --------------------------------------------
 
 # Stories anscheinend / scheinbar
 # --------------------------------------------
-  - story: apparently_seemingly_long
-    steps:
-    - intent: enter_seemingly_apparently
-    - action: utter_enter_seemingly_apparently
-    - intent: deny
-    - action: utter_explain_apparently
-    - or:
+- story: apparently_seemingly_long
+  steps:
+  - intent: enter_seemingly_apparently
+  - action: utter_enter_seemingly_apparently
+  - intent: deny
+  - action: utter_explain_apparently
+  - or:
+    - intent: affirm
+    - intent: go_on
+  - action: utter_explain_seemingly
+  - or:
       - intent: affirm
       - intent: go_on
-    - action: utter_explain_seemingly
-    - or:
-        - intent: affirm
-        - intent: go_on
-    - action: apparently_seemingly_form
-    - active_loop: apparently_seemingly_form
+  - action: apparently_seemingly_form
+  - active_loop: apparently_seemingly_form
 
-  - story: apparently_seemingly_short
-    steps:
-    - intent: enter_seemingly_apparently
-    - action: utter_enter_seemingly_apparently
-    - intent: try
-    - action: apparently_seemingly_form
-    - active_loop: apparently_seemingly_form
+- story: apparently_seemingly_short
+  steps:
+  - intent: enter_seemingly_apparently
+  - action: utter_enter_seemingly_apparently
+  - intent: try
+  - action: apparently_seemingly_form
+  - active_loop: apparently_seemingly_form
 
-  - story: apparently_seemingly_no
-    steps:
-    - intent: enter_seemingly_apparently
-    - action: utter_enter_seemingly_apparently
-    - intent: affirm
-    - action: utter_anything_else
-    - action: utter_themen
+- story: apparently_seemingly_no
+  steps:
+  - intent: enter_seemingly_apparently
+  - action: utter_enter_seemingly_apparently
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
 # --------------------------------------------
 
 # Stories dasselbe / das gleiche
 # --------------------------------------------
-  - story: dasselbe_das_gleiche_long
-    steps:
-    - intent: enter_same
-    - action: utter_enter_same
-    - intent: deny
-    - action: utter_explain_dasselbe
-    - or:
-        - intent: affirm
-        - intent: go_on
-    - action: utter_explain_dasgleiche
-    - or:
-        - intent: affirm
-        - intent: go_on
-    - action: dasselbe_gleiche_form
-    - active_loop: dasselbe_gleiche_form
+- story: dasselbe_das_gleiche_long
+  steps:
+  - intent: enter_same
+  - action: utter_enter_same
+  - intent: deny
+  - action: utter_explain_dasselbe
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_dasgleiche
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: dasselbe_gleiche_form
+  - active_loop: dasselbe_gleiche_form
 
-  - story: dasselbe_das_gleiche_short
-    steps:
-    - intent: enter_same
-    - action: utter_enter_same
-    - intent: try
-    - action: dasselbe_gleiche_form
-    - active_loop: dasselbe_gleiche_form
+- story: dasselbe_das_gleiche_short
+  steps:
+  - intent: enter_same
+  - action: utter_enter_same
+  - intent: try
+  - action: dasselbe_gleiche_form
+  - active_loop: dasselbe_gleiche_form
 
-  - story: dasselbe_das_gleiche_no
-    steps:
-    - intent: enter_same
-    - action: utter_enter_same
-    - intent: affirm
-    - action: utter_anything_else
-    - action: utter_themen
+- story: dasselbe_das_gleiche_no
+  steps:
+  - intent: enter_same
+  - action: utter_enter_same
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories seid / seit
+# --------------------------------------------
+- story: since_be_long
+  steps:
+  - intent: enter_since_be
+  - action: utter_enter_since_be
+  - intent: deny
+  - action: utter_explain_since
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_since_be_examples
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: since_be_form
+  - active_loop: since_be_form
+
+- story: since_be_short
+  steps:
+  - intent: enter_since_be
+  - action: utter_enter_since_be
+  - intent: try
+  - action: since_be_form
+  - active_loop: since_be_form
+
+- story: since_be_no
+  steps:
+  - intent: enter_since_be
+  - action: utter_enter_since_be
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories Waage / vage
+# --------------------------------------------
+- story: scale_vague_long
+  steps:
+  - intent: enter_scale_vague
+  - action: utter_enter_scale_vague
+  - intent: deny
+  - action: utter_explain_scale
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_vague
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: scale_vague_form
+  - active_loop: scale_vague_form
+
+- story: scale_vague_short
+  steps:
+  - intent: enter_scale_vague
+  - action: utter_enter_scale_vague
+  - intent: try
+  - action: scale_vague_form
+  - active_loop: scale_vague_form
+
+- story: scale_vague_no
+  steps:
+  - intent: enter_scale_vague
+  - action: utter_enter_scale_vague
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories launisch / launig
+# --------------------------------------------
+- story: moody_witty_long
+  steps:
+  - intent: enter_moody_witty
+  - action: utter_enter_moody_witty
+  - intent: deny
+  - action: utter_explain_moody
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_witty
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: moody_witty_form
+  - active_loop: moody_witty_form
+
+- story: moody_witty_short
+  steps:
+  - intent: enter_moody_witty
+  - action: utter_enter_moody_witty
+  - intent: try
+  - action: moody_witty_form
+  - active_loop: moody_witty_form
+
+- story: moody_witty_no
+  steps:
+  - intent: enter_moody_witty
+  - action: utter_enter_moody_witty
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories ein paar / Paar
+# --------------------------------------------
+- story: few_couple_long
+  steps:
+  - intent: enter_few_couple
+  - action: utter_enter_few_couple
+  - intent: deny
+  - action: utter_explain_few
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_couple
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: few_couple_form
+  - active_loop: few_couple_form
+
+- story: few_couple_short
+  steps:
+  - intent: enter_few_couple
+  - action: utter_enter_few_couple
+  - intent: try
+  - action: few_couple_form
+  - active_loop: few_couple_form
+
+- story: few_couple_no
+  steps:
+  - intent: enter_few_couple
+  - action: utter_enter_few_couple
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories Saiten / Seiten
+# --------------------------------------------
+- story: string_page_long
+  steps:
+  - intent: enter_string_page
+  - action: utter_enter_string_page
+  - intent: deny
+  - action: utter_explain_string
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_page
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: string_page_form
+  - active_loop: string_page_form
+
+- story: string_page_short
+  steps:
+  - intent: enter_string_page
+  - action: utter_enter_string_page
+  - intent: try
+  - action: string_page_form
+  - active_loop: string_page_form
+
+- story: string_page_no
+  steps:
+  - intent: enter_string_page
+  - action: utter_enter_string_page
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories Gewähr / Gewehr
+# --------------------------------------------
+- story: warranty_rifle_long
+  steps:
+  - intent: enter_warranty_rifle
+  - action: utter_enter_warranty_rifle
+  - intent: deny
+  - action: utter_explain_warranty
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_rifle
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: warranty_rifle_form
+  - active_loop: warranty_rifle_form
+
+- story: warranty_rifle_short
+  steps:
+  - intent: enter_warranty_rifle
+  - action: utter_enter_warranty_rifle
+  - intent: try
+  - action: warranty_rifle_form
+  - active_loop: warranty_rifle_form
+
+- story: warranty_rifle_no
+  steps:
+  - intent: enter_warranty_rifle
+  - action: utter_enter_warranty_rifle
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories Scheck / Check
+# --------------------------------------------
+- story: cheque_check_long
+  steps:
+  - intent: enter_cheque_check
+  - action: utter_enter_cheque_check
+  - intent: deny
+  - action: utter_explain_cheque
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_check
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: cheque_check_form
+  - active_loop: cheque_check_form
+
+- story: cheque_check_short
+  steps:
+  - intent: enter_cheque_check
+  - action: utter_enter_cheque_check
+  - intent: try
+  - action: cheque_check_form
+  - active_loop: cheque_check_form
+
+- story: cheque_check_no
+  steps:
+  - intent: enter_cheque_check
+  - action: utter_enter_cheque_check
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories Malen / Mahlen
+# --------------------------------------------
+- story: paint_grain_long
+  steps:
+  - intent: enter_paint_grain
+  - action: utter_enter_paint_grain
+  - intent: deny
+  - action: utter_explain_paint
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_grain
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: paint_grain_form
+  - active_loop: paint_grain_form
+
+- story: paint_grain_short
+  steps:
+  - intent: enter_paint_grain
+  - action: utter_enter_paint_grain
+  - intent: try
+  - action: paint_grain_form
+  - active_loop: paint_grain_form
+
+- story: paint_grain_no
+  steps:
+  - intent: enter_paint_grain
+  - action: utter_enter_paint_grain
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+  
+# Stories wart / ward
+# --------------------------------------------
+- story: ward_were_long
+  steps:
+  - intent: enter_ward_were
+  - action: utter_enter_ward_were
+  - intent: deny
+  - action: utter_explain_ward
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_were
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: ward_were_form
+  - active_loop: ward_were_form
+
+- story: ward_were_short
+  steps:
+  - intent: enter_ward_were
+  - action: utter_enter_ward_were
+  - intent: try
+  - action: ward_were_form
+  - active_loop: ward_were_form
+
+- story: ward_were_no
+  steps:
+  - intent: enter_ward_were
+  - action: utter_enter_ward_were
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+  
+# Stories das / dass
+# --------------------------------------------
+- story: das_dass_long
+  steps:
+  - intent: enter_das_dass
+  - action: utter_enter_das_dass
+  - intent: deny
+  - action: utter_explain_das
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_dass
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: das_dass_form
+  - active_loop: das_dass_form
+
+- story: das_dass_short
+  steps:
+  - intent: enter_das_dass
+  - action: utter_enter_das_dass
+  - intent: try
+  - action: das_dass_form
+  - active_loop: das_dass_form
+
+- story: das_dass_no
+  steps:
+  - intent: enter_das_dass
+  - action: utter_enter_das_dass
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories war / wahr
+# --------------------------------------------
+- story: was_truth_long
+  steps:
+  - intent: enter_was_truth
+  - action: utter_enter_was_truth
+  - intent: deny
+  - action: utter_explain_was
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_truth
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: was_truth_form
+  - active_loop: was_truth_form
+
+- story: was_truth_short
+  steps:
+  - intent: enter_was_truth
+  - action: utter_enter_was_truth
+  - intent: try
+  - action: was_truth_form
+  - active_loop: was_truth_form
+
+- story: was_truth_no
+  steps:
+  - intent: enter_was_truth
+  - action: utter_enter_was_truth
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories mehr / Meer
+# --------------------------------------------
+- story: mental_blessed_long
+  steps:
+  - intent: enter_mental_blessed
+  - action: utter_enter_mental_blessed
+  - intent: deny
+  - action: utter_explain_mental
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_blessed
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: mental_blessed_form
+  - active_loop: mental_blessed_form
+
+- story: mental_blessed_short
+  steps:
+  - intent: enter_mental_blessed
+  - action: utter_enter_mental_blessed
+  - intent: try
+  - action: mental_blessed_form
+  - active_loop: mental_blessed_form
+
+- story: mental_blessed_no
+  steps:
+  - intent: enter_mental_blessed
+  - action: utter_enter_mental_blessed
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories wieder / wider
+# --------------------------------------------
+- story: again_against_long
+  steps:
+  - intent: enter_again_against
+  - action: utter_enter_again_against
+  - intent: deny
+  - action: utter_explain_again
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_against
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: again_against_form
+  - active_loop: again_against_form
+
+- story: again_against_short
+  steps:
+  - intent: enter_again_against
+  - action: utter_enter_again_against
+  - intent: try
+  - action: again_against_form
+  - active_loop: again_against_form
+
+- story: again_against_no
+  steps:
+  - intent: enter_again_against
+  - action: utter_enter_again_against
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
+# --------------------------------------------
+
+# Stories mehr / Meer
+# --------------------------------------------
+- story: more_sea_long
+  steps:
+  - intent: enter_more_sea
+  - action: utter_enter_more_sea
+  - intent: deny
+  - action: utter_explain_more
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: utter_explain_sea
+  - or:
+      - intent: affirm
+      - intent: go_on
+  - action: more_sea_form
+  - active_loop: more_sea_form
+
+- story: more_sea_short
+  steps:
+  - intent: enter_more_sea
+  - action: utter_enter_more_sea
+  - intent: try
+  - action: more_sea_form
+  - active_loop: more_sea_form
+
+- story: more_sea_no
+  steps:
+  - intent: enter_more_sea
+  - action: utter_enter_more_sea
+  - intent: affirm
+  - action: utter_anything_else
+  - action: action_get_random_nuggets
 # --------------------------------------------

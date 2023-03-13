@@ -6,12 +6,42 @@ rules:
   steps:
   - intent: greet
   - action: utter_greet
-  - action: utter_themen
+  - action: action_get_random_nuggets
+
+- rule: Help
+  steps:
+  - intent: help
+  - action: utter_help
+
+- rule: Overview
+  steps:
+  - intent: overview
+  - action: utter_overview
+
+- rule: Similar Words
+  steps:
+  - intent: similar_words
+  - action: action_get_similar_words
+
+- rule: Nice to Know
+  steps:
+  - intent: nice_to_know
+  - action: action_get_nice_to_know
 
 - rule: Show contact
   steps:
     - intent: kontakt
     - action: utter_kontakt
+
+- rule: Select random smart nuggets
+  steps:
+    - intent: random_smart_nuggets
+    - action: action_get_random_nuggets
+
+- rule: nettiquette
+  steps:
+    - intent: nettiquette
+    - action: utter_nettiquette
 
 - rule: Say goodbye anytime the user says goodbye
   steps:
@@ -28,20 +58,10 @@ rules:
     - intent: joke
     - action: action_tell_joke
 
-- rule: respond to general questions
-  steps:
-    - intent: gen
-    - action: utter_gen
-
-- rule: respond to chitchat
-  steps:
-    - intent: chitchat
-    - action: utter_chitchat
-
 - rule: out-of-scope
   steps:
     - intent: out_of_scope
-    - action: utter_out_of_scope
+    - action: utter_help
 
 - rule: nlu fallback
   steps:
@@ -131,3 +151,241 @@ rules:
         - requested_slot: null
     - action: utter_success_same
     - action: action_clear_same
+
+# Forms for since / be
+- rule: Activate since_be_form
+  steps:
+    - action: since_be_form
+    - active_loop: since_be_form
+
+- rule: Submit since_be_form
+  condition:
+    - active_loop: since_be_form
+  steps:
+    - action: since_be_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_since_be
+    - action: action_clear_since_be
+
+# Forms for scale / vague
+- rule: Activate scale_vague_form
+  steps:
+    - action: scale_vague_form
+    - active_loop: scale_vague_form
+
+- rule: Submit scale_vague_form
+  condition:
+    - active_loop: scale_vague_form
+  steps:
+    - action: scale_vague_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_scale_vague
+    - action: action_clear_scale_vague
+
+# Forms for moody / witty
+- rule: Activate moody_witty_form
+  steps:
+    - action: moody_witty_form
+    - active_loop: moody_witty_form
+
+- rule: Submit moody_witty_form
+  condition:
+    - active_loop: moody_witty_form
+  steps:
+    - action: moody_witty_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_moody_witty
+    - action: action_clear_moody_witty
+      
+# Forms for few / couple
+- rule: Activate few_couple_form
+  steps:
+    - action: few_couple_form
+    - active_loop: few_couple_form
+
+- rule: Submit few_couple_form
+  condition:
+    - active_loop: few_couple_form
+  steps:
+    - action: few_couple_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_few_couple
+    - action: action_clear_few_couple
+      
+# Forms for string / page
+- rule: Activate string_page_form
+  steps:
+    - action: string_page_form
+    - active_loop: string_page_form
+
+- rule: Submit string_page_form
+  condition:
+    - active_loop: string_page_form
+  steps:
+    - action: string_page_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_string_page
+    - action: action_clear_string_page
+      
+# Forms for warranty / rifle
+- rule: Activate warranty_rifle_form
+  steps:
+    - action: warranty_rifle_form
+    - active_loop: warranty_rifle_form
+
+- rule: Submit warranty_rifle_form
+  condition:
+    - active_loop: warranty_rifle_form
+  steps:
+    - action: warranty_rifle_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_warranty_rifle
+    - action: action_clear_warranty_rifle
+
+# Forms for cheque / check
+- rule: Activate cheque_check_form
+  steps:
+    - action: cheque_check_form
+    - active_loop: cheque_check_form
+
+- rule: Submit cheque_check_form
+  condition:
+    - active_loop: cheque_check_form
+  steps:
+    - action: cheque_check_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_cheque_check
+    - action: action_clear_cheque_check
+      
+# Forms for paint / grain
+- rule: Activate paint_grain_form
+  steps:
+    - action: paint_grain_form
+    - active_loop: paint_grain_form
+
+- rule: Submit paint_grain_form
+  condition:
+    - active_loop: paint_grain_form
+  steps:
+    - action: paint_grain_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_paint_grain
+    - action: action_clear_paint_grain
+
+# Forms for das / dass
+- rule: Activate das_dass_form
+  steps:
+    - action: das_dass_form
+    - active_loop: das_dass_form
+
+- rule: Submit das_dass_form
+  condition:
+    - active_loop: das_dass_form
+  steps:
+    - action: das_dass_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_das_dass
+    - action: action_clear_das_dass
+
+# Forms for was / truth
+- rule: Activate was_truth_form
+  steps:
+    - action: was_truth_form
+    - active_loop: was_truth_form
+
+- rule: Submit was_truth_form
+  condition:
+    - active_loop: was_truth_form
+  steps:
+    - action: was_truth_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_was_truth
+    - action: action_clear_was_truth
+
+# Forms for ward / were
+- rule: Activate ward_were_form
+  steps:
+    - action: ward_were_form
+    - active_loop: ward_were_form
+
+- rule: Submit ward_were_form
+  condition:
+    - active_loop: ward_were_form
+  steps:
+    - action: ward_were_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_ward_were
+    - action: action_clear_ward_were
+      
+# Forms for mental / blessed
+- rule: Activate mental_blessed_form
+  steps:
+    - action: mental_blessed_form
+    - active_loop: mental_blessed_form
+
+- rule: Submit mental_blessed_form
+  condition:
+    - active_loop: mental_blessed_form
+  steps:
+    - action: mental_blessed_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_mental_blessed
+    - action: action_clear_mental_blessed
+
+# Forms for again / against
+- rule: Activate again_against_form
+  steps:
+    - action: again_against_form
+    - active_loop: again_against_form
+
+- rule: Submit again_against_form
+  condition:
+    - active_loop: again_against_form
+  steps:
+    - action: again_against_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_again_against
+    - action: action_clear_again_against
+      
+# Forms for more / sea
+- rule: Activate more_sea_form
+  steps:
+    - action: more_sea_form
+    - active_loop: more_sea_form
+
+- rule: Submit more_sea_form
+  condition:
+    - active_loop: more_sea_form
+  steps:
+    - action: more_sea_form
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: utter_success_more_sea
+    - action: action_clear_more_sea

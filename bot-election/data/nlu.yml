@@ -1,0 +1,1296 @@
+version: "3.1"
+nlu:
+# Greet, Goodbye, Affirm, Deny, Control
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hallo
+    - Grüß dich
+    - Guten Tag
+    - Hallöchen
+    - Grüzi
+    - Moin
+    - Hallo Lalo
+    - Hey du
+    - Hallo du
+    - Hallo
+    - Hallo, ich bin [Alfred](name)
+    - hey, ich heiße [Mareike](name)
+    - Grüß dich, ich bin [Werner](name)
+    - Ich bin [Klaus](name)
+    - Hallo, ich heiße [Alfred](name)
+    - Hallp
+    - Hey
+    - Hi
+    - Hallo, ich heiße Simon
+    - ich bin [Mareike](name)
+    - Hallo, ich bin Simon
+    - Hey, ich bin Simon
+    - Hallo!
+    - Hallo Alfa-Bot
+    - Hallo Bot
+    - Hi there!
+    - Guten Morgen
+    - ALFA
+    - moin
+    - Hallo Lichter an
+    - Willkommen
+    - Guten Mittag
+    - haöli
+    - neustart
+    - n3u
+    - neu
+    - Hallo la Lo
+    - alfabot
+    - Hello
+- intent: goodbye
+  examples: |
+    - cu
+    - bye
+    - byebye
+    - tschöö
+    - tschö
+    - tschüss
+    - bis dann
+    - bis bald
+    - auf wiedersehen
+    - machs gut
+    - tschüß
+    - öö
+    - Danke
+    - Machs gut
+    - Toll, machs gut
+    - Mir geht's gut danke:
+    - Danke lalo
+    - byfdb
+    - danke
+- intent: affirm
+  examples: |
+    - ja
+    - klar
+    - ok
+    - mach das
+    - in Ordnung
+    - o.k.
+    - geht klar
+    - warum nicht
+    - mach
+    - ja bitte
+    - yes
+    - okay
+    - Oh okay
+    - jhv
+- intent: deny
+  examples: |
+    - nein
+    - möchte ich nicht
+    - auf keinen Fall
+    - nö
+    - ne
+    - nicht wirklich
+    - muss nicht sein
+    - bitte nicht
+    - definitiv nicht
+    - nope
+- intent: bot_challenge
+  examples: |
+    - bist du ein Bot?
+    - bist du ein Mensch?
+    - bist du Menschlich?
+    - Spreche ich mit einem Menschen?
+    - Bist du eine KI?
+    - was bist du?
+    - Bist du ein Bot?
+    - Bist du ein bot?
+    - Wer bist du?
+    - lalou wer hat dich entwickelt
+    - la lu wer ist dein Bus
+    - lalou wer ist dein Boss
+    - Salou wer ist dein Besitzer
+    - Wer ist dein Boss
+    - Wer ist dein Chef?
+    - Wer hat dich gemacht?
+    - Wer hat dich programmiert?
+    - bist du da
+    - wer ist da
+    - You
+- intent: interrupt
+  examples: |
+    - stop
+    - aufhören
+    - lass das
+    - END
+    - ich möchte mein Wahllokal nicht wissen
+    - Stoppen bitte
+    - Hör auf mich das zu fragen
+    - Frag nicht weiter
+    - Du erkennst meine Stadt nicht
+    - ich habe keine Nummer
+    - Ich möchte nicht weiter machen
+    - ende
+    - Schluss
+    - Schluss jetzt
+    - Ende
+    - schluss damit
+
+
+
+- intent: nlu_fallback
+  examples: |
+    - djdlfkd
+    - skykgkff
+    - widbd rndlos
+    - alskdjalsdkj
+- intent: out_of_scope
+  examples: |
+    - Wer ist US-Präsident?
+    - Was läuft gerade im Kino?
+    - Kino?
+    - Barack Obama?
+    - Gottesdienst
+    - Wo kann ich baden gehen?
+    - Wer geht mit mir schwimmen?
+    - sldfjdsölgkj
+    - helgajagörrsnefall
+    - Was läuft im Kino?
+    - Wer ist Barack Obama?
+    - Blödsinn
+    - Theater
+    - Wo steht die Sphinx?
+    - Wo bitte geht's zum Militär?
+    - Wo geht es zur Bücherei?
+    - Ttsegsr
+    - dsa
+    - cool
+    - sldfjh ajldkjsa
+    - ajks laslk kalsdjka laskdj
+    - oper
+    - alskjdhalksdj
+    - blödes teil
+    - ksbdfld
+    - 123
+    - jkl
+    - kl
+    - gh
+    - Wie warm ist es
+    - wer noch?
+    - Hartz4
+    - xurk1+/"#0CuniiO:-)uzggyoqnr72xex:-(:-D
+    - text
+    - rezo
+    - was ist
+    - lalu kennst du Oliver Meisel
+    - ich habe dich gefragt was ich denn nicht nettes gesagt habe
+    - was habe ich denn nicht nettes gesagt
+    - 1 2 3
+    - wann ist Weihnachten
+    - gukgulgul
+    - gzkghkghkghk
+    - Hier ist meine Nachricht
+    - russland
+    - ukraine
+    - Krieg in der Ukraine
+    - ydfydfh
+    - , ,ljjbk
+    - gnsgfd
+    - mj j
+    - oh
+    - ,hklvjhj
+    - sfbsbaf
+    - fbasfb
+    - Are
+    - uztcou
+    - ghmdgm
+    - dfzdgk
+    - hdfmfm
+    - etjej
+    - rthwrtjr
+    - sfgnsfn
+    - dfhdgsn
+    - sdgnfng
+    - sgdnsnfg
+    - dfnsfgn
+    - snnw
+    - v
+    - m
+    - dhae
+    - Uhrzeit
+    - kannst du auch englisch
+    - Englisch
+
+- intent: kontakt
+  examples: |
+    - Ich möchte mit einem Menschen sprechen
+    - Menschen
+    - Handoff
+    - Kontakt
+    - Wer ist für dich verantwortlich?
+    - Kontakte
+    - Anrufen
+    - Anschreiben
+    - kontakt
+    - alfa telefon
+    - ich möchte mit jemanden sprechen
+- intent: testintent
+  examples: |
+    - zeige mir den Custom action Code!
+    - custom action
+    - CAS
+    - ich will die Custom Action sehen
+    - Custom action server
+    - custom action server
+    - Custom Action Server
+# Chitchat
+- intent: chitchat/howAreYou
+  examples: |
+    - wie geht es dir?
+    - geht es dir gut?
+    - wie ist dein befinden?
+    - alles fit?
+    - alles gut bei dir?
+    - Wie geht es dir?
+    - Wie geht es dir
+    - Wie geht's dir?
+    - wie gehts?
+- intent: chitchat/joke
+  examples: |
+    - Erzähle mir einen Witz
+    - Kannst du witzig sein?
+    - Kannst du mir einen Witz erzählen?
+    - Ich möchte einen Witz hören
+    - Witz
+    - Witz erzählen
+    - erzähle mir einen Witz
+    - ein anderer Witz
+- intent: chitchat/turing
+  examples: |
+    - kennst du den Turing-Test?
+    - Turing-Test
+    - weißt du, was der Turing-Test ist?
+    - kannst du den Turing-Test bestehen?
+    - Kennst du den Turing-Test?
+    - test
+    - Test
+- intent: chitchat/nettiquette
+  examples: |
+    - du bist Scheiße
+    - Kacke
+    - verdammte Scheiße
+    - Pimmel
+    - Sackgesicht
+    - Fotze
+    - Du Hure
+    - Hurensohn
+    - Du Nutte
+    - Schwanz
+    - Was ein Schrott
+    - verfickt noch mal
+    - beschissen
+    - das ist doch Mist
+    - scheiße
+    - Drecksding
+    - Dreck
+    - Schlampe
+    - Die Schlampe
+    - Du Shlampe
+    - Misthaufen
+    - mist
+    - misthaufen
+    - merkel muss weg
+    - nazi
+    - lügenpresse
+    - Penis
+    - Arschloch
+    - Arsch
+    - scheisse
+    - kacka
+    - pipi
+    - Nazi
+    - Nazis
+    - alle sind doof
+    - restart
+    
+    
+
+# gvi Generic vote information
+- intent: gvi/democracy
+  examples: |
+    - Ist Deutschland eine Demokratie?
+    - Was ist eine Demokratie?
+    - Was bedeutet Demokratie?
+    - Was versteht man unter Demokratie?
+    - Erkläre mir Demokratie
+    - Wie funktioniert eine Demokratie?
+    - Was Demokratie?
+    - Wer ist Demokratie?
+    - Das Volk kann wählen?
+    - Was bedeutet Herrschaft des Volkes
+    - Wieso heißt es Herrschaft des Volkes
+    - Demokratie
+    - Was heißt Demokratie?
+    - Was ist Demokratie?
+    - was ist eine Demokratie
+    - wie funktioniert Demokratie
+    - demokratisch
+    - demokratie
+- intent: gvi/parliamentWhat
+  examples: |
+    - Was ist der Landtag?
+    - Was bedeutet Landtag?
+    - Was versteht man unter Landtag?
+    - Was heißt Landtag?
+    - Erkläre mir Landtag?
+    - Wer ist die Volksvertretung?
+    - Wer vertritt das Volk?
+    - Wer macht die Gesetze?
+    - Wo entstehen Gesetze?
+    - Wer stimmt über Gesetze ab?
+    - Was macht der Landtag?
+    - wer ist der Landtag?
+    - Wer sitzt im Landtag?
+    - Was ist das Parlament?
+    - Parlament?
+    - parlament
+    - Parlament
+    - was ist der Unterschied zwischen Landtag und
+    - was wird gewählt
+    - was macht der Landtag
+- intent: gvi/eigenschaftenWahlen
+  examples: |
+    - wie sind die Wahlen?
+    - Was muss ich über die Landtagswahl wissen?
+    - Was sind die Prinzipien der Landtagswahl?
+    - prinzipin wal
+    - prinzipien Wahl
+    - Kritärien Wahl
+    - Kriterien Wahl
+    - Welche Kriterien gelten für Wahlen in Deutschland
+    - Wahl demokratisch
+    - Eigenschaften Wahlen
+    - Wal demokratisch
+    - Was Eigenschaften von Wahlen
+    - Wie sind die Wahlen?
+    - Kriterien Wal
+    - Wie müssen wählen sein?
+    - Wie muss eine Wahl sein?
+    - Wie muss eine Wahl sein
+    - Eigenschaft wahl
+- intent: gvi/wahlenFrei
+  examples: |
+    - Darf ich wählen, wen ich will?
+    - Wahlpflicht?
+    - freie walen?
+    - was sind freie wahlen?
+    - was heißt freie Wahlen?
+    - was freie wahlen?
+    - Wieso sind wahlen frei?
+    - Wieso heißt es, Wahlen seien frei?
+    - wählen frei
+    - Was freie wählen?
+    - kann ich alleine wählen
+    - Wahlpflicht
+- intent: gvi/wahlenGeheim
+  examples: |
+    - Geheime Wahl?
+    - Sind wahlen geheim?
+    - Wal geheim?
+    - geheime Wahlen?
+    - Was heißt geheime Wahlen?
+    - was sagt Wal geheim?
+    - wieso wal geheim?
+    - Kann ich alleine wählen?
+    - Wieso sind Wahlen geheim?
+    - Was geheime walen
+    - gehime walen
+    - Kann ich noch jemanden mitnehmen?
+    - Muss ich alleine wählen?
+    - Wahlen geheim
+
+- intent: gvi/wahlenGleich
+  examples: |
+    - Wann sind Wahlen gleich?
+    - Gleiche Wahlen?
+    - Was sind gleiche Wahlen?
+    - Wahlen gleich?
+    - wal gleich?
+    - gleiches wal?
+    - Wahl gleichberechtigt?
+    - wieso wählen gleich
+    - Wahlen gleich
+- intent: gvi/fuenfProzentHuerde
+  examples: |
+    - Was bedeutet 5-Prozent-Hürde?
+    - 5% Hürde?
+    - Wie viele Stimmen muss man haben?
+    - Warum braucht eine Partei 5% der Stimmen?
+    - Hürde
+    - Mindeststimmen?
+    - Kommt jede Partei in den Bundestag?
+    - was ist die 5% Hürde
+    - fünf 5 Hüder
+    - hürde
+    - warum benötigt eine Patei 5 %
+    - warum 5 %
+    - 5 hürde
+    - 5 Prozent
+    - 5 %
+    - 5%
+    - was ist die 5 Hürde
+- intent: gvi/warumWaehlen
+  examples: |
+    - Muss ich wählen?
+    - Warum soll ich wählen?
+    - Wählen hat doch keinen Zweck
+    - Meine Stimme bringt nichts
+    - Die machen doch sowieso was sie wollen
+    - Wählen ist sinnlos
+    - Wählen wieso?
+    - Als ob wählen etwas bringen würde.
+    - Wahlverdruss
+    - Ich will nicht wählen
+    - keine Lust
+    - ist das wichtigk
+    - Bringt wählen etwas?
+    - Meine Stimme bringt doch nichts
+    - wieso wählen
+    - Muss ich wählen gehen?
+- intent: gvi/nichtWaehlen
+  examples: |
+    - Wenn ich nicht wäjlen gehe
+    - was passiert wenn ich nicht wählen gehe
+    - wenn ich nicht wähle
+    - ich will nicht wählen
+    - wenn ich nicht wähle?
+    - Falls ich nicht wähle, was passiert?
+    - Wer kriegt meine Stimme, wenn ich nicht wähle?
+    - Wer bekommt meine Stimme, falls ich nicht wähle?
+    - ich geh nicht wählen
+- intent: gvi/onlinewahl
+  examples: |
+    - kann ich auch online wählen
+    - online wählen
+    - mit dem Internet wählen
+    - kann ich auch aus dem Internet heraus wählen?
+    - Kann ich im Internet wählen?
+    - Darf ich auch online abstimmen?
+    - Online wählen
+    - Per Internet wählen
+    - Onlinewahl
+    - Kann ich auch per Internet abstimmen?        
+
+- intent: gvi/koalition
+  examples: |
+    - Koalition
+    - Was ist eine Koalition?
+    - Wer gehört zu einer Koalition?
+    - Was ist ein Koalitionsvertrag?
+    - Was ist ein Bündnis der Parteien
+    - Parteien tun sich zu sammen
+    - Bündnis
+    - Warum schließen sich Parteien zusammen?
+    - Was ist eine Koalition
+    - was ist eine Koalition
+- intent: gvi/opposition
+  examples: |
+    - Was ist eine Opposition?
+    - Opposition
+    - Wer ist in der Oposizion?
+    - Was heißt Opposition?
+    - Wer gehört zur Opposition?
+    - Oposition
+    - Was ist Opposition?
+    - opprosition
+    - und was ist eine Opposition?
+- intent: gvi/primeMinisterWhat
+  examples: |
+    - Was ist ein Ministerpräsident?
+    - Was bedeutet Ministerpräsident?
+    - Was versteht man unter Ministerpräsident?
+    - Erkläre mir Ministerpräsident
+    - Was heißt Ministerpräsident?
+    - Was macht ein Ministerpräsident?
+    - Wer ist der Chef im Landtag?
+    - Was macht der Chef?
+    - Wer bestimmt im Landtag?
+    - Wer ist der Bestimmer?
+    - was ist ministerpräsident
+- intent: gvi/wahlberechtigt
+  examples: |
+    - Was ist ein Wahlrecht?
+    - Was bedeutet Wahlrecht?
+    - Was versteht man unter Wahlrecht?
+    - Erkläre mir Wahlrecht
+    - Wie funktioniert das Wahlrecht?
+    - Was Wahlrecht?
+    - Wahlrecht was?
+    - Wer kann wählen?
+    - Darf jeder wählen?
+    - Dürfen alle wählen?
+    - Was heißt wahlberechtigt
+    - Wann sind die Wahlen?
+    - aktives Wahlrecht?
+    - darf ich wählen
+    - wer darf wählen
+    - Wie viele Menschen dürfen wählen
+    - darf jeder wählen?
+    - Wer darf wählen?
+    - Wahlberechtigt?
+    - Gibt es eine Wahlpflicht?
+    - Darf ich wählen?
+    - Welche Bedingungen muss ich erfüllen, um wählen zu dürfen?
+    - Dürfen nur Deutsche wählen?
+    - Dürfen auch Ausländer wählen?
+    - Wie alt muss ich sein, um wählen zu dürfen?
+    - Wie alt muss ich sein um zu wählen?
+    - Dürfen Flüchtlinge wählen?
+    - flüchtlinge
+    - wer ist wahlberechtigt
+    - Wer darf wählen
+## Parties
+- intent: gvi/partiesWhat
+  examples: |
+    - Was sind Parteien?
+    - Was bedeutet Partei?
+    - Was versteht man unter Parteien?
+    - Erkläre mir Parteien
+    - Was Parteien
+    - Parteien
+    - Parteien was?
+    - Wie funktionieren Parteien?
+    - Was machen Parteien?
+    - Welche Aufgaben haben Parteien?
+    - Worum kümmern sich Parteien?
+    - Wie arbeiten Parteien?
+    - Partei
+    - europäische partei
+    - was ist eine Fraktion
+    - was sind parteien
+    - was ist eine Partei
+- intent: gvi/partiesWho
+  examples: |
+    - Wer sind Parteien?
+    - Welche Parteien gibt es?
+    - Wen kann ich wählen?
+    - sag mir welche Parteien es gibt
+    - Über welche Parteien kansnt du mir etwas sagen?
+    - Wer sind die Parteien?
+    - wen kann ich wählen?
+    - Wen kann ich wählen
+    - Was gibt es hier?
+    - Wer sind die Parteien
+    - Wen kann man wählen? u U
+    - Wer stellt sich zur Wahl?
+    - kandiat
+    - welche Parteien gibt es?
+    - Welche Parteien kann ich wählen?
+    - Welche Parteien gibt es
+    - welche parteien gibt es?
+    - sonstige
+    - tierschutzpartei
+    - die partei
+    - welche Parteien sind denn zur Wahl aufgestellt
+    - welche Parteien gibt es denn noch zum wählen
+    - welche Parteien gibt es
+    - kleine parteien
+    - kann ich die ödp wählen
+    - ödp
+    - Piraten
+    - piraten partei
+    - Wer sind die Freien Wähler
+    - Freie Wähler
+    - Bündnis für Innovation und Gerechtigkeit
+    - Wer ist BIG?
+    - Was ist die Ökologisch-Demokratische Partei
+    - Partei Volksabstimmung
+    - Marxistisch-Leninistische Partei Deutschlands MLPD
+    - Kommunisten
+    - Gibt es auch die Violetten?
+    - Die Violetten
+    - Gesundheitsforschung
+    - Partei für Gesundheitsforschung
+    - Zentrum
+    - Deutsche Zentrumspartei
+    - Wer ist die Zentrumspartei
+    - DKP
+    - Deutsche Kommunistische Partei
+    - Basisdemokratische Partei Deutschlands
+    - dieBasis
+    - Kann ich dieBasis wählen?
+    - DSP
+    - Deutsche Sportpartei
+    - Die Urbane
+    - Hiphop Partei
+    - gibt es eine Hip Hop Partei?
+    - LIEBE
+    - Europäische Partei Liebe
+    - Familienpartei Deutschlands
+    - FAMILIE
+    - neo
+    - Wohlstand für alle
+    - Die Humanisten
+    - PdF
+    - Partei des Fortschritts
+    - Lobbyisten für Kinder
+    - LfK
+    - Tierschutzpartei
+    - Partei Mensch umwelt Tierschutz
+    - Die Gerechtigkeitspartei
+    - Team Todenhöfer
+    - Volt
+    - Volt Deutschland
+    - Who
+    - kpd
+    - kommunisten
+    - ndp
+    - Welche partei steht für Umweltschutz?
+    - wie viele Partei gibt es
+- intent: gvi/parties_CDU
+  examples: |
+    - Wer ist die CDU?
+    - Wer sind die Konservativen?
+    - Was sind die konservativen Parteien?
+    - Christlich Demokratische Union
+    - Unionsparteien
+    - Union
+    - CDU
+    - Und wer ist die Union?
+    - Christlich demokratische union
+    - Schäuble
+    - union
+    - cdu
+    - was macht die cdu
+    - wahlprogramm cdu
+    - was sagt denn die CDU
+    - Wahlprogramm der CDU
+    - Hat die CDU ein Wahlprogramm?
+    - Was ist die CDU?
+    - Was ist die Cdu?
+    - Angela Merkel
+    - cdu?
+    - Angela
+    - Wer ist Angela Merkel?
+    - Wer ist Angela Merkel
+    - Merkel
+    - Cdu
+    - Wer ist die Cdu?
+- intent: gvi/parties_CSU
+  examples: |
+    - Wer ist die CSU?
+    - CSU?
+    - Was ist die CSU?
+    - Kann ich auch die CSU wählen?
+    - Ich würde gerne Söder wählen
+    - Söder wählen
+    - CSU wählen
+    - Christlich Soziale Union
+    - Ich möchte die CSU wählen
+- intent: gvi/parties_SPD
+  examples: |
+    - Sozialisten
+    - Sozialistische Partei Deutschlands
+    - SPD
+    - Wer ist die SPD?
+    - Was ist SPD?
+    - Was ist die SPD?
+    - Sozialdemokratische Partei
+    - Wahlprogramm der SPD
+    - spd
+    - was macht die spd
+    - Wahlprogramm SPD
+    - was macht die SPD
+- intent: gvi/parties_FDP
+  examples: |
+    - Liberale Partei
+    - Freiheitliche Partei
+    - Wirtschaftspartei
+    - Arbeitgeberpartei
+    - Wer ist die FDP?
+    - Sag mir was die FDP ist
+    - FDP
+    - liberal
+    - wer ist die FDP?
+    - freie demokraten
+    - freie demokratische partei
+    - ich will wirtschaft
+    - Wahlprogramm FDP
+    - fdp programm
+    - fdp
+    - Was ist die FDP?
+    - Wer ist Christian Lindner?
+    - Lindner
+- intent: gvi/parties_GRUENE
+  examples: |
+    - Ökopartei
+    - Grüne
+    - Umweltpartei
+    - Wer sind die Grünen?
+    - Was ist Bündnis 90 die Grünen.
+    - Die Grünen
+    - Wer ist Bündnis 90?
+    - Bündnis 90 die Grünen
+    - grün
+    - wer sind die grünen
+    - was machen die grünen
+    - die grünen
+    - bündnis 90
+    - ökologisch
+    - ich will öko
+    - Habeck
+    - Roth
+    - grüne
+    - Wahlprogramm grüne
+    - grünes Wahlprogramm
+    - was sind die Grünen
+    - sind die Grünen gut
+    - wofür stehen die Grünen
+    - welche Informationen gibt es zu den Grünen
+    - Wer sind die Grünen
+    - GRÜNE
+    - Die GRÜNEN
+- intent: gvi/parties_Linke
+  examples: |
+    - wer sind die Linken?
+    - Die Linke?
+    - Kommunisten
+    - SED
+    - Sozialistische Einheitspartei
+    - Kommunistische Partei
+    - Was sind die Linken?
+    - Linke Partei
+    - Wer ist politisch Links
+    - Linke
+    - Die Linke
+    - Wahlprogramm der Linken
+    - Linkes Wahlprogramm
+    - linke
+    - ist die Linke die SED
+    - PDS
+    - LINKE
+    - Die LINKE
+    - pds
+    - Lnke
+- intent: gvi/parties_AFD
+  examples: |
+    - AFD
+    - Wer ist die AFD?
+    - Was ist die Alternative für Deutschland?
+    - Wer ist politisch rechts?
+    - Die Rechten
+    - Rechte Partei
+    - AFD?
+    - afd
+    - ist die AFD eine gute Partei
+    - Was ist die afd?
+    - wie findest du die AFD
+# esq Election specific questions
+## candidates
+- intent: esq/candidates
+  examples: |
+    - Wer sind die Kandidaten?
+    - Wer will Ministerpräsident werden?
+    - Wer wird Ministerpräsident?
+    - Spitzenkandidaten?
+    - Kandidaten?
+    - wer sind die Kandidaten?
+    - kandidaten
+    - Kandidaten
+    - wofür sthene die Kandidaten
+    - welche Kandidaten gibt es?
+    - wer sind die kandidaten
+    - Wer ist denn alles auf
+    - Wer ist denn Kandidat
+    - Wer ist denn alles aufgestellt für NRW
+    - Wer ist denn in Essen aufgestellt für Partei
+    - Wer will Kanzler werden
+    - wie heißen die kandidaten
+    - nein Kandidaten
+    - Welche Kandidaten gibt es?
+    - Kandida
+    - wen kann ich wählen
+    - wer kandidiert für
+    - Wer sind die Direktkandidaten in [Bielefeld](stadt)?
+- intent: esq/Hendrik_Wuest
+  examples: |
+    - Wer ist der Kandidat der CDU?
+    - Wer kandidiert für die CDU?
+    - Wen kriege ich, wenn ich die CSU wähle?
+    - Wen stellt die CDU als Ministerpräsident auf?
+    - Wer ist Hendrick Wüst?
+    - Hendrik Wüst
+    - Henrick Wüst
+    - Laschet
+    - Laschi
+    - Wer ist Kandidat der CDU
+    - Wer ist Kandidat bei der CDU?
+    - Wer ist Hendrik Laschet
+    - wer ist Wüst
+    - Henrik Wüst
+- intent: esq/Thomas_Kutschaty
+  examples: |
+    - Wer ist der Kandidat der SPD?
+    - Wer kandidiert für die SPD?
+    - Wen kriege ich, wenn ich die SPD wähle?
+    - Wen stellt die SPD auf?
+    - Wer ist Thomas Kutschaty?
+    - Kutschaty
+    - Thomas Kutschaty
+    - Kuschatti
+    - Wer ist Thomas K.
+    - Lalo, was weißt du über Thomas Kutschaty?
+    - kutsche
+- intent: esq/Mona_Neubaur
+  examples: |
+    - Wer ist der Kandidat der Grünen?
+    - Wer kandidiert für die Grünen?
+    - Wen kriege ich, wenn ich die Grünen wähle?
+    - Wen stellen die Grünen als Kandidat auf?
+    - Wer ist Mona Neubaur?
+    - Mona Neubaur
+    - Neubauer
+    - Neubaur
+    - Wer ist der Kandidat der Grünen
+    - wer ist Mona
+    - Wer ist Neubaur
+    - wer ist Mona?
+    - Näubauer
+    - näubauher
+    - Mona
+    - Wer ist Mona Neubaur
+    - neubau
+    - Mona Neubar
+    - wer ist der Spitzenkandidat der grün
+- intent: esq/Joachim_Stamp
+  examples: |
+    - Wer ist der Kandidat der FDP?
+    - Wer kandidiert für die FDP?
+    - Wen kriege ich, wenn ich die FDP wähle?
+    - Wen stellt die FDP auf?
+    - Wer ist Joachim Stamp?
+    - Joachim Stamp
+    - Stamp
+    - Wer tritt bei der FDP an?
+    - Wer ist Kandidat der FDP?
+    - stamp
+- intent: esq/Markus_Wagner
+  examples: |
+    - Wer ist Kandidat der AFD
+    - Wer kandidiert für die AFD
+    - Wer für AFD
+    - Markus Wagner
+    - Markus
+    - Wagner
+    - Spitzenkandidat AFD
+    - Wer kandidiert für AFD
+- intent: esq/Carolin_Butterwegge
+  examples: |
+    - wer ist die Spitzenkandidatin der Linken
+    - Kandidat Linke
+    - Carolin
+    - Butterwegge
+    - Carolin butterwegge
+    - Wer für Linke
+    - Linker Kandidat
+    - linke Kandidatin
+    - Kandidatin LINKE
+    - Kandidat linke
+    - Butter Wegge
+    - Butterwäge
+    - Carolin Butterwegge
+- intent: esq/wahlprogramme
+  examples: |
+    - Welche Wahlprogramme gibt es?
+    - Wahlprogramm?
+    - Was wollen die Parteien?
+    - Wofür stehen die Parteien?
+    - Was machen die Parteien?
+    - Welche Ziele haben die Parteien?
+    - Wie soll ich mich für eine Partei entscheiden?
+    - walprogramme
+    - Wahlprogramme
+    - hallo kannst du mir das Wahlprogramm von
+    - Hallo haben nicht die Parteien immer alles versprochen
+    - was macht die Partei denn für die Analphabeten
+    - haben die Parteien nicht immer alles versprochen und nie gehalten
+
+## How to vote
+- intent: esq/howToVote
+  examples: |
+    - Wie viel zählt meine Stimme?
+    - Wie viele Stimmen habe ich?
+    - Wie funktioniert wählen?
+    - Wie viele Stimmen habe ich
+    - Wie kann ich wählen?
+    - wie viele Stimmen habe ich?
+    - wie kann ich wählen?
+    - Wählen wie?
+    - Wie wähle ich?
+    - Wie geht wahl
+    - Wie geht wählen?
+    - Lalo, wie wähle ich?
+    - wie wählen
+    - wi wälen
+    - Wie wählen?
+    - Wie wählen
+    - Wahlzettel
+    - wue vieöe stimmen?
+    - wie viele Kreuze muss ich machen
+    - Wie viele Stimmen darf ich abgeben?
+    - Wie viele Kreuze muss ich machen?
+    - ich will ja wählen aber wie denn ich kann es doch nicht
+    - wenn ich aber nicht weiß wie das geht
+    - wenn ich doch nicht weiß wie das geht mit dem wählen
+    - wie funktioniert wählen
+- intent: esq/erststimme
+  examples: |
+    - Was ist die Erststimme?
+    - Was wähle ich mit der Erststimme
+    - Erststimme?
+    - Direktmandat?
+    - Was ist ein Direktkandidat?
+    - Was passiert mit meiner Stimme?
+    - Wen wähle ich?
+    - Was ist ein Direktmandat?
+    - Direktwahl? Was ist das?
+    - Wen wähle ich mit meiner ersten Stimme?
+    - direktkandidat
+    - Erststimme
+    - Erstwahl
+    - was bedeutet Erststimme
+- intent: esq/zweitstimme
+  examples: |
+    - Was wähle ich mit der Zweitstimme?
+    - Zweitstimme
+    - Was ist die Zweitstimme?
+    - Was bedeutet Zweitstimme?
+    - Welche Stimme ist wichtiger
+    - Verhältniswahl?
+    - Was bedeutet Verhältniswahl?
+    - und zweitstimme
+    - zweitstimme?
+    - zweitstimme
+    - Zweistime
+    - Zweistimme
+    - Wofür ist die Zweitstimme?
+    - Zwei Stimmen?
+    - was bedeutet Zweitstimmen
+
+
+- intent: esq/wahlOMat
+  examples: |
+    - Was soll ich wählen?
+    - Welche Partei soll man wählen?
+    - Ich weiß nicht, was ich wählen soll
+    - Welche Partei wähle ich?
+    - Wahlomat
+    - Wahl-O-Mat
+    - Wahl-o-Mat, was ist das?
+    - Was ist der Wahlomat?
+    - Wahlomat?
+    - Wer kann mir helfen, mich zu entscheiden?
+    - Hilfe bei der Wahlentscheidung
+    - Entscheidungshilfe
+    - Welche Partei soll ich wählen?
+    - Wo kann ich etwas über Parteien lernen?
+    - Welche Partei unterstützt mich?
+    - Wahlprogramm
+    - Wen soll ich wählen
+    - walomat
+    - wal o mat
+    - wahlomat
+    - Entscheiden
+    - Was wählen?
+    - Wahl O Mat
+    - Wo bekomme ich Hilfe zum Wählen?
+    - Wahl Hilfe
+    - was wählen
+    - Wahlhilfe
+    - Was wählen
+    - wen soll ich wählen?
+    - Wer hilft mir wählen
+    - Einkommenunabhängiges Bafög
+    - klimawandel
+    - Flüchtlinge
+    - Zuwanderung
+    - niedrigere Steuern
+    - tierschutz
+    - Wahl o mat
+    - Klimawandel
+    - welche Partei ist gut
+    - welche Partei ist schlecht
+    - welche Partei ist für eine
+    - welche Partei ist die beste für
+    - welches ist die beste Partei
+    - wen sollte ich nicht
+    - was ist die beste Partei
+    - wen soll ich wählen
+    - welche Partei ist für Atomkraft
+    - wer ist gegen AKWs
+    - wer reduziert schulden
+    - mehr Schulden
+    - weniger schulden
+    - welche Partei soll ich wählen
+    - wahl o mat
+    - Wen soll ich wählen?
+    - welche Partei passt zu mir
+    - lalu wen soll ich wählen
+    - wahlhilfe
+- intent: esq/wahlbenachrichtigung
+  examples: |
+    - Wahlbenachrichtigung?
+    - Was ist eine Wahlbenachrichtigung?
+    - Was mache ich mit der Wahlbenachrichtigung?
+    - Post vom Wahlamt
+    - Post von der Stadt
+    - Karte zur Bundestagswahl
+    - Einladung zur Wahl
+    - Aufforderung zur Wahl
+    - Karte zum Wählen
+    - Wahlkarte
+    - Was ist eine Einladungskarte?
+    - wahlnachrivht
+    - Wahlnachricht
+    - Wo wählen?
+    - wahlaufforderung
+    - Wahlaufforderung
+    - Wo ist mein Wahllokal?
+    - wahlbenachrichtigung
+    - Wahlbenachrichtigung
+    - ich wohne in Essen wo ist mein Wahllokal
+- intent: esq/wahllokal
+  examples: |
+    - Wahlurne
+    - Urnenwahl
+    - wählen an der Urne
+    - Was muss ich bei der Wahl machen?
+    - Was muss ich zur Wahl mitbringen?
+    - Kann ich einfach so wählen?
+    - Wie wähle ich im Wahllokal?
+    - Wahllokal
+    - Vor Ort wählen
+    - wahllokal
+    - urne
+    - Urne
+    - wahlzettel
+    - was sind Wahllokale
+    - Wie geht wählen im Wahllokal?
+- intent: esq/briefwahl
+  examples: |
+    - Wie geht Briefwahl?
+    - Briefwahl?
+    - Kann ich Briefwahl machen?
+    - Bis wann Briefwahl?
+    - Was mache ich, wenn ich keine Zeit habe?
+    - Was ist, wenn ich am Wahltag nicht kann?
+    - Und wenn ich am Wahltag nicht kann?
+    - briefwahl
+    - Briefwahl
+    - Wie funktioniert die Briefwahl
+    - Wie beantrage ich Briefwahl
+    - Kann ich denn auch per Brief wählen?
+    - Birefwahl
+    - kann ich denn auch per Brief wählen
+    - wie geht Briefwahl
+    - Briefwal
+- intent: esq/wannWahl
+  examples: |
+    - Wann ist die nächste Wahl
+    - Wann ist die Landtagswahl?
+    - Wann wird gewählt?
+    - Wie lange ist die Legislaturperiode?
+    - Wann kommt die nächste Wahl?
+    - Wann Wahl?
+    - Wann ist wahl
+    - wann is wahl
+    - Wann ist die Wahl?
+    - Wan wahl
+    - wan wal
+    - wann Wahl
+    - wann ist die Wahl
+    - wan wählen
+    - wann wahl
+    - lalu wann ist denn die Landeswahl
+    - wann ist Landwahl
+    - Wann ist die NRW Wahl?
+    - wann sind die wahlen
+    - wann sind die Wahlen
+    - Wann ist die Wahl
+- intent: esq/oeffnungszeiten
+  examples: |
+    - Wie lange haben die Wahllokale geöffnet?
+    - Bis wann kann ich meine Stimme abgeben?
+    - Um wie viel Uhr schließen die Wahllokale?
+    - Wann schließen die Wahllokale?
+    - Bis wann muss ich gewählt haben?
+    - Öffnungszeiten?
+    - Was sind die Öffnungszeiten der Wahllokale?
+    - Wann haben die Wahllokale geöffnet?
+    - Wahllokale offen
+    - Wie lang ist die Stimmabgabe möglich?
+    - Bis wann wählen?
+    - Wahllokale schließen
+    - Wahl Schluss?
+    - Wann sind die Wahllokale geöffnet?
+    - Wann kann ich wählen?
+    - Wie lange ist das Wahllokal geöffnet
+    - Stimme abgeben
+    - Landtagswahl Zeit
+    - Wann haben die Wahllokale offen?
+    - Wann wälen
+    - wann kann ich wählen
+    - Öffnungszeiten Wahllokal
+- intent: esq/keinWahlschein
+  examples: |
+    - was kann ich denn machen wenn ich keinen Wahlschein gekriegt habe
+    - keinen Wahlschein bekommen
+    - kein walzettel
+    - keine wahlaufforderung erhalten
+    - Ich habe keinen Wahlschein bekommen
+    - Was tue ich, wenn ich keinen Wahlschein bekommen habe
+    - Was wenn ich keinen Wahlschein habe
+    - Kein Wahlschein gekriegt.
+    - ich habe aber keine Einladung gekriegt
+    - Wahlschein ist weg
+    - Schein verloren
+    - Wahlschein verlegt
+- intent: wahllokal
+  examples: |
+    - wo ist mein Wahllokal?
+    - Wo kann ich wählen?
+    - Wo kann ich in [Münster](stadt) wählen?
+    - Wo ist Wahllokal [065](nummer) in [Münster](stadt)?
+    - Wo ist Wahllokal Nummer [111](nummer)?
+    - Wie ist die Adresse zu Wahllokal [112](nummer) in [Münster](stadt)?
+    - Wo ist Wahllokal [138](nummer) in [Münster](stadt)
+    - 112
+    - Wahllokal [11](nummer)
+    - [Münster](stadt)
+    - [126](nummer)
+    - wo kann ich wählen
+    - [münster](stadt)
+    - [112](nummer)
+    - [10406](nummer)
+    - Nummer [10307](nummer)
+    - [Köln](stadt)
+    - Wo muss ich in [Köln](stadt) zum Wahllokal?
+    - Nummer [40106](nummer)
+    - Wo kann ich in [Köln](stadt) wählen?
+    - Lokal [42](nummer)
+    - 42
+    - Die Nummer lautet [043](nummer)
+    - In [Münster](stadt)
+    - Wo ist in [Münster](stadt) Wahllokal [83](nummer)?
+    - [40106](nummer)
+    - Nummer [83](nummer)
+    - Lokal [40106](nummer)
+    - Nummer [30607](nummer)
+    - Und wo kann ich in [Köln](stadt) wählen?
+    - Nummer [083](nummer)
+    - [083](nummer)
+    - Wo ist Wahllokal [40106](nummer) in [Köln](stadt)?
+    - [Dortmund](stadt)
+    - [Essen](stadt)
+    - [25](nummer)
+    - [48143](nummer)
+    - [Kölln](stadt)
+    - [22](nummer)
+    - [26](nummer)
+    - [Cologne](stadt)
+    - [15](nummer)
+    - Wo kann ich in [Aachen](stadt) wählen?
+    - In [Bielefeld](stadt) wählen?
+    - Wählen in [Greven](stadt)?
+    - Wo wählen in [Steinfurt](stadt)?
+    - Wo kann ich in [Bonn](stadt) wählen?
+    - Wo kann ich in [Leverkusen](stadt) wählen?
+    - Wo kann ich in [Coesfeld](stadt) wählen?
+    - in [Köln](stadt)
+    - wo kann ich in [Köln](stadt) wählen?
+    - [greven](stadt)
+    - [Regensburg](stadt)
+    - [131](nummer)
+## Other
+- intent: esq/kostenWahl
+  examples: |
+    - wie teuer ist das Wählen?
+    - was kostet die Wahl?
+    - Kosten wal
+    - wal kosten
+    - muss ich etwas bezahlen um wählen zu dürfen
+    - kostet das was?
+    - wählen kostenlos?
+    - Kostet wählen?
+    - kosten Briefwahl?
+    - Briefwahlen kosten?
+    - wählen teuer?
+    - Wie teuer würd die Wahl?
+    - wie teuer ist wählen
+- intent: esq/primeMinisterWho
+  examples: |
+    - Wer ist Ministerpräsident?
+    - Wie heißt der Ministerpräsident?
+    - Wie heißt die Ministerpräsident?
+    - Wer ist Hendrik Wüst?
+    - Was macht Wüst?
+    - Wer ist Ministerpräsident
+    - Ich wüsste gerne, wer Ministerpräsident ist
+    - Wer ist Chef?
+    - Wer ist der Boss?
+    - Ist Scholz der Chef
+    - Wer ist Ministerpresident?
+    - Wer ist der Ministerpresident von Deutschland?
+- intent: esq/parliamentWhere
+  examples: |
+    - Wo ist das Parlament?
+    - Wo ist der Landtag?
+    - Wo finde ich den Landtag?
+    - wo finde ich den Landtag
+- intent: esq/wahlkreise
+  examples: |
+    - Wie viele Wahlkreise gibt es bei der Landtagswahl?
+    - Was sind Wahlkreise?
+    - Wahlkreise?
+    - Anzahl Wahlkreise?
+    - Was hat es mit den Wahlkreisen auf sich?
+    - Wie viele Wahlbezirke gibt es
+    - Wahlkreise
+    - was sind Wahlkreise
+- intent: esq/landesregierung
+  examples: |
+    - Landesregierung?
+    - Was ist die Landesregierung
+    - Wer ist die Landregierung?
+    - Was macht die Regierung?
+    - Was macht die Kanzlerin?
+    - Aufgaben der Regierung?
+    - Aufgaben des Landtags
+    - Lanttag
+    - Landag
+- intent: esq/Ministerpräsidentenwahl
+  examples: |
+    - Wer bestimmt den Chef?
+    - neuer Ministerpräsident?
+    - Wer wählt den neuen Ministerpräsident?
+    - Woher neuer Ministerpräsident?
+    - Wie neuer Ministerpräsident?
+    - neu kansler?
+    - neue Ministerpräsident?
+    - neuer Boss?
+    - neue kansler?
+    - wär wält neue Ministerpräsident?
+    - wer wird neuer Ministerpräsident?
+    - Ministerpräsident wählen?
+    - Wie wird der Ministerpräsident gewählt?
+    - Wer wählt Ministerpräsident?
+- intent: esq/wahlbeteiligung
+  examples: |
+    - wie hoch ist denn die Quote beim wählen
+    - wie viele Leute nehmen an der Wahl teil?
+    - Wahlbeteiligung
+    - wie viele wählen?
+    - wer geht wählen?
+    - Wahlquote
+    - Wählquote
+    - Wie viele Menschen wählen?
+    - Wie hoch ist die Wahlbeteiligung?

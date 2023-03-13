@@ -1,86 +1,21 @@
-# This files contains your custom actions which can be used to run
-# custom Python code.
-#
-# See this guide on how to implement these action:
-# https://rasa.com/docs/rasa/custom-actions
-
-
-# This is a simple example for a custom action which utters "Hello World!"
-
-# from typing import Any, Text, Dict, List
-#
-# from rasa_sdk import Action, Tracker
-# from rasa_sdk.executor import CollectingDispatcher
-#
-#
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message(text="Hello World!")
-#
-#         return []
-
-from typing import Any, Text, Dict, List
-
+from typing import Any, Text, Dict
 import arrow
 import pandas as pd
-import requests
 import requests_cache
-import os
-import json
-import sys
-import urllib.parse
-import smtplib
-import csv
-from typing import List
-from datetime import datetime, date
-from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
-from email.mime.multipart import MIMEMultipart
-from dotenv import load_dotenv
+from datetime import date
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 from typing import List
 from bs4 import BeautifulSoup
-from requests.exceptions import HTTPError
+from .A00_general_actions import QuickReplyButton, create_csv_from_url, remove_csv, err_print
 
 # Helper vars and classes
 # ----------------------------------
 GAMES_START_DAY = 1
-polling_cities = ["Köln", "köln", "Koeln", "koeln", "cologne", "Cologne", "Kölln", "kölln", "K", "k",
-                  "Münster", "münster", "Muenster", "muenster", "MS", "ms"]
 
 
-# Helper class to create polling station objects with number and complete address and strings for bot answers
-class Pollingstation:
-    def __init__(self, street, number, plz, city):
-        self.street = street
-        self.number = number
-        self.plz = plz
-        self.city = city
-
-    # Generate a Google Maps Request link with objects properties
-    def getGMapsRequest(self) -> str:
-        # Example: https://www.google.com/maps/search/?api=1&query=Uppenkampstiege+17,+48147+Münster
-        link = f"https://www.google.com/maps/search/?api=1&query={urllib.parse.quote(self.street)}+{self.number}+" \
-               f"{self.plz}+{urllib.parse.quote(self.city)}"
-        return link
-
-    # Generate address String to be displayed in bot response message
-    def getAddress(self) -> str:
-        address = f"{self.street} {self.number}, {self.plz} {self.city}"
-        return address
-
-
-# Helper class for soccer games
 class Game:
     def __init__(self, winner: str, looser: str, goals_winner: str, goals_looser: str, gameday: str):
         self.winner = winner
@@ -163,122 +98,6 @@ class TournamentTable:
 
 # Util functions
 # ----------------------------------
-
-# Tell a random joke
-def get_joke() -> str:
-    JOKE_URL = "https://witzapi.de/api/joke/"
-    msg = "Chuck Norris schreibt Software ohne Fehler"
-    try:
-        response = requests.get(JOKE_URL)
-        response.raise_for_status()
-        # access JSON content
-        jsonResponse = response.json()
-        joke = jsonResponse[0].get('text')
-        if joke is not None:
-            return joke
-
-    except HTTPError as http_err:
-        print(f'HTTP error occurred: {http_err}')
-    except Exception as err:
-        print(f'Error occurred: {err}')
-    return msg
-
-
-# Error-Printing
-def err_print(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
-
-
-# Helper function to generate a polling station object from given city and station number.
-# Currently working only for Münster or Cologne
-def get_poll_station(city: str, stationnumber: int) -> Pollingstation:
-    cologne: List[str] = ["Köln", "köln", "Koeln", "koeln", "cologne", "Cologne", "Kölln", "kölln", "K", "k"]
-    muenster: List[str] = ["Münster", "münster", "Muenster", "muenster", "MS", "ms"]
-    response = None
-
-    # open csv-file
-    url_ms = 'https://www.alfa-bot.de/wp-content/uploads/2022/03/wahllokaleMS.csv'
-    url_k = 'https://www.alfa-bot.de/wp-content/uploads/2022/04/wahllokale_k.csv'
-
-    if city in cologne:
-        response = requests.get(url_k)
-    elif city in muenster:
-        response = requests.get(url_ms)
-
-    # create temp file to store csv-values
-    tempfile = open('tempfile.csv', 'wb')
-    tempfile.write(response.content)
-
-    # read csv-data, seperator ; with headers and select row where "lokalnummer" is equal to given number
-    # pd = pandas, df = usual shortcut for pandas.dataframe
-    df = pd.read_csv('tempfile.csv', sep=";", header=0)
-    result = df[df["lokalnummer"] == stationnumber]
-
-    if not result.empty:
-        street = result["strasse"].item()
-        number = result["hausnummer"].item()
-        plz = result["plz"].item()
-        city = result["ort"].item()
-
-        pollstation = Pollingstation(street, number, plz, city)
-
-    else:
-        pollstation = Pollingstation('n.a.', 'n.a.', 'n.a.', 'n.a.')
-
-    # close and delete temp-file
-    tempfile.close()
-    file_to_remove = "tempfile.csv"
-    if os.path.exists(file_to_remove):
-        os.remove(file_to_remove)
-    else:
-        print("%s does not exist!" % file_to_remove)
-
-    return pollstation
-
-
-# Pollingstation numbers may occur as numbers with leading zero. reformatStationNumber will remove a leading zero
-def reformatStationNumber(station_number) -> int:
-    number: int = int(station_number)
-    return number
-
-
-# Generate a Google Search request from given string (Assumption: string = utterance)
-def googleSearchRequest(utterance: str) -> str:
-    # sample url: https://www.google.com/search?q=was+läuft+im+kino&cr=countryDE&lr=lang_de
-    base_url = 'https://www.google.com/search?q='
-    country = '&cr=countryDE'
-    langcode = '&lr=lang_de'
-
-    request_string = utterance.replace(" ", "+")
-    search_string: str = base_url + request_string + country + langcode
-    return search_string
-
-
-# Copies a csv-file from given url to server, naming it 'tempfile.csv'. File has to be deleted by function remove_csv(path: str)
-def create_csv_from_url(url: str):
-    response = requests.get(url)
-    tempfile = open('tempfile.csv', 'wb')
-    tempfile.write(response.content)
-    tempfile.close()
-
-
-# Create a csv file for survey values. File has to be deleted by function remove_csv(path: str)
-def write_survey_csv(path: str, header: List[str], data: List[str]) -> None:
-    with open(path, 'w', encoding='utf-8', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(header)
-        writer.writerow(data)
-
-
-# Removes local copy of file 'tempfile.csv', created by function create_csv_from_url
-def remove_csv(path: str) -> None:
-    file_to_remove = path
-    if os.path.exists(file_to_remove):
-        os.remove(file_to_remove)
-    else:
-        print("%s does not exist!" % file_to_remove)
-
-
 # Returns group character of competing team of Fifa WM 2022
 def get_group(team: str, df: pd.DataFrame) -> str:
     result = df[df["teamlower"] == team.lower()]
@@ -389,7 +208,6 @@ def playday_lookup() -> str:
     today = date.today()
     # start date of wm 2022 in format yyyy, mm, dd
     startday = date(2022, 11, 20)
-    print(startday)
     daycode = str(today.day) + str(today.month)
     if daycode in playdays_dict:
         playday = playdays_dict.get(daycode)
@@ -496,130 +314,6 @@ def get_rankings() -> TournamentTable:
         return tournament_data
 
 
-def create_survey_msg(survey_result: List[List[str]]) -> str:
-    # survey_result[[header][data]]
-    # header = ['Losnummer', 'Datum', 'Smartphone', 'Hilfe benötigt', 'Antworten gelesen', 'Antworten verstanden',
-    #          'Hilfreich', 'App akzeptiert', 'Warum', 'Warum nicht', 'Gut', 'Verbesserung']
-    # data = [slot_lotnum, today, slot_smartphone, slot_need_help, slot_read, slot_understand, slot_helpful,
-    #        slot_learn, slot_learn_why, slot_learn_not, slot_pos, slot_neg]
-    HEADER = 0
-    DATA = 1
-    LOSNUMMER = 0
-    DATUM = 1
-    SMARTPHONE = 2
-    HILFE = 3
-    GELESEN = 4
-    VERSTANDEN = 5
-    HILFREICH = 6
-    APP = 7
-    WARUM = 8
-    WARUMNICHT = 9
-    POSITIV = 10
-    NEGATIV = 11
-    newline = '\n'
-    tab = '\t'
-    seperator = f"---------"
-    text = f"""Neues Befragungsergebnis von ALFA-Bot
-        {seperator}
-        folgende Antworten zu Losnummer {survey_result[DATA][LOSNUMMER]} erhalten. CSV Datei im Anhang:{newline}
-        {survey_result[HEADER][DATUM]}:{tab}{survey_result[DATA][DATUM]}
-        {survey_result[HEADER][SMARTPHONE]}:{tab}{survey_result[DATA][SMARTPHONE]}
-        {survey_result[HEADER][HILFE]}:{tab}{survey_result[DATA][HILFE]}
-        {survey_result[HEADER][GELESEN]}:{tab}{survey_result[DATA][GELESEN]}
-        {survey_result[HEADER][VERSTANDEN]}:{tab}{survey_result[DATA][VERSTANDEN]}
-        {survey_result[HEADER][HILFREICH]}:{tab}{survey_result[DATA][HILFREICH]}        
-        {survey_result[HEADER][APP]}:{tab}{survey_result[DATA][APP]} 
-        {survey_result[HEADER][WARUM]}:{tab}{survey_result[DATA][WARUM]} 
-        {survey_result[HEADER][WARUMNICHT]}:{tab}{survey_result[DATA][WARUMNICHT]} 
-        {survey_result[HEADER][POSITIV]}:{tab}{survey_result[DATA][POSITIV]} 
-        {survey_result[HEADER][NEGATIV]}:{tab}{survey_result[DATA][NEGATIV]} 
-        {seperator}
-        Viele Grüße Lalo
-        """
-    return text
-
-
-def send_survey_mail(survey_result: List[List[str]]) -> None:
-    load_dotenv('.env')
-    attachment_path = 'survey_data.csv'
-    sender = os.getenv('FROM')
-    receivers = [os.getenv('TOFH'), os.getenv('TOBVAG')]
-
-    write_survey_csv(attachment_path, survey_result[0], survey_result[1])
-
-    msg = MIMEMultipart()
-    body = MIMEText(create_survey_msg(survey_result))
-    msg.attach(body)
-    msg['Subject'] = 'Survey Result from ALFA-Bot'
-    msg['From'] = sender
-    msg['To'] = ", ".join(receivers)
-
-    try:
-        with open(attachment_path, "rb") as attachment:
-            att = MIMEApplication(attachment.read(), _subtype="csv")
-            att.add_header('Content-Disposition', "attachment; filename= %s" % attachment_path)
-            msg.attach(att)
-    except Exception as e:
-        print(str(e))
-
-    try:
-        with smtplib.SMTP(os.getenv('DOMAIN'), int(os.getenv('PORT1'))) as server:
-            server.connect(os.getenv('DOMAIN'), int(os.getenv('PORT2')))
-            server.ehlo()
-            server.starttls()
-            server.ehlo()
-            server.login(os.getenv('USERNAME'), os.getenv('CREDENTIAL'))
-            server.sendmail(sender, receivers, msg.as_string())
-            server.quit()
-    except Exception as error:
-        err_msg = "Something went wrong: "
-        err_msg = err_msg + str(error)
-        print(err_msg)
-    finally:
-        remove_csv('survey_data.csv')
-
-
-# Validation actions
-# ----------------------------------
-
-# Validation of extracted vars polling_num and polling_city for Landtagswahl
-# Important: Made with rasa 2.X Syntax. Next usage should use rasa 3.X Syntax
-class ValidatePollingStation(Action):
-
-    def name(self) -> Text:
-        return "action_tell_pollingstation"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        # rasa 2.X Syntax
-        station_number = tracker.get_slot('polling_num')
-        station_city = tracker.get_slot('polling_city')
-
-        # rasa 3.x syntax
-        #        station_number = (next(tracker.get_latest_entity_values("polling_num"), None))
-        #        station_city = (next(tracker.get_latest_entity_values("polling_city"), None))
-
-        # Check if a featured city is asked
-        if station_city not in polling_cities:
-            msg = f"Es tut mir Leid. Derzeit kann ich dir nur Wahllokale in Münster oder Köln nennen."
-            dispatcher.utter_message(text=msg)
-            return [SlotSet("polling_num", None), SlotSet("polling_city", None)]
-
-        # format station number to get rid of leading zeros
-        formatted_station_number = reformatStationNumber(station_number)
-        station_data = get_poll_station(station_city, formatted_station_number)
-
-        if not station_data.street == 'n.a.':
-            msg = f"Dein Wahllokal findest du unter folgender Adresse: [{station_data.getAddress()}]({station_data.getGMapsRequest()})"
-            dispatcher.utter_message(text=msg)
-            return [SlotSet("polling_num", None), SlotSet("polling_city", None)]
-        else:
-            msg = f"In {station_city} gibt es kein Wahllokal mit der Nummer {station_number}."
-            dispatcher.utter_message(text=msg)
-            return [SlotSet("polling_num", None), SlotSet("polling_city", None)]
-
-
 # Validation of variable in group slot
 class ValidateGroupForm(FormValidationAction):
 
@@ -724,48 +418,6 @@ class ValidateFinalsTeamForm(FormValidationAction):
             return {"finals_team": team}
 
 
-# Validation of entering code for survey
-class ValidateSimpleSurveyForm(FormValidationAction):
-    def name(self) -> Text:
-        return "validate_simple_survey_form"
-
-    def validate_lot_number(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: DomainDict,
-    ) -> Dict[Text, Any]:
-        access = [1092, 1126, 1263, 1518, 1645, 1931, 1932, 2063, 2147, 2656, 3094, 3349, 3507, 4098, 4297, 4667, 4935,
-                  5010, 5025, 5050, 5299, 5320, 5325, 5382, 5733, 5800, 5929, 6101, 6350, 6374, 6493, 6513, 6621, 7062,
-                  7147, 7249, 7373, 7469, 7509, 7926, 8043, 8772, 8963, 9165, 9300, 9540, 9674, 9693, 9797, 9820, 3310]
-        lot_num = int(slot_value)
-        if lot_num not in access:
-            dispatcher.utter_message(text=f"Deine eingegebene Nummer ist leider nicht gültig")
-            return {"lot_number": None}
-        dispatcher.utter_message(
-            text=f"Danke, deine Nummer {slot_value} ist korrekt. Wir können anfangen. Es geht um deine Meinung zu Chatbots, wie mir. Deine Antworten bleiben natürlich komplett anonym!")
-        return {"lot_number": slot_value}
-
-    def validate_learn_with_bot(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: DomainDict,
-    ) -> Dict[Text, Any]:
-        affirm = ["ja", "klar", "jeden", "sicher", "natürlich", "gerne", "schon"]
-        deny = ["nein", "nö", "nicht", "keinesfalls", "niemals", "nie"]
-
-        answer = str(slot_value).lower()
-        if any(element in answer for element in affirm):
-            return {"learn_with_bot": slot_value, "learn_not": "Ausgefiltert"}
-        elif any(element in answer for element in deny):
-            return {"learn_with_bot": slot_value, "learn_why": "Ausgefiltert"}
-        else:
-            return {"learn_with_bot": slot_value}
-
-
 # Validation of entering team variable in score request
 class ValidateScoreForm(FormValidationAction):
     def name(self) -> Text:
@@ -821,175 +473,8 @@ class ValidateScoreForm(FormValidationAction):
             return {"team2": None}
 
 
-# Validate as_like_form
-class AsLikeForm(FormValidationAction):
-    def name(self) -> Text:
-        return "validate_as_like_form"
-
-    def validate_as(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: DomainDict,
-    ) -> Dict[Text, Any]:
-        solution_as = str(slot_value).lower()
-        if solution_as != 'als':
-            dispatcher.utter_message(response="utter_test_as_wrong")
-            return {"as": None}
-        dispatcher.utter_message(text=f'Das ist richtig: "Meine Mutter ist älter *als* ich."')
-        return {"as": slot_value}
-
-    def validate_like(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: DomainDict,
-    ) -> Dict[Text, Any]:
-        solution_like = str(slot_value).lower()
-        print(solution_like)
-        if solution_like != 'wie':
-            dispatcher.utter_message(response="utter_test_like_wrong")
-            return {"like": None}
-        dispatcher.utter_message(text=f'Das ist richtig: "Meine Freundin hat das gleiche Hobby *wie* ich."')
-        return {"like": slot_value}
-
-
-# Validate Nugget Apparently Seemingly
-class ApparentlySeeminglyForm(FormValidationAction):
-    def name(self) -> Text:
-        return "validate_apparently_seemingly_form"
-
-    def validate_seemingly(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: DomainDict,
-            firstTry=bool(True)
-    ) -> Dict[Text, Any]:
-        solution_seemingly = str(slot_value).lower()
-        if solution_seemingly != 'scheinbar':
-            dispatcher.utter_message(response="utter_test_seemingly_wrong")
-            return {"seemingly": None}
-        dispatcher.utter_message(
-            text=f'Das ist richtig: Du vermutest, dass es scheinbar ein gutes Angebot ist. In Wahrheit könnte es aber Betrug sein.')
-        return {"seemingly": slot_value}
-
-    def validate_apparently(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: DomainDict,
-    ) -> Dict[Text, Any]:
-        solution_apparently = str(slot_value).lower()
-        if solution_apparently != 'anscheinend':
-            dispatcher.utter_message(response="utter_test_apparently_wrong")
-            return {"apparently": None}
-        dispatcher.utter_message(text=f'Das ist richtig: Der Gast wusste wirklich nicht, dass Hummer teuer ist.')
-        return {"apparently": slot_value}
-
-
-# Validate dasselbe gleiche form
-class DasselbeGleicheForm(FormValidationAction):
-    dasselbe: List[str] = ["dasselbe", "das selbe"]
-    dasgleiche: List[str] = ["dasgleiche", "das gleiche"]
-
-    def name(self) -> Text:
-        return "validate_dasselbe_gleiche_form"
-
-
-    def validate_dasselbe(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: DomainDict,
-    ) -> Dict[Text, Any]:
-        solution_dasselbe = str(slot_value).lower()
-        if solution_dasselbe not in DasselbeGleicheForm.dasselbe:
-            dispatcher.utter_message(response="utter_test_dasselbe_wrong")
-            return {"dasselbe": None}
-        dispatcher.utter_message(
-            text=f'Das ist richtig: Hat man sich nicht umgezogen, trägt man noch immer dasselbe Shirt wie zuvor.')
-        return {"dasselbe": slot_value}
-
-    def validate_dasgleiche(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: DomainDict,
-    ) -> Dict[Text, Any]:
-        solution_dasgleiche = str(slot_value).lower()
-        if solution_dasgleiche not in DasselbeGleicheForm.dasgleiche:
-            dispatcher.utter_message(response="utter_test_dasgleiche_wrong")
-            return {"dasgleiche": None}
-        dispatcher.utter_message(
-            text=f'Das ist richtig. Das Fahrrad von meinem Nachbarn hat mir so gut gefallen, dass ich mir das gleiche Rad gekauft habe.')
-        return {"dasgleiche": slot_value}
-
-
 # Custom Action Code
 # ----------------------------------
-
-# Text-Action for demo purposes only
-class ActionTestAction(Action):
-
-    def name(self) -> Text:
-        return "action_test_action"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        msg = f"Das ist eine Testnachricht von einem rasa 3.0 custom Action server"
-        dispatcher.utter_message(text=msg)
-        return []
-
-
-# Clear Slots Action for polling station search (Landtagswahl NRW 2022)
-class ActionClearSlots(Action):
-    def name(self) -> Text:
-        return "action_clear_slots"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        return [SlotSet("polling_num", None), SlotSet("polling_city", None)]
-
-
-class ActionClearAsLike(Action):
-    def name(self) -> Text:
-        return "action_clear_as_like"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        return [SlotSet("as", None), SlotSet("like", None)]
-
-
-class ActionClearSeeminglyApparently(Action):
-    def name(self) -> Text:
-        return "action_clear_seemingly_apparently"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        return [SlotSet("seemingly", None), SlotSet("apparently", None)]
-
-
-class ActionClearSame(Action):
-    def name(self) -> Text:
-        return "action_clear_same"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        return [SlotSet("dasselbe", None), SlotSet("dasgleiche", None)]
-
-
 # Returns current time for Germany and Qatar
 class ActionTellTime(Action):
 
@@ -1006,21 +491,6 @@ class ActionTellTime(Action):
 
         msg = f"In Deutschland ist es gerade {berlin_time.format('HH:mm')} Uhr. In Qatar ist es" \
               f" {qatar_time.format('HH:mm')} Uhr."
-
-        dispatcher.utter_message(text=msg)
-        return []
-
-
-# Returns current time for Germany and Qatar
-class ActionTellJoke(Action):
-
-    def name(self) -> Text:
-        return "action_tell_joke"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        msg = get_joke()
 
         dispatcher.utter_message(text=msg)
         return []
@@ -1085,43 +555,6 @@ class ActionTellGroup(Action):
         return [SlotSet("group", res), SlotSet("finals_team", None)]
 
 
-# Custom Actions for Surveys
-class ActionSubmitSurvey(Action):
-    def name(self) -> Text:
-        return "action_submit_survey"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        slot_lotnum = tracker.get_slot('lot_number')
-        today = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-        slot_smartphone = tracker.get_slot('smartphone')
-        slot_need_help = tracker.get_slot('need_help')
-        slot_read = tracker.get_slot('read_answers')
-        slot_understand = tracker.get_slot('understand_answers')
-        slot_helpful = tracker.get_slot('helpful')
-        slot_learn = tracker.get_slot('learn_with_bot')
-        slot_learn_why = tracker.get_slot('learn_why')
-        slot_learn_not = tracker.get_slot('learn_not')
-        slot_pos = tracker.get_slot('critic_pos')
-        slot_neg = tracker.get_slot('critic_neg')
-
-        header = ['Losnummer', 'Datum', 'Smartphone', 'Hilfe benötigt', 'Antworten gelesen', 'Antworten verstanden',
-                  'Hilfreich', 'App akzeptiert', 'Warum', 'Warum nicht', 'Gut', 'Verbesserung']
-        data = [slot_lotnum, today, slot_smartphone, slot_need_help, slot_read, slot_understand, slot_helpful,
-                slot_learn, slot_learn_why, slot_learn_not, slot_pos, slot_neg]
-        survey_result = [header, data]
-
-        send_survey_mail(survey_result)
-
-        dispatcher.utter_message(response="utter_submit_survey")
-
-        return [SlotSet("lot_number", None), SlotSet("helpful", None), SlotSet("smartphone", None),
-                SlotSet("learn_with_bot", None), SlotSet("learn_why", None), SlotSet("learn_not", None),
-                SlotSet("need_help", None), SlotSet("read_answers", None), SlotSet("understand_answers", None),
-                SlotSet("critic_pos", None), SlotSet("critic_neg", None)]
-
-
 # Custom action returning team phase
 class ActionTellPhase(Action):
     phases = {"gruppenphase": "20. November bis 2. Dezember 2022", "achtelfinale": "vom 3. bis 6. Dezember",
@@ -1152,30 +585,6 @@ class ActionTellPhase(Action):
         dispatcher.utter_message(text=msg)
 
         return [SlotSet("phase", None)]
-
-
-# Custom action returning a Google Search request
-class ActionAskGoogle(Action):
-
-    def name(self) -> Text:
-        return "action_ask_google"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        latest_msg = tracker.latest_message
-        j_obj = json.dumps(latest_msg)
-        j_obj = json.loads(j_obj)
-        utterance = j_obj["text"]
-
-        request_string = googleSearchRequest(utterance)
-
-        msg = f"Leider kann ich deine Nachricht nicht verstehen. Frag mich gerne noch mal. Wenn du möchtest," \
-              f"kannst du deine Frage auch bei [Google suchen]({request_string})"
-
-        dispatcher.utter_message(text=msg)
-
-        return []
 
 
 # Custom action returning a game result

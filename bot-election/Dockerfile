@@ -1,11 +1,10 @@
 # Generate a custom rasa docker container
 # Start from python 3.8 environment
-FROM python:3.8.15-slim
+FROM python:3.8-slim
 
-# Versionsnummern python 3.8 und pip upgrade prüfen!
 USER root
 # Install Rasa version 3.2.8
-RUN /usr/local/bin/python3 -m pip install pip==22.3.1
+RUN /usr/local/bin/python3 -m pip install --upgrade pip
 RUN python -m pip install rasa==3.2.8
 
 WORKDIR /app

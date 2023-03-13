@@ -1,0 +1,373 @@
+version: '3.1'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- wahllokal:
+    use_entitites: true
+- chitchat:
+    is_retrieval_intent: true
+- gvi:
+    is_retrieval_intent: true
+- esq:
+    is_retrieval_intent: true
+- themen
+- testintent
+- greet
+- goodbye
+- affirm
+- deny
+- kontakt
+- bot_challenge
+- out_of_scope
+- nlu_fallback
+- interrupt
+entities:
+- name
+- nummer
+- stadt
+slots:
+  nummer:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: nummer
+  stadt:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: stadt
+  name:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: name
+responses:
+# Greet, Goodbye, Affirm, Deny, Control
+  utter_greet:
+  - image: https://www.alfa-bot.de/wp-content/uploads/2022/03/nrw_plenarsaal.jpeg
+    text: Willkommen zum Chat. Frage mich gerne, was du über Wahlen wissen möchtest. Tippe auf den Lautsprecher, damit ich dir die Nachricht vorlese.
+  utter_goodbye:
+  - text: Machs gut!
+  - text: Bis zum nächsten Mal!
+  - text: Bis bald!
+  utter_iamabot:
+    - text: "Ich bin ein Chatbot. Meine Entwickler sind die **FH Münster** und der **Bundesverband Alphabetisierung und Grundbildung**."
+  utter_kontakt:
+  - text: "Meine Entwickler erreichst du im [Web](https://www.alfa-bot.de) oder schreibe ihnen eine [Mail](mailto:r.haeder@alphabetisierung.de)."
+## Control
+  utter_out_of_scope:
+    - text: "Ich verstehe deine Eingabe leider nicht. Versuche eine andere Formulierung oder kontaktiere meine Entwickler. Du findest sie [online](https://www.alfa-bot.de) oder schreib ihnen eine [Mail](mailto:r.haeder@alphabetisierung.de)."
+  utter_interruption:
+  - text: Ok. Falls ich dir anders helfen kann, frage mich gerne danach.
+  utter_themen:
+  - buttons:
+    - payload: Wie geht wählen?
+      title: Wie geht wählen?
+    - payload: Wann ist die Wahl?
+      title: Wann ist die Wahl?
+    - payload: Welche Parteien gibt es?
+      title: Welche Parteien gibt es?
+    - payload: Wahlprogramme
+      title: Wahlprogramme
+    - payload: Kandidaten?
+      title: Kandidaten?
+    - payload: Wen soll ich wählen?
+      title: Wen soll ich wählen?
+    text: "Hier sind Beispiele, was du mich fragen kannst."
+# Chitchat
+  utter_chitchat/howAreYou:
+    - text: Mir geht es gut, Danke.
+  utter_chitchat/joke:
+    - text: 'Kommt ein _Pferd_ in eine **Bar**, fragt der Barkeeper: "Was machst du denn für ein langes Gesicht?"'
+    - text: 'Sagt Lisa zu Anna: "Mein Hund kann lügen." Sagt Anna: "Das geht doch nicht." Sagt Lisa: "Doch das geht. **Bello**, wie macht eine Katze?" "_Wau wau_."'
+    - text: 'Fritzchen saß in der Schule. Da kam der Lehrer und nahm Fritzchen den Apfel weg. Er sagte: "Wenn du den Apfel haben willst, dann sage mir 3 Obstsorten." Da sagte Fritzchen: "Gib mir meinen Apfel, du Pflaume, sonst kriegst du eins auf die Birne."'
+  utter_chitchat/turing:
+    - text: Du willst mich testen? Dafür gibt es den Turing-Test. Der Turing-Test stammt vom britischen Mathematiker Alan Turing. Turing schlug diesen Test vor, um einen Richtwert für Künstliche Intelligenz zu erschaffen.
+  utter_chitchat/nettiquette:
+  - text: "Das war keine nette Eingabe oder? Ich rede gerne mit dir, aber bitte sei freundlich 🙃"
+# gvi Generic vote information
+  utter_gvi/democracy:
+  - text: "In einer Demokratie bestimmt nicht nur ein Mensch was passieren soll. In der Demokratie dürfen alle Menschen mitbestimmen. Dafür gibt es das Wahl-Recht. Wenn Du wählst, bestimmst Du in Deutschland mit. Das nennt man *demokratisch*."
+  utter_gvi/parliamentWhat:
+  - image: https://www.alfa-bot.de/wp-content/uploads/2022/03/nrw_plenarsaal.jpeg
+    text: "In einem Parlament kommen gewählte Politiker zusammen, die Abgeordneten. Sie beschließen Gesetze oder entscheiden, wofür Geld ausgegeben wird. Ein Parlament wählt auch einen Chef oder eine Chefin. Bei Bundesländern sind das die Ministerpräsidtenen. Der Bundestag als höchstes Parlament wählt den Bundeskanzler."
+  utter_gvi/eigenschaftenWahlen:
+  - buttons:
+      - payload: Wahlen frei
+        title: FREI
+      - payload: Wahlen gleich
+        title: GLEICH
+      - payload: Wahlen geheim
+        title: GEHEIM
+    text: "Wahlen in Deutschland sind **demokratisch**. Sie müssen drei Bedingungen erfüllen. Sie müssen **frei**, **gleich** und **geheim** sein."
+  utter_gvi/wahlenFrei:
+  - buttons:
+    - payload: Eigenschaften Wahlen
+      title: Wie müssen Wahlen sein?
+    - payload: Wahlen gleich
+      title: GLEICH
+    - payload: Wahlen geheim
+      title: GEHEIM
+    text: "Wahlen sind **frei**. Du darfst wählen, wen du möchtest! Niemand darf dir vorgeben, wen du wählen sollst. Und du musst nicht wählen, wenn du nicht möchtest."
+  utter_gvi/wahlenGeheim:
+  - buttons:
+    - payload: Eigenschaften Wahlen
+      title: Wie müssen Wahlen sein?
+    - payload: Wahlen frei
+      title: FREI
+    - payload: Wahl gleich
+      title: GLEICH
+    text: "Wahlen sind **geheim**. Niemand darf zuschauen, wen du wählst. Niemand darf überprüfen, wen du gewählt hast. Du darfst in der Wahlkabine keine Fotos machen."
+  utter_gvi/wahlenGleich:
+  - buttons:
+      - payload: Eigenschaften Wahlen
+        title: Wie müssen Wahlen sein?
+      - payload: Wahlen frei
+        title: FREI
+      - payload: Wahlen geheim
+        title: GEHEIM
+    text: "Wahlen sind **gleich**. Deine Stimme zählt genau so viel wie jede andere! Keine Stimme ist mehr oder weniger wert und jede Stimme zählt nur einmal."
+  utter_gvi/fuenfProzentHuerde:
+  - text: "Je mehr Parteien in einem Parlament sind, desto schwerer einigen sich die Abgeordneten auf Entscheidungen. Daher gibt es die **5%-Hürde**. Wenn eine Partei weniger als 5% der Zweitstimmen erhält, kommt sie nicht ins Parlament. Anders ausgedrückt muss eine Partei mindestens jeden zwanzigsten Wähler überzeugen, um ins Parlament zu kommen. Falls dich eine dieser kleinen Parteien überzeugt, unterstütze sie mit deiner Stimme."
+  utter_gvi/warumWaehlen:
+  - text: "Mit deiner Wahl stärkst du Personen und Parteien, die du gut findest. Wenn du niemanden gut findest, kannst du auch die Partei oder Person wählen, die dir am ehesten zusagt. Wenn du nicht wählst, musst du mit dem Ergebnis leben."
+  utter_gvi/nichtWaehlen:
+  - text: "Wenn du nicht wählen gehst, kannst du das Wahlergebnis nicht mitbestimmen. Nur die abgegebenen Stimmen werden auf die Parteien verteilt. Wenn also eine Partei zum Beispiel 20% erreicht, sind das 20% der abgegebenen Stimmen. Somit hat jeder fünfte Wähler für diese Partei gestimmt. Es besteht aber keine Wahlpflicht, also musst du nicht wählen, wenn du nicht möchtest."
+  utter_gvi/onlinewahl:
+  - buttons:
+    - payload: im Wahllokal wählen
+      title: Wahllokal
+    - payload: Briefwahl
+      title: Briefwahl
+    text: "Per Internet wählen, geht leider nicht. Du kannst persönlich im *Wahllokal* oder per *Briefwahl* wählen."
+  utter_gvi/koalition:
+  - text: "Eine **Koalition** ist ein Bündnis oder eine Verabredung von mehreren Parteien. Sie wollen zusammenarbeiten, um mehr als die Hälfte der Stimmen im Parlament zu haben. Sie können dann Entscheidungen treffen und Abstimmungen gewinnen."
+  - text: "Parteien schließen sich zusammen und bilden eine **Koalition**. Sie haben dann eine Mehrheit an Stimmen bei Abstimmungen. So können sie den politischen Weg bestimmen."
+  utter_gvi/opposition:
+  - text: "In der **Opposition** sind die Parteien, die nicht regieren. Opposition bedeutet 'entgegenstellen'. Die Parteien der Opposition kontrollieren die Landesregierung und haben häufig andere Lösungsvorschläge."
+  - text: "In der **Opposition** befinden sich die Parteien, die nicht zur Landesregierung gehören. Sie stellen ihre politischen Ideen vor und erarbeiten Gegenvorschläge. Häufig wird dann im Landtag diskutiert."
+  utter_gvi/primeMinisterWhat:
+  - text: "Ein Ministerpräsident oder eine Ministerpräsidentin ist der Regierungschef eines Bundeslandes. Ein Ministerpräsident bestimmt, welche Projekte die Regierung umsetzen will."
+  utter_gvi/wahlberechtigt:
+  - text: "Jede Person darf wählen, die **mindestens 18 Jahre alt** ist und einen **deutschen Personalausweis** hat. Zudem muss man bereits drei Monate in seinem Wahlkreis wohnen. Es gibt **keine Wahlpflicht**."
+## Parties
+  utter_gvi/partiesWhat:
+  - buttons:
+    - payload: Welche Parteien kann ich wählen?
+      title: Welche Parteien kann ich wählen?
+    - payload: Wahlprogramme
+      title: Wahlprogramme
+    text: "Parteien sind Organisationen von Menschen, die gleiche politische Ziele verfolgen. Gewählte Parteien vertreten die Interessen ihrer Wähler. Parteien haben Parteiprogramme und Wahlprogramme. In diesen Programmen schreiben Parteien ihre Ziele auf. Jeder kann einer Partei als Mitglied beitreten."
+  utter_gvi/partiesWho:
+  - buttons:
+    - payload: CDU
+      title: CDU
+    - payload: SPD
+      title: SPD
+    - payload: FDP
+      title: FDP
+    - payload: GRÜNE
+      title: GRÜNE
+    - payload: LINKE
+      title: LINKE
+    - payload: AFD
+      title: AFD
+    - payload: Wen soll ich wählen?
+      title: Wen soll ich wählen?
+    text: "In den meisten Parlamenten findest du die größeren Parteien CDU, SPD, FDP, die Grünen, die LINKE und die AFD. Zusätzlich gibt es manchmal Abgeordnete aus kleineren Parteien oder auch Abgeordnete ohne Partei."
+  utter_gvi/parties_CDU:
+  - buttons:
+    - payload: Wen soll ich wählen?
+      title: Wen soll ich wählen?
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/logo_cdu.gif
+    text: "[CDU](https://www.cdu.de) steht für Christlich Demokratische Union. Freiheit und soziale Gerechtigkeit sind wichtige Ziele der Partei."
+  utter_gvi/parties_CSU:
+  - buttons:
+    - payload: Wen soll ich wählen?
+      title: Wen soll ich wählen?
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/logo_csu.png
+    text: "[CSU](https://www.csu.de) steht für Christlich Soziale Union. Diese Partei kannst du nur in Bayern wählen."
+  utter_gvi/parties_SPD:
+  - buttons:
+    - payload: Thomas Kutschaty
+      title: Thomas Kutschaty
+    - payload: Wen soll ich wählen?
+      title: Wen soll ich wählen?
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/logo_spd.jpg
+    text: "[SPD](https://www.spd.de) steht für die Sozialdemokratische Partei Deutschlands. Diesen Namen hat sie seit 1890. Freiheit und soziale Gerechtigkeit sind wichtige Ziele der Partei."
+  utter_gvi/parties_FDP:
+  - buttons:
+    - payload: Joachim Stamp
+      title: Joachim Stamp
+    - payload: Wen soll ich wählen?
+      title: Wen soll ich wählen?
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/logo_fdp.png
+    text: "[FDP](https://www.fdp.de) steht für Freie Demokratische Partei. Die FDP ist seit 1947 im Landtag vertreten."
+  utter_gvi/parties_GRUENE:
+  - buttons:
+    - payload: Mona Neubar
+      title: Mona Neubaur
+    - payload: Wen soll ich wählen?
+      title: Wen soll ich wählen?
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/logo_gruene.jpg
+    text: "[Bündnis 90/Die Grünen](https://www.gruene.de): Ein inhaltlicher Schwerpunkt der Grünen ist die Umweltpolitik."
+  utter_gvi/parties_Linke:
+  - buttons:
+    - payload: Carolin Butterwegge
+      title: Carolin Butterwegge
+    - payload: Wen soll ich wählen?
+      title: Wen soll ich wählen?
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/logo_linke.jpg
+    text: "[Die LINKE](https://www.die-linke.de/start/) setzt sich für sozialistische Werte ein. 2007 gründete sich die Partei aus den kleineren Parteien *Die Linkspartei*, *PDS* und *WASG*."
+  utter_gvi/parties_AFD:
+  - buttons:
+    - payload: Markus Wagner
+      title: Markus Wagner
+    - payload: Wahl-O-Mat
+      title: Wen soll ich wählen?
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/logo_afd.png
+    text: "[AFD](https://www.afd.de) steht für Alternative für Deutschland. Die AFD gibt es seit 2013 und sie steht für Nationalismus. Damit steht sie von den bekannten Parteien am weitesten rechts."
+# esq Election specific questions
+## candidates
+  utter_esq/candidates:
+  - buttons:
+    - payload: Hendrik Wüst
+      title: Hendrik Wüst
+    - payload: Thomas Kutschaty
+      title: Thomas Kutschaty
+    - payload: Mona Neubaur
+      title: Mona Neubaur
+    - payload: Joachim Stamp
+      title: Joachim Stamp
+    - payload: Markus Wagner
+      title: Markus Wagner
+    - payload: Carolin Butterwegge
+      title: Carolin Butterwegge
+    text: 'Die Spitzenkandidaten für die Landtagswahl sind: Hendrik Wüst (CDU), Thomas Kutschaty (SPD), Mona Neubaur (GRÜNE), Joachim Stamp (FDP), Markus Wagner (AFD) und Carolin Butterwegge (LINKE). Zusätzlich gibt es in jedem Wahlkreis Direktkandidaten, die du mit deiner Erststimme wählst. Über welche Spitzenkandidaten möchtest du mehr erfahren?'
+  utter_esq/Hendrik_Wuest:
+  - buttons:
+    - payload: CDU
+      title: 'Partei: CDU'
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-hendrik_wuest-scaled.jpeg
+    text: Das ist Hendrik Wüst. Er ist der Spitzenkandidat der CDU und der jetzige Ministerpräsident.
+  utter_esq/Thomas_Kutschaty:
+  - buttons:
+    - payload: SPD
+      title: 'Partei: SPD'
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-thomas_kutschaty-scaled.jpg
+    text: Das ist Thomas Kutschaty. Er ist der Spitzenkandidat der SPD.
+  utter_esq/Mona_Neubaur:
+  - buttons:
+    - payload: Die GRÜNEN
+      title: 'Partei: Bündnis 90 die GRÜNEN'
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-mona_neubaur.jpg
+    text: Das ist Mona Neubaur. Sie ist die Spitzenkandidatin der Grünen
+  utter_esq/Joachim_Stamp:
+  - buttons:
+    - payload: FDP
+      title: 'Partei: FDP'
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-joachim_stamp-scaled.jpg
+    text: Das ist Joachim Stamp. Er ist der Spitzenkandidat der FDP.
+  utter_esq/Markus_Wagner:
+  - buttons:
+    - payload: AFD
+      title: 'Partei: AFD'
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-wagner_markus.png
+    text: Das ist Markus Wagner. Er ist der Spitzenkandidat der AFD.
+  utter_esq/Carolin_Butterwegge:
+  - buttons:
+    - payload: Die LINKE
+      title: 'Partei: Die LINKE'
+    image: https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-caro_butterwegge-scaled.jpg
+    text: Das ist Carolin Butterwegge. Sie ist die Spitzenkandidatin der Linken.   
+  utter_esq/wahlprogramme:
+  - buttons:
+    - payload: AFD
+      title: AFD
+    - payload: CDU
+      title: CDU
+    - payload: FDP
+      title: FDP
+    - payload: GRÜNE
+      title: GRÜNE
+    - payload: LINKE
+      title: LINKE
+    - payload: SPD
+      title: SPD
+    - payload: Koalition
+      title: Koalition
+    text: Jede Partei erstellt für eine Wahl ein Wahlprogramm. Da schreibt jede Partei, was sie in den nächsten fünf Jahren erreichen möchte. Regiert eine Partei in einer **Koalition** mit anderen Parteien, kann sie ihre Pläne nicht vollständig umsetzen. Zu den Parteien im Landtag haben wir die Wahlprogramme verlinkt.   
+## How to vote
+  utter_esq/howToVote:
+  - buttons:
+    - payload: Wahllokal
+      title: Wahllokal
+    - payload: Briefwahl
+      title: Briefwahl
+    text: Wenn du deine Wahlbenachrichtigung erhalten hast, kannst du damit am 15. Mai im *Wahllokal* wählen gehen oder *Briefwahl* beantragen. Du bekommst zur Wahl einen Stimmzettel auf dem du zwei Kreuze machen kannst. Deine Erststimme links und deine Zweitstimme rechts. Frage mich gerne nach Wahllokal oder Briefwahl.
+  utter_esq/erststimme:
+  - text: Mit deiner **Erststimme** wählst du den Kandidaten deines Wahlkreises. Der Kandidat mit den meisten Stimmen im Wahlkreis kommt direkt in den Landtag. Mehr zur [Erststimme in diesem Heft](https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-e-book_landtagswahl-nrw-2022_ls_0.pdf).
+  - text: Mit deiner **Erststimme** wählst du den Direktkandidaten in deinem Wahlkreis. Aus jedem Wahlkreis kommt die Person mit den meisten Stimmen direkt in den Landtag. Mehr zur [Erststimme in diesem Heft](https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-e-book_landtagswahl-nrw-2022_ls_0.pdf).
+  utter_esq/zweitstimme:
+  - text: Mit der **Zweitstimme** wählst du eine Partei. Damit bestimmst du mit, wie viele Plätze eine Partei im Landtag bekommt. Mehr zur [Zweitstimme in diesem Heft](https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-e-book_landtagswahl-nrw-2022_ls_0.pdf).
+  - text: Du wählst mit deiner **Zweitstimme** eine Partei. So entscheiden Wähler, wie viele Plätze eine Partei im Landtag bekommt. Mehr zur [Zweitstimme in diesem Heft](https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-e-book_landtagswahl-nrw-2022_ls_0.pdf).
+  utter_esq/wahlOMat:
+  - text: Bei der Landtagswahl kannst du aus 29 Parteien wählen. Es ist schwer, sich für eine Partei zu entscheiden. Man kann aber nichts verkehrt machen. Du weißt selbst was gut für dich ist. Welche Themen sind dir wichtig? Was interessiert dich? Welche Partei oder welche Person magst du? Du kannst dich aber auch beraten lassen. Dafür gibt es zum Beispiel den [Wahl-O-Mat](https://www.wahl-o-mat.de/nordrheinwestfalen2022/app/main_app.html) oder [VoteSwiper](https://www.voteswiper.org/de/deutschland/landtagswahl-nordrhein-westfalen-2022).
+  - text: Bei der Landtagswahl kannst du aus 29 Parteien wählen. Dich für eine Partei zu entscheiden, kann schwer sein. Im Internet gibt es Angebote, die dir dabei helfen. Du musst dort nur ein paar Fragen mit Ja oder Nein beantworten und auswählen, welche Parteien du vergleichen möchtest. Zum Beispiel der [Wahl-O-Mat](https://www.wahl-o-mat.de/nordrheinwestfalen2022/app/main_app.html) der Bundeszentrale für politische Bildung oder [VoteSwiper](https://www.voteswiper.org/de/deutschland/landtagswahl-nordrhein-westfalen-2022).
+  utter_esq/wahlbenachrichtigung:
+    - text: Mit der Wahlbenachrichtigung wirst du zur Wahl eingeladen. Du kannst damit wählen gehen oder Briefwahl beantragen. Die Benachrichtigung enthält alle wichtigen Informationen zur bevorstehenden Wahl und sollte vor dem 25. April in deinem Briefkasten sein.
+    - text: Du erhältst deine Wahlbenachrichtigung spätestens am 25. April 2022. Dort steht wo dein Wahllokal ist. Du kannst mit der Wahlbenachrichtigung auch deine Unterlagen für eine Briefwahl bestellen.
+  utter_seq/wahllokal:
+    - text: Traditionell wählt man im Wahllokal. Das ist ein Raum in deiner Nähe, in dem Wahlhelfer dir die Stimmzettel geben. Dann kannst du in die Wahlkabine gehen und ungestört wählen. Wenn du fertig bist, wirfst du deine gefalteten Stimmzettel in eine Wahlurne.
+  utter_esq/briefwahl:
+  - text: Manche Wähler können nicht zum Wahllokal. Zum Beispiel wenn sie am Wahltag im Urlaub sind, einen Termin haben oder weil sie krank sind. Dafür gibt es die Briefwahl. Dann können sie vor dem Wahltag wählen. Die Briefwahl kannst du mit deiner Wahlbenachrichtigung bis zum 13. Mai beantragen. Du bekommst mehrere Briefumschläge, einen Stimmzettel, einen Wahlschein und eine Anleitung geschickt. Auf dem Stimmzettel wählst du in der linken Spalte einen Direktkandidaten mit deiner **Erststimme**. Mit der rechten Spalte, gibst du deine **Zweitstimme** einer Partei. In jeder Spalte darfst du ein Kreuz machen. Danach steckst du den Stimmzettel gefaltet in den blauen Umschlag und klebst ihn zu. Nun unterschreibst du den Wahlschein und steckst diesen zusammen mit dem blauen Umschlag in den roten Umschlag. Dann kannst du deine Wahlunterlagen in einen Briefkasten einwerfen. Mehr Informationen dazu findest du [hier](https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-e-book_landtagswahl-nrw-2022_ls_0.pdf)
+  - text: 'Möchtest du zu Hause wählen, dann musst du die Briefwahl bis zum 13. Mai beantragen. Diesen Antrag findest du in deiner Wahlbenachrichtigung. Er heißt: Wahlschein-Antrag. du bekommst die Wahlzettel zugeschickt. Du bekommst mehrere Briefumschläge, einen Stimmzettel, einen Wahlschein und eine Anleitung geschickt. Auf dem Stimmzettel wählst du in der linken Spalte einen Direktkandidaten mit deiner **Erststimme**. Mit der rechten Spalte, gibst du deine **Zweitstimme** einer Partei. In jeder Spalte darfst du ein Kreuz machen. Danach steckst du den Stimmzettel gefaltet in den blauen Umschlag und klebst ihn zu. Nun unterschreibst du den Wahlschein und steckst diesen zusammen mit dem blauen Umschlag in den roten Umschlag. Nun kannst du deine Wahlunterlagen in einen Briefkasten einwerfen. Mehr Informationen dazu findest du [hier](https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-e-book_landtagswahl-nrw-2022_ls_0.pdf)'  
+  utter_esq/wannWahl:
+  - text: Die Landtagswahl 2022 ist am **Sonntag, 15. Mai 2022**. Das dann gewählte Parlament ist normalerweise für fünf Jahre im Amt.  
+  utter_esq/oeffnungszeiten:
+  - text: Die Wahllokale sind am **Sonntag, den 15. Mai 2022** von 8:00 Uhr bis 18:00 Uhr geöffnet.
+  - text: Wählen kannst Du am **Sonntag, 15. Mai 2022** zwischen 8:00 Uhr und 18:00 Uhr.
+  utter_esq/keinWahlschein:
+  - text: Wenn du bis zum 25. April noch keine Wahlbenachrichtigung erhalten hast, melde dich bei deinem Wahlamt und frage nach. Falls du nicht weißt, wo dein Wahlamt ist, frage am besten in deinem Rathaus oder bei deiner Gemeindeverwaltung nach.    
+  utter_ask_nummer:
+  - text: Wie lautet die Nummer deines Wahllokals? Du findest die Nummer auf deinem Wahlschein.
+  utter_ask_stadt:
+  - text: In welcher Stadt möchtest du wählen?    
+## Other
+  utter_esq/kostenWahl:
+  - text: Die Landtagswahl 2022 wird komplett aus Steuermitteln bezahlt. Das Wählen ist für dich kostenlos. Auch wenn du Briefwahl nutzt, musst du keine Briefmarke kaufen.
+  utter_esq/primeMinisterWho:
+  - image: https://www.alfa-bot.de/wp-content/uploads/2022/03/alfabot_ltw_nrw_2022-hendrik_wuest-scaled.jpeg
+    text: Hendrik Wüst von der CDU ist seit Oktober 2021 Ministerpräsident des Landes NRW. Nach der Landtagswahl am 15. Mai 2022 möchte er wieder Ministerpräsident sein.
+  utter_esq/parliamentWhere:
+  - image: https://www.alfa-bot.de/wp-content/uploads/2022/03/landtag_nrw.jpeg
+    text: Der Landtag NRW ist in Düsseldorf. Du findest ihn an der Adresse [Platz des Landtags 1, Düsseldorf](https://www.google.com/maps/search/?api=1&query=Platz+des+Landtags+1+40221+Düsseldorf)
+  utter_esq/wahlkreise:
+  - text: Es gibt insgesamt 128 Wahlkreise in NRW. Die Wahlkreise sind unterschiedlich groß, aber es leben immer ungefähr gleich viele Wähler in den Wahlkreisen.
+  utter_esq/landesregierung:
+  - text: Die Landesregierung setzt die Entscheidungen des Landtages um und macht Vorschläge für Gesetze. Die Landesregierung besteht aus dem Ministerpräsidenten und Landesministern.
+  utter_esq/Ministerpräsidentenwahl:
+  - text: Der Landtagspräsident schlägt nach einer Wahl den Ministerpräsidenten vor und der Landtag wählt den Ministerpräsidenten. Üblicherweise wird der Spitzenkandidat der stärksten Partei neuer Ministerpräsident.
+  utter_esq/wahlbeteiligung:
+  - text: Wie hoch die Wahlbeteiligung sein wird, kann man erst hinterher sagen. Bei der letzten Landtagswahl 2017 haben 65,2% der 13 Millionen Wahlberechtigten abgestimmt. Jeder dritte Wahlberechtigte hat sich nicht an der Wahl beteiligt.
+actions:
+- action_tell_pollingstation
+- action_test_action
+- action_clear_slots
+- utter_chitchat
+- utter_gvi
+- utter_esq
+- utter_interruption
+- utter_kontakt
+- utter_ask_nummer
+- utter_ask_stadt
+- utter_themen
+forms:
+  simple_polling_form:
+    required_slots:
+    - stadt
+    - nummer
